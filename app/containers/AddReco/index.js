@@ -1,6 +1,12 @@
 import React from 'react';
+import TextField from 'material-ui/TextField';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
+import RaisedButton from 'material-ui/RaisedButton';
+
+const buttonStyle = {
+  marginLeft: 12
+}
 
 export default class AddReco extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -27,16 +33,18 @@ export default class AddReco extends React.Component { // eslint-disable-line re
   render() {
     return (
       <div>
-        <input
+        <TextField
+          hintText={<FormattedMessage {...messages.newReco} />}
           type='text'
           value={this.state.value}
           onChange={this.handleChange}
         />
-        <button
+        <RaisedButton
+          label={<FormattedMessage {...messages.add} />}
+          style={buttonStyle}
+          primary={true}
           onClick={this.addButtonClicked}
-          disabled={!this.state.value}>
-          <FormattedMessage {...messages.add} />
-        </button>
+          disabled={!this.state.value} />
       </div>
     );
   }

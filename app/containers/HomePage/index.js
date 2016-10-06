@@ -3,6 +3,13 @@ import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import AddReco from '../AddReco'
 import RecoList from '../RecoList'
+import {Card, CardText} from 'material-ui/Card';
+import AppBar from 'material-ui/AppBar';
+
+const style = {
+  maxWidth: 700,
+  margin: '0 auto'
+};
 
 export default class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -21,14 +28,16 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 
   render() {
     return (
-      <div>
-        <h1>
-          <FormattedMessage {...messages.appName} />
-        </h1>
-        <AddReco addReco={this.addReco.bind(this)} />
-        <hr />
-        <RecoList recos={this.state.recos}/>
-
+      <div style={style}>
+        <AppBar
+          title={<FormattedMessage {...messages.appName} />}
+          showMenuIconButton={false}/>
+        <Card>
+          <CardText>
+            <AddReco addReco={this.addReco.bind(this)} />
+            <RecoList recos={this.state.recos}/>
+          </CardText>
+        </Card>
       </div>
     );
   }

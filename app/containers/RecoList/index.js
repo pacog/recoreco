@@ -1,18 +1,19 @@
 import React from 'react';
-import RecoItem from '../RecoItem';
+// import RecoItem from '../RecoItem';
+import {List, ListItem} from 'material-ui/List';
 
 const RecoList = ({recos}) => (
-  <ul>
+  <List>
     {
       recos.map( (reco, index) => {
           return (
-            <li key={`reco-${index}`}>
-              <RecoItem reco={reco} />
-            </li>
+            <ListItem
+              key={`reco-${index}`}
+              primaryText={reco} />
           );
       })
     }
-  </ul>
+  </List>
 );
 
 RecoList.propTypes = {
