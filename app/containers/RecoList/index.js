@@ -1,10 +1,15 @@
 import React from 'react';
+import RecoItem from '../RecoItem';
 
 const RecoList = ({recos}) => (
   <ul>
     {
       recos.map( (reco, index) => {
-          return <li key={`reco-${index}`>{reco}</li>;
+          return (
+            <li key={`reco-${index}`}>
+              <RecoItem reco={reco} />
+            </li>
+          );
       })
     }
   </ul>
