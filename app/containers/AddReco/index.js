@@ -28,7 +28,7 @@ export default class AddReco extends React.Component { // eslint-disable-line re
     return (
       <div>
         <input
-          type="text"
+          type='text'
           value={this.state.value}
           onChange={this.handleChange}
         />
@@ -41,3 +41,7 @@ export default class AddReco extends React.Component { // eslint-disable-line re
     );
   }
 }
+
+AddReco.propTypes = {
+    addReco: React.PropTypes.func.isRequired
+};

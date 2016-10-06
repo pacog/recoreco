@@ -2,6 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import AddReco from '../AddReco'
+import RecoList from '../RecoList'
 
 export default class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -13,7 +14,6 @@ export default class HomePage extends React.Component { // eslint-disable-line r
   }
 
   addReco(reco) {
-    console.log(reco);
     this.setState({
       recos: this.state.recos.concat([reco])
     });
@@ -27,17 +27,8 @@ export default class HomePage extends React.Component { // eslint-disable-line r
         </h1>
         <AddReco addReco={this.addReco.bind(this)} />
         <hr />
-        <ul>
-          {
-            this.state.recos.map( (reco, index) => {
-                return <li key={'reco-' + index}>{reco}</li>;
-            })
-          }
-        </ul>
-        <hr />
-        <div>
-          {this.state.recos.length}
-        </div>
+        <RecoList recos={this.state.recos}/>
+
       </div>
     );
   }
