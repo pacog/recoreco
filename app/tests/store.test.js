@@ -41,13 +41,14 @@ describe('main reducer', () => {
     it('should be able to add a reco when there are none', () => {
       const initialState = { recos: [] };
       const finalState = { recos: [
-        { id: 1, name: 'test' }
+        { id: 1, name: 'test', recommender: 'someone' }
       ] };
       deepFreeze(initialState);
       let action = {
         type: 'ADD_RECO',
         id: 1,
-        name: 'test'
+        name: 'test',
+        recommender: 'someone'
       };
 
       expect(mainReducer(initialState, action)).toEqual(finalState);
@@ -55,19 +56,81 @@ describe('main reducer', () => {
 
     it('should be able to add a reco when there are some', () => {
       const initialState = { recos: [
-        { id: 1, name: 'test1' },
-        { id: 2, name: 'test2' }
+        { id: 1, name: 'test1', recommender: 'someone1' },
+        { id: 2, name: 'test2', recommender: 'someone2' }
       ] };
       const finalState = { recos: [
-        { id: 1, name: 'test1' },
-        { id: 2, name: 'test2' },
-        { id: 3, name: 'test3' }
+        { id: 1, name: 'test1', recommender: 'someone1' },
+        { id: 2, name: 'test2', recommender: 'someone2' },
+        { id: 3, name: 'test3', recommender: 'someone3' }
       ] };
       deepFreeze(initialState);
       let action = {
         type: 'ADD_RECO',
         id: 3,
-        name: 'test3'
+        name: 'test3',
+        recommender: 'someone3'
+      };
+
+      expect(mainReducer(initialState, action)).toEqual(finalState);
+    });
+
+    it('should not add when name is empty', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test1', recommender: 'someone1' },
+        { id: 2, name: 'test2', recommender: 'someone2' }
+      ] };
+      const finalState = { recos: [
+        { id: 1, name: 'test1', recommender: 'someone1' },
+        { id: 2, name: 'test2', recommender: 'someone2' }
+      ] };
+      deepFreeze(initialState);
+      let action = {
+        type: 'ADD_RECO',
+        id: 3,
+        name: '',
+        recommender: ''
+      };
+
+      expect(mainReducer(initialState, action)).toEqual(finalState);
+    });
+
+    it('should not add when name is empty even in recommender is set', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test1', recommender: 'someone1' },
+        { id: 2, name: 'test2', recommender: 'someone2' }
+      ] };
+      const finalState = { recos: [
+        { id: 1, name: 'test1', recommender: 'someone1' },
+        { id: 2, name: 'test2', recommender: 'someone2' }
+      ] };
+      deepFreeze(initialState);
+      let action = {
+        type: 'ADD_RECO',
+        id: 3,
+        name: '',
+        recommender: 'somebody'
+      };
+
+      expect(mainReducer(initialState, action)).toEqual(finalState);
+    });
+
+    it('should add when name is correct but there is no recommender', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test1', recommender: 'someone1' },
+        { id: 2, name: 'test2', recommender: 'someone2' }
+      ] };
+      const finalState = { recos: [
+        { id: 1, name: 'test1', recommender: 'someone1' },
+        { id: 2, name: 'test2', recommender: 'someone2' },
+        { id: 3, name: 'test3', recommender: '' }
+      ] };
+      deepFreeze(initialState);
+      let action = {
+        type: 'ADD_RECO',
+        id: 3,
+        name: 'test3',
+        recommender: ''
       };
 
       expect(mainReducer(initialState, action)).toEqual(finalState);
