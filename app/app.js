@@ -22,6 +22,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
+import configureStore from './store';
 // import LanguageProvider from 'containers/LanguageProvider';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -33,27 +34,7 @@ import 'sanitize.css/sanitize.css';
 
 import RecoReco from './containers/RecoReco';
 
-const initialState = {
-  recos: []
-};
-
-const reducer = (state = initialState, action) => {
-
-  switch (action.type) {
-    case 'ADD_RECO':
-      return {
-        ...state,
-        recos: state.recos.concat([{
-          id: action.id,
-          name: action.text
-        }])
-      };
-    default:
-      return state;
-  }
-}
-
-const store = createStore(reducer);
+const store = configureStore();
 
 const render = () => {
   ReactDOM.render(

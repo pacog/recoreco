@@ -17,7 +17,7 @@ class RecoReco extends React.Component {
 
     store.dispatch({
         type: 'ADD_RECO',
-        text: recoName,
+        name: recoName,
         id: nextRecoId++
       });
   }
