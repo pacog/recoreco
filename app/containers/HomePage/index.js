@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
-import AddReco from '../AddReco'
+import AddRecoContainer from '../AddReco'
 import RecoList from '../RecoList'
 import {Card, CardText} from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
@@ -34,7 +34,7 @@ export default class HomePage extends React.Component { // eslint-disable-line r
           showMenuIconButton={false}/>
         <Card>
           <CardText>
-            <AddReco addReco={this.addReco.bind(this)} />
+            <AddRecoContainer addReco={this.addReco.bind(this)} />
             <RecoList recos={this.state.recos}/>
           </CardText>
         </Card>

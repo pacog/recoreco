@@ -1,7 +1,5 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
 import RaisedButton from 'material-ui/RaisedButton';
 
 const buttonStyle = {
@@ -34,13 +32,13 @@ export default class AddReco extends React.Component { // eslint-disable-line re
     return (
       <div>
         <TextField
-          hintText={<FormattedMessage {...messages.newReco} />}
+          hintText={'Add new reco'}
           type='text'
           value={this.state.value}
           onChange={this.handleChange}
         />
         <RaisedButton
-          label={<FormattedMessage {...messages.add} />}
+          label={'Add'}
           style={buttonStyle}
           primary={true}
           onClick={this.addButtonClicked}
