@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 // import RecoItem from '../RecoItem';
 import {List, ListItem} from 'material-ui/List';
 
@@ -16,8 +17,12 @@ const RecoList = ({recos}) => (
   </List>
 );
 
-RecoList.propTypes = {
-    recos: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
-};
+const mapStateToProps = (state) => {
+  return {
+    recos: state.recos
+  };
+}
 
-export default RecoList;
+const RecoListContainer = connect(mapStateToProps)(RecoList);
+
+export default RecoListContainer;

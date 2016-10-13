@@ -1,18 +1,21 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import { connect } from 'react-redux';
 
 const buttonStyle = {
   marginLeft: 12
 }
 
-export default class AddReco extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  constructor(props) {
-    super(props);
+let nextRecoId = 0;
+
+class AddReco extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  constructor({ dispatch }) {
+    super();
     this.state = {value: ''};
     this.handleChange = this.handleChange.bind(this);
     this.addButtonClicked = this.addButtonClicked.bind(this);
-    this.notifyAddReco = props.addReco;
+    this.dispatch = dispatch;
   }
 
   handleChange(event) {
@@ -21,7 +24,12 @@ export default class AddReco extends React.Component { // eslint-disable-line re
 
   addButtonClicked(event) {
     if(this.state.value) {
-      this.notifyAddReco(this.state.value);
+      this.dispatch({
+          type: 'ADD_RECO',
+          name: this.state.value,
+          id: nextRecoId++
+        });
+
       this.setState({
         value: ''
       });
@@ -48,6 +56,6 @@ export default class AddReco extends React.Component { // eslint-disable-line re
   }
 }
 
-AddReco.propTypes = {
-    addReco: React.PropTypes.func.isRequired
-};
+const AddRecoContainer = connect()(AddReco);
+
+export default AddRecoContainer;
