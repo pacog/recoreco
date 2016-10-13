@@ -4,22 +4,29 @@ import RecoList from '../RecoList';
 import { Card, CardText } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
 
+let nextRecoId = 0;
+
 class RecoReco extends React.Component {
 
   constructor() {
     super();
-    this.state = {
-      recos: []
-    };
   }
 
-  addReco(reco) {
-    this.setState({
-      recos: this.state.recos.concat([reco])
-    });
+  addReco(recoName) {
+    const { store } = this.context;
+
+    store.dispatch({
+        type: 'ADD_RECO',
+        text: recoName,
+        id: nextRecoId++
+      });
   }
 
   render() {
+
+    const { store } = this.context;
+    const state = store.getState();
+
     return (
       <div>
         <AppBar
@@ -28,12 +35,14 @@ class RecoReco extends React.Component {
         <Card>
           <CardText>
             <AddReco addReco={this.addReco.bind(this)} />
-            <RecoList recos={this.state.recos}/>
+            <RecoList recos={state.recos}/>
           </CardText>
         </Card>
       </div>
     );
   }
 }
-
+RecoReco.contextTypes = {
+  store: React.PropTypes.object
+}
 export default RecoReco;

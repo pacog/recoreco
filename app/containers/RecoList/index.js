@@ -8,8 +8,8 @@ const RecoList = ({recos}) => (
       recos.map( (reco, index) => {
           return (
             <ListItem
-              key={`reco-${index}`}
-              primaryText={reco} />
+              key={`reco-${reco.id}`}
+              primaryText={reco.name} />
           );
       })
     }
@@ -17,7 +17,7 @@ const RecoList = ({recos}) => (
 );
 
 RecoList.propTypes = {
-    recos: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+    recos: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
 };
 
 export default RecoList;

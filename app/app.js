@@ -33,24 +33,41 @@ import 'sanitize.css/sanitize.css';
 
 import RecoReco from './containers/RecoReco';
 
-const initialState = {};
-const counter = (state = initialState, action) => {
+const initialState = {
+  recos: []
+};
+
+const reducer = (state = initialState, action) => {
+
   switch (action.type) {
+    case 'ADD_RECO':
+      return {
+        ...state,
+        recos: state.recos.concat([{
+          id: action.id,
+          name: action.text
+        }])
+      };
     default:
       return state;
   }
 }
 
-const store = createStore(counter);
+const store = createStore(reducer);
 
-ReactDOM.render(
-  <MuiThemeProvider>
-    <Provider store={store}>
-        <RecoReco />
-    </Provider>
-  </MuiThemeProvider>,
-  document.getElementById('app')
-);
+const render = () => {
+  ReactDOM.render(
+    <MuiThemeProvider>
+      <Provider store={store}>
+          <RecoReco />
+      </Provider>
+    </MuiThemeProvider>,
+    document.getElementById('app')
+  );
+};
+
+store.subscribe(render);
+render();
 
 
 // // Hot reloadable translation json files
