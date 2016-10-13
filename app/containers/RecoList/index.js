@@ -10,7 +10,8 @@ const RecoList = ({recos}) => (
           return (
             <ListItem
               key={`reco-${reco.id}`}
-              primaryText={reco.name} />
+              primaryText={reco.name}
+              secondaryText={reco.recommender}/>
           );
       })
     }

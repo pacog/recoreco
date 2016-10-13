@@ -13,7 +13,6 @@ const addReco = (state, action) => {
 };
 
 export const mainReducer = (state, action = {}) => {
-
   switch (action.type) {
     case 'ADD_RECO':
       return addReco(state, action);
