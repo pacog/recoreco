@@ -4,8 +4,6 @@ import RecoList from '../RecoList';
 import { Card, CardText } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
 
-
-
 const RecoReco = () => {
   return (
     <div>
@@ -14,7 +12,6 @@ const RecoReco = () => {
         showMenuIconButton={false}/>
       <Card>
         <CardText>
-          <AddReco />
           <RecoList />
         </CardText>
       </Card>

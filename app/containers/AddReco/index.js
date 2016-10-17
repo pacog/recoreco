@@ -2,6 +2,8 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
+import { Card, CardText } from 'material-ui/Card';
+import AppBar from 'material-ui/AppBar';
 
 const marginLeftStyle = {
   marginLeft: 12
@@ -46,29 +48,37 @@ class AddReco extends React.Component { // eslint-disable-line react/prefer-stat
   render() {
     return (
       <div>
-        <TextField
-          hintText={'Add new reco'}
-          type='text'
-          value={this.state.name}
-          onChange={this.handleNameChange}
-        />
-        <TextField
-          hintText={'Who recommended it?'}
-          style={marginLeftStyle}
-          type='text'
-          value={this.state.recommender}
-          onChange={this.handleRecommenderChange}
-        />
-        <RaisedButton
-          label={'Add'}
-          style={marginLeftStyle}
-          primary={true}
-          onClick={this.addButtonClicked}
-          disabled={!this.state.name} />
+        <AppBar
+          title={'RecoReco'}
+          showMenuIconButton={false}/>
+        <Card>
+          <CardText>
+            <TextField
+              hintText={'Add new reco'}
+              type='text'
+              value={this.state.name}
+              onChange={this.handleNameChange}
+            />
+            <TextField
+              hintText={'Who recommended it?'}
+              style={marginLeftStyle}
+              type='text'
+              value={this.state.recommender}
+              onChange={this.handleRecommenderChange}
+            />
+            <RaisedButton
+              label={'Add'}
+              style={marginLeftStyle}
+              primary={true}
+              onClick={this.addButtonClicked}
+              disabled={!this.state.name} />
+          </CardText>
+        </Card>
       </div>
     );
   }
 }
+
 
 const AddRecoContainer = connect()(AddReco);
 

@@ -22,17 +22,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import configureStore from './store';
-// import LanguageProvider from 'containers/LanguageProvider';
+import { Router, Route, browserHistory } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-// Import i18n messages
-// import { translationMessages } from './i18n';
+import configureStore from './store';
 
 // Import the CSS reset, which HtmlWebpackPlugin transfers to the build folder
 import 'sanitize.css/sanitize.css';
 
-import RecoReco from './containers/RecoReco';
+import Dashboard from './containers/Dashboard';
+import Reco from './containers/Reco';
+import AddReco from './containers/AddReco';
 
 const store = configureStore();
 
@@ -40,7 +40,10 @@ const render = () => {
   ReactDOM.render(
     <MuiThemeProvider>
       <Provider store={store}>
-          <RecoReco />
+        <Router history={browserHistory}>
+          <Route path="/" component={Dashboard} />
+          <Route path="/add" component={AddReco} />
+        </Router>
       </Provider>
     </MuiThemeProvider>,
     document.getElementById('app')
@@ -50,7 +53,7 @@ const render = () => {
 store.subscribe(render);
 render();
 
-
+// <Route path="/reco/{:recoId}" component={Reco} />
 // // Hot reloadable translation json files
 // if (module.hot) {
 //   // modules.hot.accept does not accept dynamic dependencies,
