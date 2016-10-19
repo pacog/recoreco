@@ -1,9 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
+
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import { connect } from 'react-redux';
 import { Card, CardText } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
+import NavigationClose from 'material-ui/svg-icons/navigation/close';
+import FlatButton from 'material-ui/FlatButton';
+
 
 const blockStyle = {
   display: 'block'
@@ -35,22 +41,38 @@ class AddReco extends React.Component { // eslint-disable-line react/prefer-stat
   }
 
   addButtonClicked(event) {
-      this.dispatch({
-          type: 'ADD_RECO',
-          name: this.state.name,
-          recommender: this.state.recommender,
-          id: nextRecoId++
-        });
+    this.dispatch({
+        type: 'ADD_RECO',
+        name: this.state.name,
+        recommender: this.state.recommender,
+        id: nextRecoId++
+      });
 
-      this.resetState();
+    this.resetState();
+  }
+
+  closeButtonClicked(event) {
+    browserHistory.push('/');
+  }
+
+  getHeaderSaveButton() {
+    if(this.state.name) {
+      return <FlatButton label="Save" />;
+    } else {
+      return null;
+    }
   }
 
   render() {
     return (
       <div>
         <AppBar
-          title={'RecoReco'}
-          showMenuIconButton={false}/>
+          title={'Add Reco'}
+          iconElementLeft={<IconButton><NavigationClose /></IconButton>}
+          onLeftIconButtonTouchTap={this.closeButtonClicked}
+          iconElementRight={this.getHeaderSaveButton()}
+          onRightIconButtonTouchTap={this.addButtonClicked}
+          />
         <Card>
           <CardText>
             <TextField
