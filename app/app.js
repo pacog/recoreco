@@ -43,7 +43,7 @@ const render = () => {
         <Router history={browserHistory}>
           <Route path="/" component={Dashboard} />
           <Route path="/add" component={AddReco} />
-          <Route path="/reco/(:recoId)" component={Reco} />
+          <Route path="/reco/:recoId" component={Reco} />
         </Router>
       </Provider>
     </MuiThemeProvider>,

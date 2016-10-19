@@ -45,7 +45,7 @@ class AddReco extends React.Component { // eslint-disable-line react/prefer-stat
   }
 
   closeButtonClicked(event) {
-    browserHistory.push('/');
+    browserHistory.goBack();
   }
 
   getHeaderSaveButton() {
@@ -83,7 +83,7 @@ class AddReco extends React.Component { // eslint-disable-line react/prefer-stat
               onChange={this.handleRecommenderChange}
             />
             <RaisedButton
-              label={'Add'}
+              label={'Save'}
               style={blockStyle}
               primary={true}
               onClick={this.addButtonClicked}

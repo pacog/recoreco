@@ -20,3 +20,10 @@ export const mainReducer = (state, action = {}) => {
       return state;
   }
 };
+
+export const getReco = (state, recoId) => {
+  if(!state.recos) {
+    return null;
+  }
+  return state.recos.find( reco => reco.id === recoId);
+}
