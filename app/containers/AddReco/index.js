@@ -9,13 +9,12 @@ import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import FlatButton from 'material-ui/FlatButton';
-
+import { addReco } from '../../actions';
 
 const blockStyle = {
   display: 'block'
 }
 
-let nextRecoId = 0;
 const emptyState = { name: '', recommender: '' };
 
 class AddReco extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -41,13 +40,7 @@ class AddReco extends React.Component { // eslint-disable-line react/prefer-stat
   }
 
   addButtonClicked(event) {
-    this.dispatch({
-        type: 'ADD_RECO',
-        name: this.state.name,
-        recommender: this.state.recommender,
-        id: nextRecoId++
-      });
-
+    this.dispatch(addReco(this.state.name, this.state.recommender));
     this.resetState();
   }
 
