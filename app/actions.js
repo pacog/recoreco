@@ -6,3 +6,8 @@ export const addReco = (recoName, recommender = '') => ({
   recommender: recommender,
   id: v4()
 });
+
+export const removeReco = (id) => ({
+  type: 'REMOVE_RECO',
+  id
+});

@@ -12,10 +12,19 @@ const addReco = (state, action) => {
   };
 };
 
+const removeReco = (state, action) => {
+  return {
+    ...state,
+    recos: state.recos.filter( (reco) => reco.id !== action.id )
+  };
+};
+
 export const mainReducer = (state, action = {}) => {
   switch (action.type) {
     case 'ADD_RECO':
       return addReco(state, action);
+    case 'REMOVE_RECO':
+      return removeReco(state, action);
     default:
       return state;
   }

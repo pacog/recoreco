@@ -138,15 +138,73 @@ describe('main reducer', () => {
 
   });
 
+  describe('remove reco action', () => {
+    it('should be able to remove a reco when there is one', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone' }
+      ] };
+      const finalState = { recos: [] };
+      deepFreeze(initialState);
+      let action = {
+        type: 'REMOVE_RECO',
+        id: 1
+      };
+
+      expect(mainReducer(initialState, action)).toEqual(finalState);
+    });
+
+    it('should be able to remove a reco when there is more than one', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone' },
+        { id: 2, name: 'test2', recommender: 'someone2' }
+      ] };
+      const finalState = { recos: [
+        { id: 2, name: 'test2', recommender: 'someone2' }
+      ] };
+      deepFreeze(initialState);
+      let action = {
+        type: 'REMOVE_RECO',
+        id: 1
+      };
+
+      expect(mainReducer(initialState, action)).toEqual(finalState);
+    });
+
+    it('should be able to remove all recos', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone' },
+        { id: 2, name: 'test2', recommender: 'someone2' }
+      ] };
+      const finalState = { recos: [
+      ] };
+      deepFreeze(initialState);
+      let action1 = {
+        type: 'REMOVE_RECO',
+        id: 1
+      };
+      let state = mainReducer(initialState, action1);
+      let action2 = {
+        type: 'REMOVE_RECO',
+        id: 2
+      };
+      expect(mainReducer(state, action2)).toEqual(finalState);
+    });
+
+    it('should not remove actions that do not exist', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone' }
+      ] };
+      const finalState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone' }
+      ] };
+      deepFreeze(initialState);
+      let action = {
+        type: 'REMOVE_RECO',
+        id: 2
+      };
+
+      expect(mainReducer(initialState, action)).toEqual(finalState);
+    });
+
+  });
 });
-
-const testAddCounter = () => {
-  const listBefore = [];
-  const listAfter = [0];
-
-  deepFreeze(listBefore);
-
-  expect(
-    addCounter(listBefore)
-  ).toEqual(listAfter);
-};
