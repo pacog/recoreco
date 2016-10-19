@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { Card, CardText } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
 
-const marginLeftStyle = {
-  marginLeft: 12
+const blockStyle = {
+  display: 'block'
 }
 
 let nextRecoId = 0;
@@ -54,21 +54,22 @@ class AddReco extends React.Component { // eslint-disable-line react/prefer-stat
         <Card>
           <CardText>
             <TextField
-              hintText={'Add new reco'}
+              hintText={'Recommendation name'}
+              style={blockStyle}
               type='text'
               value={this.state.name}
               onChange={this.handleNameChange}
             />
             <TextField
               hintText={'Who recommended it?'}
-              style={marginLeftStyle}
+              style={blockStyle}
               type='text'
               value={this.state.recommender}
               onChange={this.handleRecommenderChange}
             />
             <RaisedButton
               label={'Add'}
-              style={marginLeftStyle}
+              style={blockStyle}
               primary={true}
               onClick={this.addButtonClicked}
               disabled={!this.state.name} />
