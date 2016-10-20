@@ -27,10 +27,6 @@ class AddReco extends React.Component { // eslint-disable-line react/prefer-stat
     this.dispatch = dispatch;
   }
 
-  resetState() {
-    this.setState(emptyState);
-  }
-
   handleNameChange(event) {
     this.setState({ name: event.target.value });
   }
@@ -41,7 +37,7 @@ class AddReco extends React.Component { // eslint-disable-line react/prefer-stat
 
   addButtonClicked(event) {
     this.dispatch(addReco(this.state.name, this.state.recommender));
-    this.resetState();
+    browserHistory.push('/');
   }
 
   closeButtonClicked(event) {

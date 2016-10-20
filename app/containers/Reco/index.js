@@ -73,6 +73,7 @@ const mapDispatchToProps = (dispatch, { params }) => {
   return {
     onRemoveClick: (id) => {
       dispatch(removeReco(params.recoId));
+      browserHistory.push('/');
     }
   };
 };
