@@ -36,14 +36,28 @@ import AddReco from './containers/AddReco';
 
 const store = configureStore();
 
+const routeConfig = [
+  { path: '/',
+    component: Dashboard
+  },
+  { path: '/add',
+    component: AddReco
+  },
+  { path: '/reco/:recoId',
+    component: Reco
+  }
+];
+
+
+
+
+
 const render = () => {
   ReactDOM.render(
     <MuiThemeProvider>
       <Provider store={store}>
-        <Router history={browserHistory}>
-          <Route path="/" component={Dashboard} />
-          <Route path="/add" component={AddReco} />
-          <Route path="/reco/:recoId" component={Reco} />
+        <Router history={browserHistory}
+                routes={routeConfig}>
         </Router>
       </Provider>
     </MuiThemeProvider>,
@@ -54,34 +68,5 @@ const render = () => {
 store.subscribe(render);
 render();
 
-// <Route path="/reco/{:recoId}" component={Reco} />
-// // Hot reloadable translation json files
-// if (module.hot) {
-//   // modules.hot.accept does not accept dynamic dependencies,
-//   // have to be constants at compile-time
-//   module.hot.accept('./i18n', () => {
-//     render(translationMessages);
-//   });
-// }
-//
-// // Chunked polyfill for browsers without Intl support
-// if (!window.Intl) {
-//   (new Promise((resolve) => {
-//     resolve(System.import('intl'));
-//   }))
-//     .then(() => Promise.all([
-//       System.import('intl/locale-data/jsonp/de.js'),
-//     ]))
-//     .then(() => render(translationMessages))
-//     .catch((err) => {
-//       throw err;
-//     });
-// } else {
-//   render(translationMessages);
-// }
-
-// Install ServiceWorker and AppCache in the end since
-// it's not most important operation and if main code fails,
-// we do not want it installed
 import { install } from 'offline-plugin/runtime';
 install();
