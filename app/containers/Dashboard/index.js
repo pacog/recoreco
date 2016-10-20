@@ -5,6 +5,8 @@ import { Card, CardText } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 import { browserHistory } from 'react-router';
+import FloatingAddButton from '../../components/FloatingAddButton';
+
 
 const RecoReco = () => {
   return (
@@ -23,6 +25,7 @@ const RecoReco = () => {
           <RecoList />
         </CardText>
       </Card>
+      <FloatingAddButton />
     </div>
   );
 };

@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getReco } from '../../reducer';
 import { browserHistory } from 'react-router';
-
-// import { Link } from 'react-router';
 import { Card, CardText } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -13,6 +11,8 @@ import Paper from 'material-ui/Paper';
 import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
 import { removeReco } from '../../actions';
+import IconButton from 'material-ui/IconButton';
+import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 
 const deleteButtonStyle = {
   marginTop: 20,
@@ -24,7 +24,10 @@ const Reco = ({reco, onRemoveClick}) => {
     <div>
       <AppBar
         title={'RecoReco'}
-        showMenuIconButton={false}
+        iconElementLeft={<IconButton><KeyboardArrowLeft /></IconButton>}
+        onLeftIconButtonTouchTap={() => {
+          browserHistory.push('/');
+        }}
         onTitleTouchTap={() => {
           browserHistory.push('/');
         }} />

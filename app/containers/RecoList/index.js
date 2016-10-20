@@ -20,6 +20,8 @@ const getRecoList = (recos) => (
   <SelectableList onChange={
       (event, selectedReco) => {
         browserHistory.push('/reco/' + selectedReco.id);
+        event.stopPropagation();
+        event.preventDefault();
       }
     }>
     {
