@@ -15,6 +15,7 @@ module.exports = require('./webpack.base.babel')({
   output: {
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name].[chunkhash].chunk.js',
+    publicPath: "./"
   },
 
   // We use ExtractTextPlugin so we get a separate CSS file instead
