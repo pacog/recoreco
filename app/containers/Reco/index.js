@@ -13,6 +13,7 @@ import ActionDelete from 'material-ui/svg-icons/action/delete';
 import { removeReco } from '../../actions';
 import IconButton from 'material-ui/IconButton';
 import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
+import timeSince from '../../utils/time-since';
 
 const deleteButtonStyle = {
   marginTop: 20,
@@ -71,8 +72,7 @@ const getAddedPart = (reco) => {
   if(reco.added) {
     return (
       <div>
-        <p>Added:</p>
-        <p>{reco.added}</p>
+        <p>{timeSince(reco.added)} ago</p>
       </div>
     );
   } else {
