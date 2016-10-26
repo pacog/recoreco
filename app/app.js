@@ -48,10 +48,6 @@ const routeConfig = [
   }
 ];
 
-
-
-
-
 const render = () => {
   ReactDOM.render(
     <MuiThemeProvider>
