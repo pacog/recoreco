@@ -12,3 +12,13 @@ export const removeReco = (id) => ({
   type: 'REMOVE_RECO',
   id
 });
+
+export const markAsSeen = (id) => ({
+  type: 'MARK_RECO_AS_SEEN',
+  id
+});
+
+export const markAsUnSeen = (id) => ({
+  type: 'MARK_RECO_AS_NOT_SEEN',
+  id
+});
