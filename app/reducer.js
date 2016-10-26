@@ -7,7 +7,8 @@ const addReco = (state, action) => {
     recos: state.recos.concat([{
       id: action.id,
       name: action.name,
-      recommender: action.recommender
+      recommender: action.recommender,
+      added: action.added
     }])
   };
 };

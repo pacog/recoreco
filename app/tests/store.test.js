@@ -41,14 +41,15 @@ describe('main reducer', () => {
     it('should be able to add a reco when there are none', () => {
       const initialState = { recos: [] };
       const finalState = { recos: [
-        { id: 1, name: 'test', recommender: 'someone' }
+        { id: 1, name: 'test', recommender: 'someone', added: 123 }
       ] };
       deepFreeze(initialState);
       let action = {
         type: 'ADD_RECO',
         id: 1,
         name: 'test',
-        recommender: 'someone'
+        recommender: 'someone',
+        added: 123
       };
 
       expect(mainReducer(initialState, action)).toEqual(finalState);
@@ -56,20 +57,21 @@ describe('main reducer', () => {
 
     it('should be able to add a reco when there are some', () => {
       const initialState = { recos: [
-        { id: 1, name: 'test1', recommender: 'someone1' },
-        { id: 2, name: 'test2', recommender: 'someone2' }
+        { id: 1, name: 'test1', recommender: 'someone1', added: 123 },
+        { id: 2, name: 'test2', recommender: 'someone2', added: 124 }
       ] };
       const finalState = { recos: [
-        { id: 1, name: 'test1', recommender: 'someone1' },
-        { id: 2, name: 'test2', recommender: 'someone2' },
-        { id: 3, name: 'test3', recommender: 'someone3' }
+        { id: 1, name: 'test1', recommender: 'someone1', added: 123 },
+        { id: 2, name: 'test2', recommender: 'someone2', added: 124 },
+        { id: 3, name: 'test3', recommender: 'someone3', added: 125 }
       ] };
       deepFreeze(initialState);
       let action = {
         type: 'ADD_RECO',
         id: 3,
         name: 'test3',
-        recommender: 'someone3'
+        recommender: 'someone3',
+        added: 125
       };
 
       expect(mainReducer(initialState, action)).toEqual(finalState);
@@ -77,12 +79,12 @@ describe('main reducer', () => {
 
     it('should not add when name is empty', () => {
       const initialState = { recos: [
-        { id: 1, name: 'test1', recommender: 'someone1' },
-        { id: 2, name: 'test2', recommender: 'someone2' }
+        { id: 1, name: 'test1', recommender: 'someone1', added: 123 },
+        { id: 2, name: 'test2', recommender: 'someone2', added: 124 }
       ] };
       const finalState = { recos: [
-        { id: 1, name: 'test1', recommender: 'someone1' },
-        { id: 2, name: 'test2', recommender: 'someone2' }
+        { id: 1, name: 'test1', recommender: 'someone1', added: 123 },
+        { id: 2, name: 'test2', recommender: 'someone2', added: 124 }
       ] };
       deepFreeze(initialState);
       let action = {
@@ -97,12 +99,12 @@ describe('main reducer', () => {
 
     it('should not add when name is empty even in recommender is set', () => {
       const initialState = { recos: [
-        { id: 1, name: 'test1', recommender: 'someone1' },
-        { id: 2, name: 'test2', recommender: 'someone2' }
+        { id: 1, name: 'test1', recommender: 'someone1', added: 123 },
+        { id: 2, name: 'test2', recommender: 'someone2', added: 124 }
       ] };
       const finalState = { recos: [
-        { id: 1, name: 'test1', recommender: 'someone1' },
-        { id: 2, name: 'test2', recommender: 'someone2' }
+        { id: 1, name: 'test1', recommender: 'someone1', added: 123 },
+        { id: 2, name: 'test2', recommender: 'someone2', added: 124 }
       ] };
       deepFreeze(initialState);
       let action = {
@@ -117,20 +119,21 @@ describe('main reducer', () => {
 
     it('should add when name is correct but there is no recommender', () => {
       const initialState = { recos: [
-        { id: 1, name: 'test1', recommender: 'someone1' },
-        { id: 2, name: 'test2', recommender: 'someone2' }
+        { id: 1, name: 'test1', recommender: 'someone1', added: 123 },
+        { id: 2, name: 'test2', recommender: 'someone2', added: 124 }
       ] };
       const finalState = { recos: [
-        { id: 1, name: 'test1', recommender: 'someone1' },
-        { id: 2, name: 'test2', recommender: 'someone2' },
-        { id: 3, name: 'test3', recommender: '' }
+        { id: 1, name: 'test1', recommender: 'someone1', added: 123 },
+        { id: 2, name: 'test2', recommender: 'someone2', added: 124 },
+        { id: 3, name: 'test3', recommender: '', added: 125 }
       ] };
       deepFreeze(initialState);
       let action = {
         type: 'ADD_RECO',
         id: 3,
         name: 'test3',
-        recommender: ''
+        recommender: '',
+        added: 125
       };
 
       expect(mainReducer(initialState, action)).toEqual(finalState);
@@ -141,7 +144,7 @@ describe('main reducer', () => {
   describe('remove reco action', () => {
     it('should be able to remove a reco when there is one', () => {
       const initialState = { recos: [
-        { id: 1, name: 'test', recommender: 'someone' }
+        { id: 1, name: 'test', recommender: 'someone', added: 123 }
       ] };
       const finalState = { recos: [] };
       deepFreeze(initialState);
@@ -155,11 +158,11 @@ describe('main reducer', () => {
 
     it('should be able to remove a reco when there is more than one', () => {
       const initialState = { recos: [
-        { id: 1, name: 'test', recommender: 'someone' },
-        { id: 2, name: 'test2', recommender: 'someone2' }
+        { id: 1, name: 'test', recommender: 'someone', added: 122 },
+        { id: 2, name: 'test2', recommender: 'someone2', added: 123 }
       ] };
       const finalState = { recos: [
-        { id: 2, name: 'test2', recommender: 'someone2' }
+        { id: 2, name: 'test2', recommender: 'someone2', added: 123 }
       ] };
       deepFreeze(initialState);
       let action = {
@@ -172,8 +175,8 @@ describe('main reducer', () => {
 
     it('should be able to remove all recos', () => {
       const initialState = { recos: [
-        { id: 1, name: 'test', recommender: 'someone' },
-        { id: 2, name: 'test2', recommender: 'someone2' }
+        { id: 1, name: 'test', recommender: 'someone', added: 123 },
+        { id: 2, name: 'test2', recommender: 'someone2', added: 124 }
       ] };
       const finalState = { recos: [
       ] };
@@ -192,10 +195,10 @@ describe('main reducer', () => {
 
     it('should not remove actions that do not exist', () => {
       const initialState = { recos: [
-        { id: 1, name: 'test', recommender: 'someone' }
+        { id: 1, name: 'test', recommender: 'someone', added: 123 }
       ] };
       const finalState = { recos: [
-        { id: 1, name: 'test', recommender: 'someone' }
+        { id: 1, name: 'test', recommender: 'someone', added: 123 }
       ] };
       deepFreeze(initialState);
       let action = {

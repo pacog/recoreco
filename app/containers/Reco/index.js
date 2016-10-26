@@ -37,6 +37,7 @@ const Reco = ({reco, onRemoveClick}) => {
               {reco.name}
           </h3>
           { getRecommendedByPart(reco) }
+          { getAddedPart(reco) }
           <RaisedButton
             label="Delete"
             labelPosition="after"
@@ -65,6 +66,21 @@ const getRecommendedByPart = (reco) => {
   }
 
 };
+
+const getAddedPart = (reco) => {
+  if(reco.added) {
+    return (
+      <div>
+        <p>Added:</p>
+        <p>{reco.added}</p>
+      </div>
+    );
+  } else {
+    return '';
+  }
+
+};
+
 
 const mapStateToProps = (state, { params }) => {
   return {
