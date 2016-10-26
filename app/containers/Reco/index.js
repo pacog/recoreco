@@ -10,17 +10,18 @@ import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigati
 import Paper from 'material-ui/Paper';
 import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
-import { removeReco, markAsSeen, markAsUnSeen } from '../../actions';
+import { removeReco, markAsSeen, markAsUnSeen, rateReco } from '../../actions';
 import IconButton from 'material-ui/IconButton';
 import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 import timeSince from '../../utils/time-since';
+import RatingSelector from '../../components/RatingSelector';
 
 const buttonStyle = {
   marginTop: 20,
   width: '100%'
 };
 
-const Reco = ({reco, onRemoveClick, onMarkAsUnSeenClick, onMarkAsSeenClick}) => {
+const Reco = ({reco, onRemoveClick, onMarkAsUnSeenClick, onMarkAsSeenClick, onChangedRating}) => {
   return (
     <div>
       <AppBar
@@ -39,7 +40,7 @@ const Reco = ({reco, onRemoveClick, onMarkAsUnSeenClick, onMarkAsSeenClick}) => 
           </h3>
           { getRecommendedByPart(reco) }
           { getAddedPart(reco) }
-          { getSeenPart(reco, onMarkAsUnSeenClick, onMarkAsSeenClick) }
+          { getSeenPart(reco, onMarkAsUnSeenClick, onMarkAsSeenClick, onChangedRating) }
 
           <RaisedButton
             label="Delete"
@@ -84,9 +85,14 @@ const getAddedPart = (reco) => {
 
 };
 
-const getSeenPart = (reco, onMarkAsUnSeenClick, onMarkAsSeenClick) => {
+const getSeenPart = (reco, onMarkAsUnSeenClick, onMarkAsSeenClick, onChangedRating) => {
   if(reco.seen) {
-    return getMarkAsUnseenPart(reco, onMarkAsUnSeenClick);
+    return (
+      <div>
+        <RatingSelector rating={reco.rating} onChangedRating={ onChangedRating.bind(this, reco.id) }></RatingSelector>
+        { getMarkAsUnseenPart(reco, onMarkAsUnSeenClick) }
+      </div>
+    );
   } else {
     return getMarkAsSeenPart(reco, onMarkAsSeenClick);
   }
@@ -131,6 +137,9 @@ const mapDispatchToProps = (dispatch, { params }) => {
     },
     onMarkAsSeenClick: (id) => {
       dispatch(markAsSeen(params.recoId));
+    },
+    onChangedRating: (id, newRating) => {
+      dispatch(rateReco(params.recoId, newRating));
     }
   };
 };
