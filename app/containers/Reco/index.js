@@ -10,17 +10,17 @@ import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigati
 import Paper from 'material-ui/Paper';
 import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
-import { removeReco } from '../../actions';
+import { removeReco, markAsSeen, markAsUnSeen } from '../../actions';
 import IconButton from 'material-ui/IconButton';
 import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 import timeSince from '../../utils/time-since';
 
-const deleteButtonStyle = {
+const buttonStyle = {
   marginTop: 20,
   width: '100%'
 };
 
-const Reco = ({reco, onRemoveClick}) => {
+const Reco = ({reco, onRemoveClick, onMarkAsUnSeenClick, onMarkAsSeenClick}) => {
   return (
     <div>
       <AppBar
@@ -39,14 +39,17 @@ const Reco = ({reco, onRemoveClick}) => {
           </h3>
           { getRecommendedByPart(reco) }
           { getAddedPart(reco) }
+          { getSeenPart(reco, onMarkAsUnSeenClick, onMarkAsSeenClick) }
+
           <RaisedButton
             label="Delete"
             labelPosition="after"
-            style={deleteButtonStyle}
-            primary={true}
+            style={buttonStyle}
+            secondary={true}
             icon={<ActionDelete />}
             onClick={ onRemoveClick.bind(this, reco.id) }
           />
+
         </CardText>
 
       </Card>
@@ -81,6 +84,35 @@ const getAddedPart = (reco) => {
 
 };
 
+const getSeenPart = (reco, onMarkAsUnSeenClick, onMarkAsSeenClick) => {
+  if(reco.seen) {
+    return getMarkAsUnseenPart(reco, onMarkAsUnSeenClick);
+  } else {
+    return getMarkAsSeenPart(reco, onMarkAsSeenClick);
+  }
+};
+
+const getMarkAsUnseenPart = (reco, onMarkAsUnSeenClick) => {
+  return (
+    <RaisedButton
+      label="Mark as unseen"
+      style={buttonStyle}
+      primary={true}
+      onClick={ onMarkAsUnSeenClick.bind(this, reco.id) }
+    />
+  );
+};
+
+const getMarkAsSeenPart = (reco, onMarkAsSeenClick) => {
+  return (
+    <RaisedButton
+      label="Mark as seen"
+      style={buttonStyle}
+      primary={true}
+      onClick={ onMarkAsSeenClick.bind(this, reco.id) }
+    />
+  );
+};
 
 const mapStateToProps = (state, { params }) => {
   return {
@@ -93,6 +125,12 @@ const mapDispatchToProps = (dispatch, { params }) => {
     onRemoveClick: (id) => {
       dispatch(removeReco(params.recoId));
       browserHistory.push('/');
+    },
+    onMarkAsUnSeenClick: (id) => {
+      dispatch(markAsUnSeen(params.recoId));
+    },
+    onMarkAsSeenClick: (id) => {
+      dispatch(markAsSeen(params.recoId));
     }
   };
 };
