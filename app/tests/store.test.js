@@ -375,4 +375,108 @@ describe('main reducer', () => {
       expect(mainReducer(initialState, action)).toEqual(finalState);
     });
   });
+
+  describe('rate reco action', () => {
+    it('should be able to rate a previously unrated reco', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone', added: 123, seen: true }
+      ] };
+      const finalState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
+      ] };
+      let action = {
+        type: 'RATE_RECO',
+        id: 1,
+        rating: 3
+      };
+      deepFreeze(initialState);
+      deepFreeze(action);
+
+      expect(mainReducer(initialState, action)).toEqual(finalState);
+    });
+
+    it('should be able to rate a previously rated reco', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 1 }
+      ] };
+      const finalState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
+      ] };
+      let action = {
+        type: 'RATE_RECO',
+        id: 1,
+        rating: 3
+      };
+      deepFreeze(initialState);
+      deepFreeze(action);
+
+      expect(mainReducer(initialState, action)).toEqual(finalState);
+    });
+
+    it('should not change other ratings', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 1 },
+        { id: 2, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 1 },
+        { id: 3, name: 'test', recommender: 'someone', added: 123, seen: true }
+      ] };
+      const finalState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 1 },
+        { id: 2, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 2 },
+        { id: 3, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
+      ] };
+      let action1 = {
+        type: 'RATE_RECO',
+        id: 2,
+        rating: 2
+      };
+      let action2 = {
+        type: 'RATE_RECO',
+        id: 3,
+        rating: 3
+      };
+      deepFreeze(initialState);
+      deepFreeze(action1);
+      deepFreeze(action2);
+
+      let state = mainReducer(initialState, action1);
+      expect(mainReducer(state, action2)).toEqual(finalState);
+    });
+
+    it('should not change value when it is not present', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone', added: 123, seen: true },
+        { id: 2, name: 'test', recommender: 'someone', added: 123, seen: true }
+      ] };
+      const finalState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone', added: 123, seen: true },
+        { id: 2, name: 'test', recommender: 'someone', added: 123, seen: true }
+      ] };
+      let action = {
+        type: 'RATE_RECO',
+        id: 3,
+        rating: 4
+      };
+      deepFreeze(initialState);
+      deepFreeze(action);
+
+      expect(mainReducer(initialState, action)).toEqual(finalState);
+    });
+
+    it('should not change value when no rating is specified', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
+      ] };
+      const finalState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
+      ] };
+      let action = {
+        type: 'RATE_RECO',
+        id: 1
+      };
+      deepFreeze(initialState);
+      deepFreeze(action);
+
+      expect(mainReducer(initialState, action)).toEqual(finalState);
+    });
+  });
 });

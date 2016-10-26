@@ -22,3 +22,9 @@ export const markAsUnSeen = (id) => ({
   type: 'MARK_RECO_AS_NOT_SEEN',
   id
 });
+
+export const rateReco = (id, rating) => ({
+  type: 'RATE_RECO',
+  id,
+  rating
+});

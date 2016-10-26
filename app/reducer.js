@@ -56,6 +56,23 @@ const markRecoAsNotSeen = (state, action) => {
   };
 };
 
+const rateReco = (state, action) => {
+  if (typeof action.rating === 'undefined') {
+    return state;
+  }
+  return {
+    ...state,
+    recos: state.recos.map((reco) => {
+      if(reco.id === action.id) {
+        return {
+          ...reco,
+          rating: action.rating
+        };
+      }
+      return reco;
+    })
+  };
+};
 
 export const mainReducer = (state, action = {}) => {
   switch (action.type) {
@@ -67,6 +84,8 @@ export const mainReducer = (state, action = {}) => {
       return markRecoAsSeen(state, action);
     case 'MARK_RECO_AS_NOT_SEEN':
       return markRecoAsNotSeen(state, action);
+    case 'RATE_RECO':
+      return rateReco(state, action);
     default:
       return state;
   }
