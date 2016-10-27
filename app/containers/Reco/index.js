@@ -30,7 +30,7 @@ const Reco = ({reco, onRemoveClick, onMarkAsUnSeenClick, onMarkAsSeenClick, onCh
         title={'RecoReco'}
         iconElementLeft={<IconButton><KeyboardArrowLeft /></IconButton>}
         onLeftIconButtonTouchTap={() => {
-          browserHistory.push('/');
+          browserHistory.goBack();
         }}
         onTitleTouchTap={() => {
           browserHistory.push('/');

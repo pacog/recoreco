@@ -1,20 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
+import { getRecosByRecommender } from '../../reducer';
 import AddReco from '../AddReco';
+import FloatingAddButton from '../../components/FloatingAddButton';
 import RecoList from '../../components/RecoList';
 import { Card, CardText } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
-import { browserHistory } from 'react-router';
-import FloatingAddButton from '../../components/FloatingAddButton';
-import { getRecosByRecommender } from '../../reducer';
+import IconButton from 'material-ui/IconButton';
+import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 
 const Recommender = ({ params, recos }) => {
   return (
     <div>
       <AppBar
         title={`Recos by ${decodeURI(params.recommender)}`}
-        showMenuIconButton={false}
+        iconElementLeft={<IconButton><KeyboardArrowLeft /></IconButton>}
+        onLeftIconButtonTouchTap={() => {
+          browserHistory.goBack();
+        }}
         iconElementRight={<FlatButton label="See all" />}
         onRightIconButtonTouchTap={
           () => {
