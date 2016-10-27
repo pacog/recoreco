@@ -15,6 +15,7 @@ import ActionDelete from 'material-ui/svg-icons/action/delete';
 import { removeReco, markAsSeen, markAsUnSeen, rateReco } from '../../actions';
 import IconButton from 'material-ui/IconButton';
 import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
+import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import timeSince from '../../utils/time-since';
 import RatingSelector from '../../components/RatingSelector';
 
@@ -34,7 +35,13 @@ const Reco = ({reco, onRemoveClick, onMarkAsUnSeenClick, onMarkAsSeenClick, onCh
         }}
         onTitleTouchTap={() => {
           browserHistory.push('/');
-        }} />
+        }}
+        iconElementRight={<IconButton><ModeEdit /></IconButton>}
+        onRightIconButtonTouchTap={
+          () => {
+            browserHistory.push(`/edit-reco/${reco.id}`);
+          }
+        }/>
       <Card>
         <CardText>
           <h3>

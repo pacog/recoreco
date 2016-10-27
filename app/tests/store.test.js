@@ -152,6 +152,106 @@ describe('main reducer', () => {
 
   });
 
+  describe('edit reco action', () => {
+    it('should be able to edit a reco', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone', added: 123, seen: false }
+      ] };
+      const finalState = { recos: [
+        { id: 1, name: 'test2', recommender: 'someone2', added: 123, seen: false }
+      ] };
+      let action = {
+        type: 'EDIT_RECO',
+        id: 1,
+        name: 'test2',
+        recommender: 'someone2'
+      };
+      deepFreeze(initialState);
+      deepFreeze(action);
+
+      expect(mainReducer(initialState, action)).toEqual(finalState);
+    });
+
+    it('should be able to edit a reco and not change others', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone', added: 123, seen: false },
+        { id: 2, name: 'test2', recommender: 'someone2', added: 123, seen: false }
+      ] };
+      const finalState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone', added: 123, seen: false },
+        { id: 2, name: 'test3', recommender: '', added: 123, seen: false }
+      ] };
+      let action = {
+        type: 'EDIT_RECO',
+        id: 2,
+        name: 'test3'
+      };
+      deepFreeze(initialState);
+      deepFreeze(action);
+
+      expect(mainReducer(initialState, action)).toEqual(finalState);
+    });
+
+    it('should not change anything if id is not in store', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone', added: 123, seen: false },
+        { id: 2, name: 'test2', recommender: 'someone2', added: 123, seen: false }
+      ] };
+      const finalState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone', added: 123, seen: false },
+        { id: 2, name: 'test2', recommender: 'someone2', added: 123, seen: false }
+      ] };
+      let action = {
+        type: 'EDIT_RECO',
+        id: 3,
+        name: 'test3'
+      };
+      deepFreeze(initialState);
+      deepFreeze(action);
+
+      expect(mainReducer(initialState, action)).toEqual(finalState);
+    });
+
+    it('should not change anything if id is no sent', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone', added: 123, seen: false },
+        { id: 2, name: 'test2', recommender: 'someone2', added: 123, seen: false }
+      ] };
+      const finalState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone', added: 123, seen: false },
+        { id: 2, name: 'test2', recommender: 'someone2', added: 123, seen: false }
+      ] };
+      let action = {
+        type: 'EDIT_RECO',
+        name: 'test3'
+      };
+      deepFreeze(initialState);
+      deepFreeze(action);
+
+      expect(mainReducer(initialState, action)).toEqual(finalState);
+    });
+
+    it('should not change anything if name is no sent', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone', added: 123, seen: false },
+        { id: 2, name: 'test2', recommender: 'someone2', added: 123, seen: false }
+      ] };
+      const finalState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone', added: 123, seen: false },
+        { id: 2, name: 'test2', recommender: 'someone2', added: 123, seen: false }
+      ] };
+      let action = {
+        type: 'EDIT_RECO',
+        id: 1
+      };
+      deepFreeze(initialState);
+      deepFreeze(action);
+
+      expect(mainReducer(initialState, action)).toEqual(finalState);
+    });
+
+  });
+
   describe('remove reco action', () => {
     it('should be able to remove a reco when there is one', () => {
       const initialState = { recos: [

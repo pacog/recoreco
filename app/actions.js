@@ -8,6 +8,14 @@ export const addReco = (recoName, recommender = '') => ({
   added: (new Date().getTime())
 });
 
+export const editReco = (id, recoName, recommender = '') => ({
+  id: id,
+  type: 'EDIT_RECO',
+  name: recoName,
+  recommender: recommender
+});
+
+
 export const removeReco = (id) => ({
   type: 'REMOVE_RECO',
   id

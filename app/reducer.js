@@ -19,6 +19,28 @@ const addReco = (state, action) => {
   };
 };
 
+const editReco = (state, action) => {
+  if(!action.name) {
+    return state;
+  }
+  if(typeof action.id === 'undefined') {
+    return state;
+  }
+  return {
+    ...state,
+    recos: state.recos.map((reco) => {
+      if(reco.id === action.id) {
+        return {
+          ...reco,
+          name: action.name,
+          recommender: action.recommender || ''
+        };
+      }
+      return reco;
+    })
+  };
+}
+
 const removeReco = (state, action) => {
   return {
     ...state,
@@ -78,6 +100,8 @@ export const mainReducer = (state, action = {}) => {
   switch (action.type) {
     case 'ADD_RECO':
       return addReco(state, action);
+    case 'EDIT_RECO':
+      return editReco(state, action);
     case 'REMOVE_RECO':
       return removeReco(state, action);
     case 'MARK_RECO_AS_SEEN':

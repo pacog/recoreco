@@ -34,6 +34,7 @@ import Dashboard from './containers/Dashboard';
 import Reco from './containers/Reco';
 import Recommender from './containers/Recommender';
 import AddReco from './containers/AddReco';
+import EditReco from './containers/EditReco';
 import Recommenders from './containers/Recommenders';
 
 const store = configureStore();
@@ -53,6 +54,9 @@ const routeConfig = [
   },
   { path: '/recommender/:recommender',
     component: Recommender
+  },
+  { path: '/edit-reco/:recoId',
+    component: EditReco
   }
 ];
 
