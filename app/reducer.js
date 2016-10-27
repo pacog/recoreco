@@ -107,6 +107,13 @@ export const getRecommenders = (state) => {
       }
     });
   }
-  
+
   return Object.keys(uniqueRecommenders);
+}
+
+export const getRecosByRecommender = (state, recommender) => {
+  if(!state.recos) {
+    return [];
+  }
+  return state.recos.filter( reco => reco.recommender === recommender);
 }

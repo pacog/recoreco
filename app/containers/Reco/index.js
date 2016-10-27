@@ -66,7 +66,7 @@ const getRecommendedByPart = (reco) => {
       <p>
         <span>Recommended by: </span>
         <Link
-          to={`recommender/${encodeURI(reco.recommender)}`}
+          to={`/recommender/${encodeURI(reco.recommender)}`}
         >{reco.recommender}</Link>
       </p>
     );

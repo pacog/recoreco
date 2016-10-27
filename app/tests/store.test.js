@@ -1,6 +1,6 @@
 import expect from 'expect';
 import configureStore from '../store'; // eslint-disable-line
-import { mainReducer, getReco, getRecommenders } from '../reducer';
+import { mainReducer, getReco, getRecommenders, getRecosByRecommender } from '../reducer';
 import deepFreeze from '../utils/deep-freeze';
 
 describe('configureStore', () => {
@@ -566,4 +566,58 @@ describe('main reducer', () => {
     });
   });
 
+  describe('getRecosByRecommender method', () => {
+    it('should be able to get recos', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'Paco', added: 123, seen: true },
+        { id: 2, name: 'test', recommender: 'Paco', added: 123, seen: true },
+        { id: 3, name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
+      ] };
+      const result = [
+        { id: 1, name: 'test', recommender: 'Paco', added: 123, seen: true },
+        { id: 2, name: 'test', recommender: 'Paco', added: 123, seen: true }
+      ];
+
+      deepFreeze(initialState);
+
+      expect(getRecosByRecommender(initialState, 'Paco')).toEqual(result);
+    });
+
+    it('should be able to get recos when there is only one', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'Paco', added: 123, seen: true },
+        { id: 2, name: 'test', recommender: 'Paco', added: 123, seen: true },
+        { id: 3, name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
+      ] };
+      const result = [
+        { id: 3, name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
+      ];
+
+      deepFreeze(initialState);
+
+      expect(getRecosByRecommender(initialState, 'Pepe')).toEqual(result);
+    });
+
+    it('should be able to get no recos', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'Paco', added: 123, seen: true },
+        { id: 2, name: 'test', recommender: 'Paco', added: 123, seen: true },
+        { id: 3, name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
+      ] };
+      const result = [];
+
+      deepFreeze(initialState);
+
+      expect(getRecosByRecommender(initialState, 'Julian')).toEqual(result);
+    });
+
+    it('should be able to get no recos when list is empty', () => {
+      const initialState = { recos: [] };
+      const result = [];
+
+      deepFreeze(initialState);
+
+      expect(getRecosByRecommender(initialState, 'Julian')).toEqual(result);
+    });
+  });
 });
