@@ -1,5 +1,4 @@
 import React from 'react';
-import IconButton from 'material-ui/IconButton';
 import ActionGrade from 'material-ui/svg-icons/action/grade';
 
 const starStyles = {
@@ -11,7 +10,7 @@ const starStyles = {
   }
 };
 
-const RatingSelector = (props) => {
+const RatingDisplay = (props) => {
   return (
     <div>
       {getStar(1, props)}
@@ -23,22 +22,13 @@ const RatingSelector = (props) => {
   );
 };
 
-RatingSelector.propTypes = {
-  rating: React.PropTypes.number,
-  onChangedRating: React.PropTypes.func.isRequired
+RatingDisplay.propTypes = {
+  rating: React.PropTypes.number
 };
 
 const getStar = (starValue, props) => {
-  const onStarClicked = () => {
-    props.onChangedRating(starValue)
-  };
   return (
-    <IconButton
-      onClick={onStarClicked}
-      touch={true}
-      iconStyle={ getStarStyle(starValue, props.rating) }>
-      <ActionGrade />
-    </IconButton>
+    <ActionGrade style={ getStarStyle(starValue, props.rating) }/>
   );
 };
 
@@ -52,4 +42,4 @@ const getStarStyle = (starRating, currentRating) => {
   return starStyles.unselected;
 };
 
-export default RatingSelector;
+export default RatingDisplay;

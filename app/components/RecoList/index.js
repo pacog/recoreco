@@ -1,11 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router';
-import {List, ListItem, makeSelectable} from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton';
 import { browserHistory } from 'react-router';
-import KeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
-
-let SelectableList = makeSelectable(List);
+import RecoLink from '../RecoLink';
 
 const RecoList = ({recos}) => {
   if(recos && recos.length) {
@@ -20,26 +16,18 @@ RecoList.propTypes = {
 };
 
 const getRecoList = (recos) => (
-  <SelectableList onChange={
-      (event, selectedReco) => {
-        browserHistory.push('/reco/' + selectedReco.id);
-        event.stopPropagation();
-        event.preventDefault();
-      }
-    }>
+  <div>
     {
       recos.map( (reco, index) => {
           return (
-            <ListItem
-              value={reco}
+            <RecoLink
               key={`reco-${reco.id}`}
-              primaryText={reco.name}
-              secondaryText={reco.recommender}
-              rightIcon={<KeyboardArrowRight />} />
+              reco={reco}
+              ></RecoLink>
           );
       })
     }
-  </SelectableList>
+  </div>
 );
 
 const getEmptyState = () => (
