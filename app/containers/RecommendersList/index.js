@@ -1,0 +1,62 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import { getRecommenders } from '../../reducer';
+
+import { Link } from 'react-router';
+import {List, ListItem, makeSelectable} from 'material-ui/List';
+import RaisedButton from 'material-ui/RaisedButton';
+import { browserHistory } from 'react-router';
+import KeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
+
+let SelectableList = makeSelectable(List);
+
+const RecommendersList = ({recommenders}) => {
+  if(recommenders && recommenders.length) {
+    return getRecommendersList(recommenders);
+  } else {
+    return getEmptyState();
+  }
+};
+
+const getRecommendersList = (recos) => (
+  <SelectableList onChange={
+      (event, selectedReco) => {
+        // browserHistory.push('/reco/' + selectedReco.id);
+        event.stopPropagation();
+        event.preventDefault();
+      }
+    }>
+    {
+      recos.map( (recommender, index) => {
+          return (
+            <ListItem
+              value={recommender}
+              key={`recommender-${encodeURI(recommender)}`}
+              primaryText={recommender}
+              rightIcon={<KeyboardArrowRight />} />
+          );
+      })
+    }
+  </SelectableList>
+);
+
+const getEmptyState = () => (
+  <div>
+    <p>No recommenders yet.</p>
+    <Link
+      to={'add'}
+    >
+      <RaisedButton
+        label={'Add new reco'}
+        primary={true}/>
+    </Link>
+  </div>
+);
+
+const mapStateToProps = (state) => ({
+    recommenders: getRecommenders(state)
+});
+
+const RecommendersListContainer = connect(mapStateToProps)(RecommendersList);
+
+export default RecommendersListContainer;
