@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
+import { addReco } from '../../actions';
+import { getRecommenders } from '../../reducer';
 
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -9,7 +11,8 @@ import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import FlatButton from 'material-ui/FlatButton';
-import { addReco } from '../../actions';
+import AutoComplete from 'material-ui/AutoComplete';
+
 
 const blockStyle = {
   display: 'block'
@@ -18,26 +21,26 @@ const blockStyle = {
 const emptyState = { name: '', recommender: '' };
 
 class AddReco extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  constructor({ dispatch }) {
+  constructor({ recommenders, dispatchAddButtonClicked }) {
     super();
     this.state = emptyState;
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleRecommenderChange = this.handleRecommenderChange.bind(this);
     this.addButtonClicked = this.addButtonClicked.bind(this);
-    this.dispatch = dispatch;
+    this.dispatchAddButtonClicked = dispatchAddButtonClicked; //Probably there is a better way to have evrything being into this.
+    this.recommenders = recommenders;
   }
 
   handleNameChange(event) {
     this.setState({ name: event.target.value });
   }
 
-  handleRecommenderChange(event) {
-    this.setState({ recommender: event.target.value });
+  handleRecommenderChange(value) {
+    this.setState({ recommender: value });
   }
 
   addButtonClicked(event) {
-    this.dispatch(addReco(this.state.name, this.state.recommender));
-    browserHistory.push('/');
+    this.dispatchAddButtonClicked(this.state.name, this.state.recommender);
   }
 
   closeButtonClicked(event) {
@@ -71,12 +74,12 @@ class AddReco extends React.Component { // eslint-disable-line react/prefer-stat
               value={this.state.name}
               onChange={this.handleNameChange}
             />
-            <TextField
-              hintText={'Who recommended it?'}
+            <AutoComplete
+              hintText='Who recommended it?'
+              dataSource={this.recommenders}
+              onUpdateInput={this.handleRecommenderChange}
+              onNewRequest={this.handleRecommenderChange}
               style={blockStyle}
-              type='text'
-              value={this.state.recommender}
-              onChange={this.handleRecommenderChange}
             />
             <RaisedButton
               label={'Save'}
@@ -91,7 +94,21 @@ class AddReco extends React.Component { // eslint-disable-line react/prefer-stat
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    recommenders: getRecommenders(state)
+  };
+};
 
-const AddRecoContainer = connect()(AddReco);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    dispatchAddButtonClicked: (name, recommender) => {
+      dispatch(addReco(name, recommender));
+      browserHistory.push('/');
+    }
+  };
+};
+
+const AddRecoContainer = connect(mapStateToProps, mapDispatchToProps)(AddReco);
 
 export default AddRecoContainer;

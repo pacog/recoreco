@@ -1,6 +1,6 @@
 import expect from 'expect';
 import configureStore from '../store'; // eslint-disable-line
-import { mainReducer } from '../reducer';
+import { mainReducer, getReco, getRecommenders } from '../reducer';
 import deepFreeze from '../utils/deep-freeze';
 
 describe('configureStore', () => {
@@ -479,4 +479,91 @@ describe('main reducer', () => {
       expect(mainReducer(initialState, action)).toEqual(finalState);
     });
   });
+
+  describe('getReco method', () => {
+    it('should be able to get a reco by id', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone', added: 123, seen: true },
+        { id: 2, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
+      ] };
+      const result =
+        { id: 2, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 };
+
+      deepFreeze(initialState);
+
+      expect(getReco(initialState, 2)).toEqual(result);
+    });
+
+    it('should return null when not found', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'someone', added: 123, seen: true },
+        { id: 2, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
+      ] };
+      const result = null;
+
+      deepFreeze(initialState);
+
+      expect(getReco(initialState, 3)).toEqual(result);
+    });
+
+    it('should return null when no recos yet', () => {
+      const initialState = { recos: [] };
+      const result = null;
+
+      deepFreeze(initialState);
+
+      expect(getReco(initialState, 3)).toEqual(result);
+    });
+  });
+
+  describe('getRecommenders method', () => {
+    it('should be able to get recommenders', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'Paco', added: 123, seen: true },
+        { id: 2, name: 'test', recommender: 'Paco', added: 123, seen: true },
+        { id: 3, name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
+      ] };
+      const result = ['Paco', 'Pepe'];
+
+      deepFreeze(initialState);
+
+      expect(getRecommenders(initialState)).toEqual(result);
+    });
+
+    it('should work with empty recommenders', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'Paco', added: 123, seen: true },
+        { id: 2, name: 'test', recommender: '', added: 123, seen: true },
+        { id: 3, name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
+      ] };
+      const result = ['Paco', 'Pepe'];
+
+      deepFreeze(initialState);
+
+      expect(getRecommenders(initialState)).toEqual(result);
+    });
+
+    it('should work with empty recommenders', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: '', added: 123, seen: true },
+        { id: 2, name: 'test', recommender: '', added: 123, seen: true },
+        { id: 3, name: 'test', recommender: '', added: 123, seen: true, rating: 3 }
+      ] };
+      const result = [];
+
+      deepFreeze(initialState);
+
+      expect(getRecommenders(initialState)).toEqual(result);
+    });
+
+    it('should work with empty recos', () => {
+      const initialState = { recos: [] };
+      const result = [];
+
+      deepFreeze(initialState);
+
+      expect(getRecommenders(initialState)).toEqual(result);
+    });
+  });
+
 });

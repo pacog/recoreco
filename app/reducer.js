@@ -97,3 +97,16 @@ export const getReco = (state, recoId) => {
   }
   return state.recos.find( reco => reco.id === recoId);
 }
+
+export const getRecommenders = (state) => {
+  const uniqueRecommenders = {};
+  if(state.recos) {
+    state.recos.forEach( reco => {
+      if(reco.recommender) {
+        uniqueRecommenders[reco.recommender] = true;
+      }
+    });
+  }
+  
+  return Object.keys(uniqueRecommenders);
+}
