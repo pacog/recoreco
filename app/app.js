@@ -32,6 +32,7 @@ import 'sanitize.css/sanitize.css';
 
 import Dashboard from './containers/Dashboard';
 import Reco from './containers/Reco';
+import Recommender from './containers/Recommender';
 import AddReco from './containers/AddReco';
 import Recommenders from './containers/Recommenders';
 
@@ -49,6 +50,9 @@ const routeConfig = [
   },
   { path: '/reco/:recoId',
     component: Reco
+  },
+  { path: '/recommender/:recommender',
+    component: Recommender
   }
 ];
 

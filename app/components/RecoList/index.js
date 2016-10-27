@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import {List, ListItem, makeSelectable} from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -14,6 +13,10 @@ const RecoList = ({recos}) => {
   } else {
     return getEmptyState();
   }
+};
+
+RecoList.propTypes = {
+  recos: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
 };
 
 const getRecoList = (recos) => (
@@ -52,10 +55,4 @@ const getEmptyState = () => (
   </div>
 );
 
-const mapStateToProps = (state) => ({
-    recos: state.recos
-});
-
-const RecoListContainer = connect(mapStateToProps)(RecoList);
-
-export default RecoListContainer;
+export default RecoList;

@@ -1,18 +1,17 @@
 import React from 'react';
 import AddReco from '../AddReco';
-import { browserHistory } from 'react-router';
-import { connect } from 'react-redux';
-import FloatingAddButton from '../../components/FloatingAddButton';
-import RecoList from '../../components/RecoList';
+// import RecoList from '../RecoList';
 import { Card, CardText } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
+import { browserHistory } from 'react-router';
+import FloatingAddButton from '../../components/FloatingAddButton';
 
-const Dashboard = ({ recos }) => {
+const Recommender = ({ params }) => {
   return (
     <div>
       <AppBar
-        title={'RecoReco'}
+        title={`Recos by ${decodeURI(params.recommender)}`}
         showMenuIconButton={false}
         iconElementRight={<FlatButton label="Add" />}
         onRightIconButtonTouchTap={
@@ -22,7 +21,7 @@ const Dashboard = ({ recos }) => {
         }/>
       <Card>
         <CardText>
-          <RecoList recos={recos} />
+
         </CardText>
       </Card>
       <FloatingAddButton />
@@ -30,10 +29,4 @@ const Dashboard = ({ recos }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-    recos: state.recos
-});
-
-const DashboardContainer = connect(mapStateToProps)(Dashboard);
-
-export default DashboardContainer;
+export default Recommender;

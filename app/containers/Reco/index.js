@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getReco } from '../../reducer';
 import { browserHistory } from 'react-router';
+import { Link } from 'react-router';
+
 import { Card, CardText } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -61,10 +63,12 @@ const Reco = ({reco, onRemoveClick, onMarkAsUnSeenClick, onMarkAsSeenClick, onCh
 const getRecommendedByPart = (reco) => {
   if(reco.recommender) {
     return (
-      <div>
-        <p>Recommended by:</p>
-        <p>{reco.recommender}</p>
-      </div>
+      <p>
+        <span>Recommended by: </span>
+        <Link
+          to={`recommender/${encodeURI(reco.recommender)}`}
+        >{reco.recommender}</Link>
+      </p>
     );
   } else {
     return '';

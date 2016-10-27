@@ -20,8 +20,8 @@ const RecommendersList = ({recommenders}) => {
 
 const getRecommendersList = (recos) => (
   <SelectableList onChange={
-      (event, selectedReco) => {
-        // browserHistory.push('/reco/' + selectedReco.id);
+      (event, selectedRecommender) => {
+        browserHistory.push('/recommender/' + encodeURI(selectedRecommender));
         event.stopPropagation();
         event.preventDefault();
       }
