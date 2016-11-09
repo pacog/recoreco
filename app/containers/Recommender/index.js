@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { getRecosByRecommender } from '../../reducer';
 import AddReco from '../AddReco';
-import FloatingAddButton from '../../components/FloatingAddButton';
 import RecoList from '../../components/RecoList';
 import { Card, CardText } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
+import Footer from '../../components/Footer';
 
 const Recommender = ({ params, recos }) => {
   return (
@@ -31,7 +31,8 @@ const Recommender = ({ params, recos }) => {
           <RecoList recos={recos} />
         </CardText>
       </Card>
-      <FloatingAddButton />
+
+      <Footer />
     </div>
   );
 };

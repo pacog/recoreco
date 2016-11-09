@@ -18,6 +18,7 @@ import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-lef
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import timeSince from '../../utils/time-since';
 import RatingSelector from '../../components/RatingSelector';
+import Footer from '../../components/Footer';
 
 const buttonStyle = {
   marginTop: 20,
@@ -63,6 +64,8 @@ const Reco = ({reco, onRemoveClick, onMarkAsUnSeenClick, onMarkAsSeenClick, onCh
         </CardText>
 
       </Card>
+
+      <Footer />
     </div>
   );
 };

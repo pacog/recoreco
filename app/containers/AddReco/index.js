@@ -12,7 +12,7 @@ import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import FlatButton from 'material-ui/FlatButton';
 import AutoComplete from 'material-ui/AutoComplete';
-
+import Footer from '../../components/Footer';
 
 const blockStyle = {
   display: 'block'
@@ -89,6 +89,7 @@ class AddReco extends React.Component { // eslint-disable-line react/prefer-stat
               disabled={!this.state.name} />
           </CardText>
         </Card>
+        <Footer active={'add'} />
       </div>
     );
   }

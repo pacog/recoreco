@@ -5,7 +5,7 @@ import { Card, CardText } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 import { browserHistory } from 'react-router';
-import FloatingAddButton from '../../components/FloatingAddButton';
+import Footer from '../../components/Footer';
 
 const Recommenders = () => {
   return (
@@ -24,7 +24,7 @@ const Recommenders = () => {
           <RecommendersList />
         </CardText>
       </Card>
-      <FloatingAddButton />
+      <Footer />
     </div>
   );
 };

@@ -39,6 +39,7 @@ import 'sanitize.css/sanitize.css';
 import Dashboard from './containers/Dashboard';
 import Reco from './containers/Reco';
 import Recommender from './containers/Recommender';
+import History from './containers/History';
 import AddReco from './containers/AddReco';
 import EditReco from './containers/EditReco';
 import Recommenders from './containers/Recommenders';
@@ -48,6 +49,9 @@ const store = configureStore();
 const routeConfig = [
   { path: '/',
     component: Dashboard
+  },
+  { path: '/history',
+    component: History
   },
   { path: '/add',
     component: AddReco
@@ -82,5 +86,5 @@ const render = () => {
 store.subscribe(render);
 render();
 
-import { install } from 'offline-plugin/runtime';
-install();
+// import { install } from 'offline-plugin/runtime';
+// install();

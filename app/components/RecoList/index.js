@@ -1,6 +1,5 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
-import { browserHistory } from 'react-router';
 import RecoLink from '../RecoLink';
 import { Link } from 'react-router';
 
