@@ -21,6 +21,7 @@ import '!file?name=[name].[ext]!./favicon-32x32.png';
 import '!file?name=[name].[ext]!./favicon-16x16.png';
 import '!file?name=[name].[ext]!./apple-touch-icon.png';
 import '!file?name=[name].[ext]!./safari-pinned-tab.svg';
+import '!file?name=[name].[ext]!./mstile-150x150.png';
 /* eslint-enable import/no-unresolved */
 
 import React from 'react';
