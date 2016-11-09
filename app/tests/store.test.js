@@ -1,6 +1,6 @@
 import expect from 'expect';
 import configureStore from '../store'; // eslint-disable-line
-import { mainReducer, getReco, getRecommenders, getRecosByRecommender } from '../reducer';
+import { mainReducer, getReco, getRecommenders, getRecosByRecommender, getUnseenRecos, getSeenRecos } from '../reducer';
 import deepFreeze from '../utils/deep-freeze';
 
 describe('configureStore', () => {
@@ -719,5 +719,149 @@ describe('main reducer', () => {
 
       expect(getRecosByRecommender(initialState, 'Julian')).toEqual(result);
     });
+  });
+
+  describe('getUnseenRecos method', () => {
+    it('should be able to get recos', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'Paco', added: 123, seen: true },
+        { id: 2, name: 'test', recommender: 'Paco', added: 123, seen: false },
+        { id: 3, name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
+      ] };
+      const result = [
+        { id: 2, name: 'test', recommender: 'Paco', added: 123, seen: false }
+      ];
+
+      deepFreeze(initialState);
+
+      expect(getUnseenRecos(initialState)).toEqual(result);
+    });
+
+    it('should be able to get all recos', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'Paco', added: 123, seen: false },
+        { id: 2, name: 'test', recommender: 'Paco', added: 123, seen: false },
+        { id: 3, name: 'test', recommender: 'Pepe', added: 123, seen: false, rating: 3 }
+      ] };
+      const result = [
+        { id: 1, name: 'test', recommender: 'Paco', added: 123, seen: false },
+        { id: 2, name: 'test', recommender: 'Paco', added: 123, seen: false },
+        { id: 3, name: 'test', recommender: 'Pepe', added: 123, seen: false, rating: 3 }
+      ];
+
+      deepFreeze(initialState);
+
+      expect(getUnseenRecos(initialState)).toEqual(result);
+    });
+
+    it('should be able to get no recos', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'Paco', added: 123, seen: true },
+        { id: 2, name: 'test', recommender: 'Paco', added: 123, seen: true },
+        { id: 3, name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
+      ] };
+      const result = [];
+
+      deepFreeze(initialState);
+
+      expect(getUnseenRecos(initialState)).toEqual(result);
+    });
+
+    it('should work with empty state', () => {
+      const initialState = { recos: [] };
+      const result = [];
+
+      deepFreeze(initialState);
+
+      expect(getUnseenRecos(initialState)).toEqual(result);
+    });
+
+    it('should work with undefined seen state', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'Paco', added: 123, seen: true },
+        { id: 2, name: 'test', recommender: 'Paco', added: 123 },
+        { id: 3, name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
+      ] };
+      const result = [
+        { id: 2, name: 'test', recommender: 'Paco', added: 123 }
+      ];
+
+      deepFreeze(initialState);
+
+      expect(getUnseenRecos(initialState)).toEqual(result);
+    });
+
+  });
+
+  describe('getSeenRecos method', () => {
+    it('should be able to get recos', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'Paco', added: 123, seen: false },
+        { id: 2, name: 'test', recommender: 'Paco', added: 123, seen: true },
+        { id: 3, name: 'test', recommender: 'Pepe', added: 123, seen: false, rating: 3 }
+      ] };
+      const result = [
+        { id: 2, name: 'test', recommender: 'Paco', added: 123, seen: true }
+      ];
+
+      deepFreeze(initialState);
+
+      expect(getSeenRecos(initialState)).toEqual(result);
+    });
+
+    it('should be able to get all recos', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'Paco', added: 123, seen: true },
+        { id: 2, name: 'test', recommender: 'Paco', added: 123, seen: true },
+        { id: 3, name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
+      ] };
+      const result = [
+        { id: 1, name: 'test', recommender: 'Paco', added: 123, seen: true },
+        { id: 2, name: 'test', recommender: 'Paco', added: 123, seen: true },
+        { id: 3, name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
+      ];
+
+      deepFreeze(initialState);
+
+      expect(getSeenRecos(initialState)).toEqual(result);
+    });
+
+    it('should be able to get no recos', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'Paco', added: 123, seen: false },
+        { id: 2, name: 'test', recommender: 'Paco', added: 123, seen: false },
+        { id: 3, name: 'test', recommender: 'Pepe', added: 123, seen: false, rating: 3 }
+      ] };
+      const result = [];
+
+      deepFreeze(initialState);
+
+      expect(getSeenRecos(initialState)).toEqual(result);
+    });
+
+    it('should work with empty state', () => {
+      const initialState = { recos: [] };
+      const result = [];
+
+      deepFreeze(initialState);
+
+      expect(getSeenRecos(initialState)).toEqual(result);
+    });
+
+    it('should work with undefined seen state', () => {
+      const initialState = { recos: [
+        { id: 1, name: 'test', recommender: 'Paco', added: 123 },
+        { id: 2, name: 'test', recommender: 'Paco', added: 123, seen: true },
+        { id: 3, name: 'test', recommender: 'Pepe', added: 123 }
+      ] };
+      const result = [
+        { id: 2, name: 'test', recommender: 'Paco', added: 123, seen: true }
+      ];
+
+      deepFreeze(initialState);
+
+      expect(getSeenRecos(initialState)).toEqual(result);
+    });
+
   });
 });

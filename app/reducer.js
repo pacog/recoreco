@@ -141,3 +141,17 @@ export const getRecosByRecommender = (state, recommender) => {
   }
   return state.recos.filter( reco => reco.recommender === recommender);
 }
+
+export const getUnseenRecos = (state) => {
+  if(!state.recos) {
+    return [];
+  }
+  return state.recos.filter( reco => !reco.seen);
+}
+
+export const getSeenRecos = (state) => {
+  if(!state.recos) {
+    return [];
+  }
+  return state.recos.filter( reco => reco.seen);
+}
