@@ -81,6 +81,6 @@ const render = () => {
 
 store.subscribe(render);
 render();
-//
-// import { install } from 'offline-plugin/runtime';
-// install();
+
+import { install } from 'offline-plugin/runtime';
+install();
