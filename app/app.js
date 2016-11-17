@@ -10,7 +10,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, Route, browserHistory } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import configureStore from './store';
+import { configureStore } from './store';
 import routeConfig from './routes.js';
 
 const store = configureStore();

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import { getRecosByRecommender } from '../../store/reducer';
+import { getRecosByRecommender } from '../../store';
 import AddReco from '../AddReco';
 import RecoList from '../../components/RecoList';
 import { Card, CardText } from 'material-ui/Card';

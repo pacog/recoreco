@@ -1,6 +1,6 @@
 import expect from 'expect';
-import configureStore from '../store'; // eslint-disable-line
-import { mainReducer, getReco, getRecommenders, getRecosByRecommender, getUnseenRecos, getSeenRecos } from '../store/reducer';
+import { configureStore } from '../store'; // eslint-disable-line
+import { mainReducer, getReco, getRecommenders, getRecosByRecommender, getUnseenRecos, getSeenRecos } from '../store';
 import deepFreeze from '../utils/deep-freeze';
 
 describe('configureStore', () => {

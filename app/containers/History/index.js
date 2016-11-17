@@ -1,5 +1,5 @@
 import React from 'react';
-import { getSeenRecos } from '../../store/reducer';
+import { getSeenRecos } from '../../store';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 
