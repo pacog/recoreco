@@ -1,4 +1,5 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 // import { fromJS } from 'immutable';
 import { mainReducer } from './reducer';
 import { loadState, saveState } from './localStorage';
@@ -13,7 +14,8 @@ const initialState = loadState() || {
 export default function configureStore(state = initialState) {
   const store = createStore(
     mainReducer,
-    state
+    state,
+    applyMiddleware(thunk)
   );
 
   store.subscribe(throttle(() => {

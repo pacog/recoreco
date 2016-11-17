@@ -1,4 +1,5 @@
 import { v4 } from 'node-uuid';
+import { db } from './db';
 
 export const addReco = (recoName, recommender = '') => ({
   type: 'ADD_RECO',
@@ -7,6 +8,17 @@ export const addReco = (recoName, recommender = '') => ({
   id: v4(),
   added: (new Date().getTime())
 });
+
+export const addRecoToDB = (recoName, recommender = '') => {
+  return (dispatch) => {
+    return db.addReco().then(
+      () => dispatch(addReco(recoName, recommender))
+      // ,
+      // error => dispatch(apologize('The Sandwich Shop', forPerson, error))
+    );
+  };
+};
+
 
 export const editReco = (id, recoName, recommender = '') => ({
   id: id,

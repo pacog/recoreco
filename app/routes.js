@@ -1,46 +1,50 @@
-// These are the pages you can go to.
-// They are all wrapped in the App component, which should contain the navbar etc
-// See http://blog.mxstbr.com/2016/01/react-apps-with-pages for more information
-// about the code splitting business
-import { getAsyncInjectors } from 'utils/asyncInjectors';
+import Dashboard from './containers/Dashboard';
+import Reco from './containers/Reco';
+import Login from './containers/Login';
+import Signup from './containers/Signup';
+import Recommender from './containers/Recommender';
+import History from './containers/History';
+import AddReco from './containers/AddReco';
+import EditReco from './containers/EditReco';
+import Recommenders from './containers/Recommenders';
 
-const errorLoading = (err) => {
-  console.error('Dynamic page loading failed', err); // eslint-disable-line no-console
-};
-
-const loadModule = (cb) => (componentModule) => {
-  cb(null, componentModule.default);
-};
-
-export default function createRoutes(store) {
-  // Create reusable async injectors using getAsyncInjectors factory
-  const { injectReducer, injectSagas } = getAsyncInjectors(store); // eslint-disable-line no-unused-vars
-
-  return [
-    {
-      path: '/',
-      name: 'home',
-      getComponent(nextState, cb) {
-        const importModules = Promise.all([
-          System.import('containers/HomePage'),
-        ]);
-
-        const renderRoute = loadModule(cb);
-
-        importModules.then(([component]) => {
-          renderRoute(component);
-        });
-
-        importModules.catch(errorLoading);
-      },
-    }, {
-      path: '*',
-      name: 'notfound',
-      getComponent(nextState, cb) {
-        System.import('containers/NotFoundPage')
-          .then(loadModule(cb))
-          .catch(errorLoading);
-      },
-    },
-  ];
+const checkLoggedIn = (nextState, replace) => {
+  // if (!auth.loggedIn()) {
+  //   replace({
+  //     pathname: '/login'
+  //   })
+  // }
 }
+
+const routeConfig = [
+  { path: '/',
+    component: Dashboard,
+    onEnter: checkLoggedIn
+  },
+  { path: '/login',
+    component: Login
+  },
+  { path: '/signup',
+    component: Signup
+  },
+  { path: '/history',
+    component: History
+  },
+  { path: '/add',
+    component: AddReco
+  },
+  { path: '/recommenders',
+    component: Recommenders
+  },
+  { path: '/reco/:recoId',
+    component: Reco
+  },
+  { path: '/recommender/:recommender',
+    component: Recommender
+  },
+  { path: '/edit-reco/:recoId',
+    component: EditReco
+  }
+];
+
+export default routeConfig;

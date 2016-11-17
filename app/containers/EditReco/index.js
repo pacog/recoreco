@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { editReco } from '../../actions';
-import { getRecommenders, getReco } from '../../reducer';
+import { getRecommenders, getReco } from '../../store/reducer';
 
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';

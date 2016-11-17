@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import { addReco } from '../../actions';
-import { getRecommenders } from '../../reducer';
+import { addRecoToDB } from '../../actions';
+import { getRecommenders } from '../../store/reducer';
 
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -104,8 +104,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     dispatchAddButtonClicked: (name, recommender) => {
-      dispatch(addReco(name, recommender));
-      browserHistory.push('/');
+      dispatch(addRecoToDB(name, recommender)).then(() => {
+        browserHistory.push('/')
+      });
     }
   };
 };

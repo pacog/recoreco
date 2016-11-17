@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getRecommenders } from '../../reducer';
+import { getRecommenders } from '../../store/reducer';
 
 import { Link } from 'react-router';
 import {List, ListItem, makeSelectable} from 'material-ui/List';
