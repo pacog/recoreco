@@ -60,7 +60,6 @@ export const getSeenRecos = (state) => {
   return state.recos.filter( reco => reco.seen);
 }
 
-
 export const getReco = (state, recoId) => {
   if(!state.recos) {
     return null;
