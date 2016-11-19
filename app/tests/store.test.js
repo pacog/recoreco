@@ -20,7 +20,13 @@ describe('configureStore', () => {
 
 describe('main reducer', () => {
 
-  const DEFAULT_EMPTY_STATE = { recos: [] };
+  const DEFAULT_EMPTY_STATE = {
+    recos: [],
+    auth: {
+      loggedInUser: null,
+      logInProgress: false
+    }
+  };
   deepFreeze(DEFAULT_EMPTY_STATE);
 
   describe('empty actions', () => {
@@ -325,25 +331,4 @@ describe('getSeenRecos method', () => {
     expect(getSeenRecos(initialState)).toEqual(result);
   });
 
-});
-
-
-describe('correct integration of combined reducers', () => {
-  it('should be able to add a reco when there are none', () => {
-    const initialState = { recos: [] };
-    const finalState = { recos: [
-      { id: 1, name: 'test', recommender: 'someone', added: 123, seen: false }
-    ] };
-    let action = {
-      type: 'ADD_RECO',
-      id: 1,
-      name: 'test',
-      recommender: 'someone',
-      added: 123
-    };
-    deepFreeze(initialState);
-    deepFreeze(action);
-
-    expect(mainReducer(initialState, action)).toEqual(finalState);
-  });
 });
