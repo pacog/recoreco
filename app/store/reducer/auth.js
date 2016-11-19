@@ -3,17 +3,29 @@ const DEFAULT_STATE = {
   logInProgress: false
 };
 
-const logInUser = (state, action) => {
+const login = (state, action) => {
   if(!action.user) {
     return state;
   }
-  return Object.assign({}, DEFAULT_STATE, { loggedInUser: action.user });
+  return {
+    ...DEFAULT_STATE,
+    loggedInUser: action.user
+  };
+};
+
+const logout = (state, action) => {
+  return {
+    ...DEFAULT_STATE,
+    loggedInUser: null
+  };
 };
 
 export default (state = DEFAULT_STATE, action = {}) => {
   switch (action.type) {
-    case 'LOG_IN_USER':
-      return logInUser(state, action);
+    case 'LOGIN':
+      return login(state, action);
+    case 'LOGOUT':
+      return logout(state, action);
     default:
       return state;
   }
