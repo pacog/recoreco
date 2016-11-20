@@ -8,7 +8,8 @@ import throttle from 'lodash/throttle';
 const LOCAL_STORAGE_THROTTLE = 1000; //ms
 
 const initialState = loadState() || {
-  recos: []
+  recos: [],
+  auth: {}
 };
 
 export const configureStore = (state = initialState) => {
@@ -65,4 +66,11 @@ export const getReco = (state, recoId) => {
     return null;
   }
   return state.recos.find( reco => reco.id === recoId);
+}
+
+export const getLoggedInUser = (state) => {
+  if(!state.auth) {
+    return null;
+  }
+  return state.auth.loggedInUser;
 }

@@ -12,8 +12,10 @@ import { Router, Route, browserHistory } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { configureStore } from './store';
 import routeConfig from './routes.js';
+import { authManager } from './auth.js';
 
 const store = configureStore();
+authManager.setStore(store);
 
 const render = () => {
   ReactDOM.render(

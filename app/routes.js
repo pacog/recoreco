@@ -8,12 +8,14 @@ import AddReco from './containers/AddReco';
 import EditReco from './containers/EditReco';
 import Recommenders from './containers/Recommenders';
 
+import { authManager } from './auth.js';
+
 const checkLoggedIn = (nextState, replace) => {
-  // if (!auth.loggedIn()) {
-  //   replace({
-  //     pathname: '/login'
-  //   })
-  // }
+  if (!authManager.isLoggedIn()) {
+    replace({
+      pathname: '/login'
+    })
+  }
 }
 
 const routeConfig = [
