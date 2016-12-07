@@ -12,6 +12,7 @@ import { Router, Route, browserHistory } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { configureStore } from './store';
 import routeConfig from './routes.js';
+import { initAuth } from './core/auth';
 
 const store = configureStore();
 
@@ -28,8 +29,9 @@ const render = () => {
   );
 };
 
-store.subscribe(render);
-render();
+initAuth(store.dispatch)
+  .then(() => render())
+  .catch(error => console.error(error)); // eslint-disable-line no-console
 
 // Offline stuff, disabled for now
 // import { install } from 'offline-plugin/runtime';
