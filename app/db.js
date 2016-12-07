@@ -7,6 +7,26 @@ const addReco = () => {
   });
 };
 
+const login = () => {
+  console.log('db login');
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve();
+    }, 5000);
+  });
+};
+
+const logout = () => {
+  console.log('db login');
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve();
+    }, 5000);
+  });
+};
+
 export const db = {
-  addReco
+  addReco,
+  login,
+  logout
 };

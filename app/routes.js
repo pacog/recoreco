@@ -7,14 +7,21 @@ import History from './containers/History';
 import AddReco from './containers/AddReco';
 import EditReco from './containers/EditReco';
 import Recommenders from './containers/Recommenders';
-
-import { authManager } from './auth.js';
+import { getLoggedInUser } from './store';
 
 const checkLoggedIn = (nextState, replace) => {
-  if (!authManager.isLoggedIn()) {
+  if(!getLoggedInUser(nextState)) {
     replace({
       pathname: '/login'
-    })
+    });
+  }
+}
+
+const checkNotLoggedIn = (nextState, replace) => {
+  if(!!getLoggedInUser(nextState)) {
+    replace({
+      pathname: '/'
+    });
   }
 }
 
@@ -24,28 +31,36 @@ const routeConfig = [
     onEnter: checkLoggedIn
   },
   { path: '/login',
-    component: Login
+    component: Login,
+    onEnter: checkNotLoggedIn
   },
   { path: '/signup',
-    component: Signup
+    component: Signup,
+    onEnter: checkNotLoggedIn
   },
   { path: '/history',
-    component: History
+    component: History,
+    onEnter: checkLoggedIn
   },
   { path: '/add',
-    component: AddReco
+    component: AddReco,
+    onEnter: checkLoggedIn
   },
   { path: '/recommenders',
-    component: Recommenders
+    component: Recommenders,
+    onEnter: checkLoggedIn
   },
   { path: '/reco/:recoId',
-    component: Reco
+    component: Reco,
+    onEnter: checkLoggedIn
   },
   { path: '/recommender/:recommender',
-    component: Recommender
+    component: Recommender,
+    onEnter: checkLoggedIn
   },
   { path: '/edit-reco/:recoId',
-    component: EditReco
+    component: EditReco,
+    onEnter: checkLoggedIn
   }
 ];
 

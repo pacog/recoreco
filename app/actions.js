@@ -19,7 +19,6 @@ export const addRecoToDB = (recoName, recommender = '') => {
   };
 };
 
-
 export const editReco = (id, recoName, recommender = '') => ({
   id: id,
   type: 'EDIT_RECO',
@@ -47,4 +46,24 @@ export const rateReco = (id, rating) => ({
   type: 'RATE_RECO',
   id,
   rating
+});
+
+export const login = (email, password) => ({
+  type: 'LOGIN',
+  email,
+  password
+});
+
+export const loginDB = (email, password) => {
+  return (dispatch) => {
+    return db.login(email, password).then(
+      () => dispatch(login(email, password))
+      // ,
+      // error => dispatch(apologize('The Sandwich Shop', forPerson, error))
+    );
+  };
+};
+
+export const logout = () => ({
+  type: 'LOGOUT'
 });
