@@ -2,7 +2,7 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import * as EmailValidator from 'email-validator';
-
+import { loginDB } from '../../actions';
 import { Card, CardText } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
@@ -63,7 +63,7 @@ class Login extends React.Component { // eslint-disable-line react/prefer-statel
   }
 
   loginButtonClicked() {
-    this.dispatchAddButtonClicked(this.state.email, this.state.password);
+    this.dispatchLoginButtonClicked(this.state.email, this.state.password);
   }
 
   buttonShouldBeDisabled() {
@@ -124,11 +124,9 @@ class Login extends React.Component { // eslint-disable-line react/prefer-statel
 const mapDispatchToProps = (dispatch) => {
   return {
     dispatchLoginButtonClicked: (email, password) => {
-      console.log('dispatchLoginButtonClicked');
-      //TODO: connect to login in DB
-      // dispatch(addRecoToDB(name, recommender)).then(() => {
-      //   browserHistory.push('/')
-      // });
+      dispatch(loginDB(email, password)).then(() => {
+        browserHistory.push('/dashboard')
+      });
     }
   };
 };
