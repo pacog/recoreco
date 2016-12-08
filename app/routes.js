@@ -9,59 +9,63 @@ import EditReco from './containers/EditReco';
 import Recommenders from './containers/Recommenders';
 import { getLoggedInUser } from './store';
 
-const checkLoggedIn = (nextState, replace) => {
-  if(!getLoggedInUser(nextState)) {
-    replace({
-      pathname: '/login'
-    });
-  }
-}
+const checkLoggedIn = (getState) => {
+  return (nextState, replace) => {
+    if(!getLoggedInUser(getState())) {
+      replace({
+        pathname: '/login'
+      });
+    }
+  };
+};
 
-const checkNotLoggedIn = (nextState, replace) => {
-  if(!!getLoggedInUser(nextState)) {
-    replace({
-      pathname: '/'
-    });
-  }
-}
+const checkNotLoggedIn = (getState) => {
+  return (nextState, replace) => {
+    if(!!getLoggedInUser(getState())) {
+      replace({
+        pathname: '/'
+      });
+    }
+  };
+};
 
-const routeConfig = [
-  { path: '/',
-    component: Dashboard,
-    onEnter: checkLoggedIn
-  },
-  { path: '/login',
-    component: Login,
-    onEnter: checkNotLoggedIn
-  },
-  { path: '/signup',
-    component: Signup,
-    onEnter: checkNotLoggedIn
-  },
-  { path: '/history',
-    component: History,
-    onEnter: checkLoggedIn
-  },
-  { path: '/add',
-    component: AddReco,
-    onEnter: checkLoggedIn
-  },
-  { path: '/recommenders',
-    component: Recommenders,
-    onEnter: checkLoggedIn
-  },
-  { path: '/reco/:recoId',
-    component: Reco,
-    onEnter: checkLoggedIn
-  },
-  { path: '/recommender/:recommender',
-    component: Recommender,
-    onEnter: checkLoggedIn
-  },
-  { path: '/edit-reco/:recoId',
-    component: EditReco,
-    onEnter: checkLoggedIn
-  }
-];
-
-export default routeConfig;
+export const getRoutes = (getState) => {
+  return [
+    { path: '/',
+      component: Dashboard,
+      onEnter: checkLoggedIn(getState)
+    },
+    { path: '/login',
+      component: Login,
+      onEnter: checkNotLoggedIn(getState)
+    },
+    { path: '/signup',
+      component: Signup,
+      onEnter: checkNotLoggedIn(getState)
+    },
+    { path: '/history',
+      component: History,
+      onEnter: checkLoggedIn(getState)
+    },
+    { path: '/add',
+      component: AddReco,
+      onEnter: checkLoggedIn(getState)
+    },
+    { path: '/recommenders',
+      component: Recommenders,
+      onEnter: checkLoggedIn(getState)
+    },
+    { path: '/reco/:recoId',
+      component: Reco,
+      onEnter: checkLoggedIn(getState)
+    },
+    { path: '/recommender/:recommender',
+      component: Recommender,
+      onEnter: checkLoggedIn(getState)
+    },
+    { path: '/edit-reco/:recoId',
+      component: EditReco,
+      onEnter: checkLoggedIn(getState)
+    }
+  ]
+};

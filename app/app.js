@@ -11,7 +11,7 @@ import { Provider } from 'react-redux';
 import { Router, Route, browserHistory } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { configureStore } from './store';
-import routeConfig from './routes.js';
+import { getRoutes } from './routes.js';
 import { initAuth } from './core/auth';
 
 const store = configureStore();
@@ -21,7 +21,7 @@ const render = () => {
     <MuiThemeProvider>
       <Provider store={store}>
         <Router history={browserHistory}
-                routes={routeConfig}>
+                routes={getRoutes(store.getState)}>
         </Router>
       </Provider>
     </MuiThemeProvider>,
