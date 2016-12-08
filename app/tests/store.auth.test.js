@@ -6,7 +6,8 @@ const DEFAULT_STATE = {
   loggedInUser: null,
   logInProgress: false,
   initialized: false,
-  error: null
+  loginError: null,
+  signupError: null
 };
 
 const DEFAULT_INITIALIZED_STATE = {
@@ -136,7 +137,7 @@ describe('Login', () => {
   it('should remove error after successful login', () => {
     const initialState = {
       ...DEFAULT_INITIALIZED_STATE,
-      error: {
+      loginError: {
         ...DEFAULT_ERROR
       }
     };
@@ -167,12 +168,36 @@ describe('Login error', () => {
     };
     const finalState = {
       ...DEFAULT_INITIALIZED_STATE,
-      error: {
+      loginError: {
         ...DEFAULT_ERROR
       }
     };
     let action = {
       type: 'LOGIN_ERROR',
+      error: {
+        ...DEFAULT_ERROR
+      }
+    };
+    deepFreeze(initialState);
+    deepFreeze(action);
+
+    expect(authReducer(initialState, action)).toEqual(finalState);
+  });
+});
+
+describe('Signup error', () => {
+  it('should show error if it occurs', () => {
+    const initialState = {
+      ...DEFAULT_INITIALIZED_STATE
+    };
+    const finalState = {
+      ...DEFAULT_INITIALIZED_STATE,
+      signupError: {
+        ...DEFAULT_ERROR
+      }
+    };
+    let action = {
+      type: 'SIGNUP_ERROR',
       error: {
         ...DEFAULT_ERROR
       }

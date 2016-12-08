@@ -2,6 +2,7 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import * as EmailValidator from 'email-validator';
+import { signUpWithEmailAndPassword } from '../../actions';
 
 import { Card, CardText } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
@@ -68,6 +69,21 @@ class Signup extends React.Component { // eslint-disable-line react/prefer-state
     }
   }
 
+  //TODO: extract to component and reuse in login
+  getServerError() {
+    if(this.props.error) {
+      return (
+        <Card>
+          <CardText>
+            {this.props.error.message}
+          </CardText>
+        </Card>
+      );
+    } else {
+      return '';
+    }
+  }
+
   signupButtonClicked() {
     this.dispatchSignupButtonClicked(this.state.email, this.state.password);
   }
@@ -112,6 +128,7 @@ class Signup extends React.Component { // eslint-disable-line react/prefer-state
             </CardText>
           </CardText>
         </Card>
+        {this.getServerError()}
         <Card>
           <CardText>
             <p>Already have an account?</p>
@@ -129,14 +146,18 @@ class Signup extends React.Component { // eslint-disable-line react/prefer-state
   }
 };
 
+const mapStateToProps = (state) => {
+  return {
+    error: getSignupError(state)
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     dispatchSignupButtonClicked: (email, password) => {
-      console.log('dispatchSignupButtonClicked');
-      //TODO: connect to login in DB
-      // dispatch(addRecoToDB(name, recommender)).then(() => {
-      //   browserHistory.push('/')
-      // });
+      dispatch(signUpWithEmailAndPassword(email, password)).then(() => {
+        browserHistory.push('/');
+      });
     }
   };
 };

@@ -79,5 +79,12 @@ export const getLoginError = (state) => {
   if(!state.auth) {
     return null;
   }
-  return state.auth.error;
+  return state.auth.loginError;
+};
+
+export const getSignupError = (state) => {
+  if(!state.auth) {
+    return null;
+  }
+  return state.auth.signupError;
 };

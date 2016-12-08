@@ -2,7 +2,8 @@ const DEFAULT_STATE = {
   loggedInUser: null,
   logInProgress: false,
   initialized: false,
-  error: null
+  loginError: null,
+  signupError: null
 };
 
 const DEFAULT_INITIALIZED_STATE = {
@@ -30,7 +31,14 @@ const login = (state, action) => {
 const loginError = (state, action) => {
   return {
     ...DEFAULT_INITIALIZED_STATE,
-    error: action.error
+    loginError: action.error
+  };
+};
+
+const signupError = (state, action) => {
+  return {
+    ...DEFAULT_INITIALIZED_STATE,
+    signupError: action.error
   };
 };
 
@@ -49,6 +57,8 @@ export default (state = DEFAULT_STATE, action = {}) => {
       return login(state, action);
     case 'LOGIN_ERROR':
       return loginError(state, action);
+    case 'SIGNUP_ERROR':
+      return signupError(state, action);
     case 'LOGOUT':
       return logout(state, action);
     default:
