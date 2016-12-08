@@ -2,12 +2,13 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import * as EmailValidator from 'email-validator';
-import { loginDB } from '../../actions';
+import { signInWithEmailAndPassword } from '../../actions';
 import { Card, CardText } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Link } from 'react-router';
+import { getLoginError, getLoggedInUser } from '../../store';
 
 const mainButtonStyle = {
   display: 'block',
@@ -22,9 +23,12 @@ const emptyState = { email: '', password: '', emailError: false, passwordError: 
 
 class Login extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
-  constructor({ recommenders, dispatchLoginButtonClicked }) {
+  constructor({ error, dispatchLoginButtonClicked }) {
     super();
-    this.state = emptyState;
+    this.state = {
+      ...emptyState,
+      error
+    };
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.loginButtonClicked = this.loginButtonClicked.bind(this);
@@ -70,6 +74,20 @@ class Login extends React.Component { // eslint-disable-line react/prefer-statel
     return !!(this.state.emailError || this.state.passwordError);
   }
 
+  getServerError() {
+    if(this.props.error) {
+      return (
+        <Card>
+          <CardText>
+            {this.props.error.message}
+          </CardText>
+        </Card>
+      );
+    } else {
+      return '';
+    }
+  }
+
   render() {
     return (
       <div>
@@ -94,7 +112,6 @@ class Login extends React.Component { // eslint-disable-line react/prefer-statel
               errorText={this.state.passwordError}
               onChange={this.handlePasswordChange}
             />
-
             <RaisedButton
               label={'Log in'}
               style={mainButtonStyle}
@@ -104,6 +121,9 @@ class Login extends React.Component { // eslint-disable-line react/prefer-statel
 
           </CardText>
         </Card>
+
+        {this.getServerError()}
+
         <Card>
           <CardText>
             <p>New to RecoReco?</p>
@@ -121,16 +141,22 @@ class Login extends React.Component { // eslint-disable-line react/prefer-statel
   }
 };
 
+const mapStateToProps = (state) => {
+  return {
+    error: getLoginError(state)
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     dispatchLoginButtonClicked: (email, password) => {
-      dispatch(loginDB(email, password)).then(() => {
-        browserHistory.push('/dashboard')
+      dispatch(signInWithEmailAndPassword(email, password)).then(() => {
+        browserHistory.push('/');
       });
     }
   };
 };
 
-const LoginContainer = connect(null, mapDispatchToProps)(Login);
+const LoginContainer = connect(mapStateToProps, mapDispatchToProps)(Login);
 
 export default LoginContainer;

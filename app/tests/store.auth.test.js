@@ -5,12 +5,24 @@ import deepFreeze from '../utils/deep-freeze';
 const DEFAULT_STATE = {
   loggedInUser: null,
   logInProgress: false,
-  initialized: false
+  initialized: false,
+  error: null
 };
 
 const DEFAULT_INITIALIZED_STATE = {
   ...DEFAULT_STATE,
   initialized: true
+};
+
+const DEFAULT_USER = {
+  id: 1,
+  username: 'JohnDoe',
+  email: 'john@doe.com'
+};
+
+const DEFAULT_ERROR = {
+  code: 500,
+  message: 'There was an error.'
 };
 
 describe('Init auth', () => {
@@ -21,17 +33,13 @@ describe('Init auth', () => {
     const finalState = {
       ...DEFAULT_INITIALIZED_STATE,
       loggedInUser: {
-        id: 1,
-        username: 'JohnDoe',
-        email: 'john@doe.com'
+        ...DEFAULT_USER
       }
     };
     let action = {
       type: 'INIT_AUTH',
       user: {
-        id: 1,
-        username: 'JohnDoe',
-        email: 'john@doe.com'
+        ...DEFAULT_USER
       }
     };
     deepFreeze(initialState);
@@ -66,17 +74,13 @@ describe('Login', () => {
     const finalState = {
       ...DEFAULT_INITIALIZED_STATE,
       loggedInUser: {
-        id: 1,
-        username: 'JohnDoe',
-        email: 'john@doe.com'
+        ...DEFAULT_USER
       }
     };
     let action = {
       type: 'LOGIN',
       user: {
-        id: 1,
-        username: 'JohnDoe',
-        email: 'john@doe.com'
+        ...DEFAULT_USER
       }
     };
     deepFreeze(initialState);
@@ -105,6 +109,7 @@ describe('Login', () => {
     const initialState = {
       ...DEFAULT_INITIALIZED_STATE,
       loggedInUser: {
+        ...DEFAULT_USER,
         id: 2,
         username: 'JaneDoe',
         email: 'jane@doe.com'
@@ -113,17 +118,38 @@ describe('Login', () => {
     const finalState = {
       ...DEFAULT_INITIALIZED_STATE,
       loggedInUser: {
-        id: 1,
-        username: 'JohnDoe',
-        email: 'john@doe.com'
+        ...DEFAULT_USER
       }
     };
     let action = {
       type: 'LOGIN',
       user: {
-        id: 1,
-        username: 'JohnDoe',
-        email: 'john@doe.com'
+        ...DEFAULT_USER
+      }
+    };
+    deepFreeze(initialState);
+    deepFreeze(action);
+
+    expect(authReducer(initialState, action)).toEqual(finalState);
+  });
+
+  it('should remove error after successful login', () => {
+    const initialState = {
+      ...DEFAULT_INITIALIZED_STATE,
+      error: {
+        ...DEFAULT_ERROR
+      }
+    };
+    const finalState = {
+      ...DEFAULT_INITIALIZED_STATE,
+      loggedInUser: {
+        ...DEFAULT_USER
+      }
+    };
+    let action = {
+      type: 'LOGIN',
+      user: {
+        ...DEFAULT_USER
       }
     };
     deepFreeze(initialState);
@@ -134,14 +160,36 @@ describe('Login', () => {
 
 });
 
+describe('Login error', () => {
+  it('should show error if it occurs', () => {
+    const initialState = {
+      ...DEFAULT_INITIALIZED_STATE
+    };
+    const finalState = {
+      ...DEFAULT_INITIALIZED_STATE,
+      error: {
+        ...DEFAULT_ERROR
+      }
+    };
+    let action = {
+      type: 'LOGIN_ERROR',
+      error: {
+        ...DEFAULT_ERROR
+      }
+    };
+    deepFreeze(initialState);
+    deepFreeze(action);
+
+    expect(authReducer(initialState, action)).toEqual(finalState);
+  });
+});
+
 describe('Logout', () => {
   it('should be able to log out', () => {
     const initialState = {
       ...DEFAULT_INITIALIZED_STATE,
       loggedInUser: {
-        id: 1,
-        username: 'JohnDoe',
-        email: 'john@doe.com'
+        ...DEFAULT_USER
       }
     };
     const finalState = {

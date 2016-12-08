@@ -1,5 +1,6 @@
 import { v4 } from 'node-uuid';
 import { db } from './db';
+import { firebaseAuth } from './core/firebase';
 
 export const addReco = (recoName, recommender = '') => ({
   type: 'ADD_RECO',
@@ -53,21 +54,23 @@ export const initAuthAction = (user) => ({
   user
 });
 
-export const login = (email, password) => ({
-  type: 'LOGIN',
-  email,
-  password
-});
-
-export const loginDB = (email, password) => {
+export const signInWithEmailAndPassword = (email, password) => {
   return (dispatch) => {
-    return db.login(email, password).then(
-      () => dispatch(login(email, password))
-      // ,
-      // error => dispatch(apologize('The Sandwich Shop', forPerson, error))
-    );
+    return firebaseAuth.signInWithEmailAndPassword(email, password)
+      .then(result => dispatch(login(result)))
+      .catch(error => dispatch(loginError(error)));
   };
 };
+
+export const login = (user) => ({
+  type: 'LOGIN',
+  user
+});
+
+export const loginError = (error) => ({
+  type: 'LOGIN_ERROR',
+  error
+});
 
 export const logout = () => ({
   type: 'LOGOUT'

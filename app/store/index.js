@@ -74,3 +74,10 @@ export const getLoggedInUser = (state) => {
   }
   return state.auth.loggedInUser;
 }
+
+export const getLoginError = (state) => {
+  if(!state.auth) {
+    return null;
+  }
+  return state.auth.error;
+};
