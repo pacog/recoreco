@@ -48,6 +48,11 @@ export const rateReco = (id, rating) => ({
   rating
 });
 
+export const initAuthAction = (user) => ({
+  type: 'INIT_AUTH',
+  user
+});
+
 export const login = (email, password) => ({
   type: 'LOGIN',
   email,

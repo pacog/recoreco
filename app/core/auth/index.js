@@ -1,11 +1,11 @@
 import { firebaseAuth } from '../firebase';
+import { initAuthAction } from '../../actions';
 
 export const initAuth = (dispatch) => {
   return new Promise((resolve, reject) => {
     const unsub = firebaseAuth.onAuthStateChanged(
       user => {
-        // TODO dispatch init user action
-        // dispatch(authActions.initAuth(user));
+        dispatch(initAuthAction(user));
         unsub();
         resolve();
       },
