@@ -27,7 +27,7 @@ const getRecommendersList = (recos) => (
       }
     }>
     {
-      recos.map( (recommender, index) => {
+      recos.map( (recommender) => {
           return (
             <ListItem
               value={recommender}

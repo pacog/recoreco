@@ -4,10 +4,10 @@ import { browserHistory } from 'react-router';
 import { editReco } from '../../actions';
 import { getRecommenders, getReco } from '../../store';
 
+import Header from '../Header';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Card, CardText } from 'material-ui/Card';
-import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import FlatButton from 'material-ui/FlatButton';
@@ -39,11 +39,11 @@ class EditReco extends React.Component { // eslint-disable-line react/prefer-sta
     this.setState({ recommender: value });
   }
 
-  saveButtonClicked(event) {
+  saveButtonClicked() {
     this.dispatchSaveButtonClicked(this.state.id, this.state.name, this.state.recommender);
   }
 
-  closeButtonClicked(event) {
+  closeButtonClicked() {
     browserHistory.goBack();
   }
 
@@ -58,12 +58,10 @@ class EditReco extends React.Component { // eslint-disable-line react/prefer-sta
   render() {
     return (
       <div>
-        <AppBar
+        <Header
           title={'Edit Reco'}
           iconElementLeft={<IconButton><NavigationClose /></IconButton>}
           onLeftIconButtonTouchTap={this.closeButtonClicked}
-          iconElementRight={this.getHeaderSaveButton()}
-          onRightIconButtonTouchTap={this.saveButtonClicked}
           />
         <Card>
           <CardText>

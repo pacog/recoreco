@@ -2,30 +2,26 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { getRecosByRecommender } from '../../store';
-import AddReco from '../AddReco';
+
+
+import Header from '../Header';
 import RecoList from '../../components/RecoList';
+import Footer from '../../components/Footer';
 import { Card, CardText } from 'material-ui/Card';
-import AppBar from 'material-ui/AppBar';
-import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
-import Footer from '../../components/Footer';
+
 
 const Recommender = ({ params, recos }) => {
   return (
     <div>
-      <AppBar
+      <Header
         title={`Recos by ${decodeURI(params.recommender)}`}
         iconElementLeft={<IconButton><KeyboardArrowLeft /></IconButton>}
         onLeftIconButtonTouchTap={() => {
           browserHistory.goBack();
         }}
-        iconElementRight={<FlatButton label="See all" />}
-        onRightIconButtonTouchTap={
-          () => {
-            browserHistory.push('/');
-          }
-        }/>
+        />
       <Card>
         <CardText>
           <RecoList recos={recos} />

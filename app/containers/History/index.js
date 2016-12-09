@@ -1,26 +1,18 @@
 import React from 'react';
 import { getSeenRecos } from '../../store';
-import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 
+import Header from '../Header';
 import Footer from '../../components/Footer';
 import RecoList from '../../components/RecoList';
 import { Card, CardText } from 'material-ui/Card';
-import AppBar from 'material-ui/AppBar';
-import FlatButton from 'material-ui/FlatButton';
 
 const History = ({ recos }) => {
   return (
     <div>
-      <AppBar
+      <Header
         title={'History'}
-        showMenuIconButton={false}
-        iconElementRight={<FlatButton label="Add" />}
-        onRightIconButtonTouchTap={
-          () => {
-            browserHistory.push('/add');
-          }
-        }/>
+        />
       <Card>
         <CardText>
           <RecoList recos={recos} />

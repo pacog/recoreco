@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import Header from '../Header';
 import Footer from '../../components/Footer';
 import RecoList from '../../components/RecoList';
-import UserHeaderInfo from '../UserHeaderInfo';
 import { Card, CardText } from 'material-ui/Card';
 
 const Dashboard = ({ recos }) => {

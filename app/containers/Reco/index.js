@@ -4,18 +4,13 @@ import { getReco } from '../../store';
 import { browserHistory } from 'react-router';
 import { Link } from 'react-router';
 
+import Header from '../Header';
 import { Card, CardText } from 'material-ui/Card';
-import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
-import FontIcon from 'material-ui/FontIcon';
-import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
-import Paper from 'material-ui/Paper';
-import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
 import { removeReco, markAsSeen, markAsUnSeen, rateReco } from '../../actions';
 import IconButton from 'material-ui/IconButton';
 import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
-import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import timeSince from '../../utils/time-since';
 import RatingSelector from '../../components/RatingSelector';
 import Footer from '../../components/Footer';
@@ -28,7 +23,7 @@ const buttonStyle = {
 const Reco = ({reco, onRemoveClick, onMarkAsUnSeenClick, onMarkAsSeenClick, onChangedRating}) => {
   return (
     <div>
-      <AppBar
+      <Header
         title={'RecoReco'}
         iconElementLeft={<IconButton><KeyboardArrowLeft /></IconButton>}
         onLeftIconButtonTouchTap={() => {
@@ -37,12 +32,7 @@ const Reco = ({reco, onRemoveClick, onMarkAsUnSeenClick, onMarkAsSeenClick, onCh
         onTitleTouchTap={() => {
           browserHistory.push('/');
         }}
-        iconElementRight={<IconButton><ModeEdit /></IconButton>}
-        onRightIconButtonTouchTap={
-          () => {
-            browserHistory.push(`/edit-reco/${reco.id}`);
-          }
-        }/>
+      />
       <Card>
         <CardText>
           <h3>
@@ -142,14 +132,14 @@ const mapStateToProps = (state, { params }) => {
 
 const mapDispatchToProps = (dispatch, { params }) => {
   return {
-    onRemoveClick: (id) => {
+    onRemoveClick: () => {
       dispatch(removeReco(params.recoId));
       browserHistory.push('/');
     },
-    onMarkAsUnSeenClick: (id) => {
+    onMarkAsUnSeenClick: () => {
       dispatch(markAsUnSeen(params.recoId));
     },
-    onMarkAsSeenClick: (id) => {
+    onMarkAsSeenClick: () => {
       dispatch(markAsSeen(params.recoId));
     },
     onChangedRating: (id, newRating) => {

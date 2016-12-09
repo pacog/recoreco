@@ -4,13 +4,12 @@ import { browserHistory } from 'react-router';
 import { addRecoToDB } from '../../actions';
 import { getRecommenders } from '../../store';
 
+import Header from '../Header';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Card, CardText } from 'material-ui/Card';
-import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
-import FlatButton from 'material-ui/FlatButton';
 import AutoComplete from 'material-ui/AutoComplete';
 import Footer from '../../components/Footer';
 
@@ -39,31 +38,21 @@ class AddReco extends React.Component { // eslint-disable-line react/prefer-stat
     this.setState({ recommender: value });
   }
 
-  addButtonClicked(event) {
+  addButtonClicked() {
     this.dispatchAddButtonClicked(this.state.name, this.state.recommender);
   }
 
-  closeButtonClicked(event) {
+  closeButtonClicked() {
     browserHistory.goBack();
-  }
-
-  getHeaderSaveButton() {
-    if(this.state.name) {
-      return <FlatButton label="Save" />;
-    } else {
-      return null;
-    }
   }
 
   render() {
     return (
       <div>
-        <AppBar
+        <Header
           title={'Add Reco'}
           iconElementLeft={<IconButton><NavigationClose /></IconButton>}
           onLeftIconButtonTouchTap={this.closeButtonClicked}
-          iconElementRight={this.getHeaderSaveButton()}
-          onRightIconButtonTouchTap={this.addButtonClicked}
           />
         <Card>
           <CardText>

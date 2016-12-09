@@ -6,20 +6,20 @@ import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
-import FlatButton from 'material-ui/FlatButton';
-import Toggle from 'material-ui/Toggle';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 import { getLoggedInUser } from '../../store';
 import { logoutFromDatabase } from '../../actions';
 
-const Header = ({ user, title, logoutClicked }) => {
-
+const Header = ({ user, title, logoutClicked, iconElementLeft, onLeftIconButtonTouchTap, onTitleTouchTap }) => {
   return (
     <div>
       <AppBar
         title={title}
-        showMenuIconButton={false}
+        iconElementLeft={iconElementLeft}
+        onLeftIconButtonTouchTap={onLeftIconButtonTouchTap}
+        onTitleTouchTap={onTitleTouchTap}
+        showMenuIconButton={!!iconElementLeft}
         iconElementRight={(
           <IconMenu
             iconButtonElement={
@@ -39,12 +39,18 @@ const Header = ({ user, title, logoutClicked }) => {
 };
 
 Header.propTypes = {
-  title: React.PropTypes.string.isRequired
+  title: React.PropTypes.string.isRequired,
+  iconElementLeft: React.PropTypes.node,
+  onLeftIconButtonTouchTap: React.PropTypes.func,
+  onTitleTouchTap: React.PropTypes.func,
 };
 
 const mapStateToProps = (state, ownProps) => ({
     user: getLoggedInUser(state),
-    title: ownProps.title
+    title: ownProps.title,
+    iconElementLeft: ownProps.iconElementLeft,
+    onLeftIconButtonTouchTap: ownProps.onLeftIconButtonTouchTap,
+    onTitleTouchTap: ownProps.onTitleTouchTap,
 });
 const mapDispatchToProps = (dispatch) => {
   return {
