@@ -7,7 +7,8 @@ const DEFAULT_STATE = {
   logInProgress: false,
   initialized: false,
   loginError: null,
-  signupError: null
+  signupError: null,
+  logoutError: null
 };
 
 const DEFAULT_INITIALIZED_STATE = {
@@ -209,6 +210,36 @@ describe('Signup error', () => {
   });
 });
 
+describe('Logout error', () => {
+  it('should show error if it occurs', () => {
+    const initialState = {
+      ...DEFAULT_INITIALIZED_STATE,
+      loggedInUser: {
+        ...DEFAULT_USER
+      }
+    };
+    const finalState = {
+      ...DEFAULT_INITIALIZED_STATE,
+      loggedInUser: {
+        ...DEFAULT_USER
+      },
+      logoutError: {
+        ...DEFAULT_ERROR
+      }
+    };
+    let action = {
+      type: 'LOGOUT_ERROR',
+      error: {
+        ...DEFAULT_ERROR
+      }
+    };
+    deepFreeze(initialState);
+    deepFreeze(action);
+
+    expect(authReducer(initialState, action)).toEqual(finalState);
+  });
+});
+
 describe('Logout', () => {
   it('should be able to log out', () => {
     const initialState = {
@@ -232,6 +263,25 @@ describe('Logout', () => {
   it('should do nothing if not logged in', () => {
     const initialState = {
       ...DEFAULT_INITIALIZED_STATE
+    };
+    const finalState = {
+      ...DEFAULT_INITIALIZED_STATE
+    };
+    let action = {
+      type: 'LOGOUT'
+    };
+    deepFreeze(initialState);
+    deepFreeze(action);
+
+    expect(authReducer(initialState, action)).toEqual(finalState);
+  });
+
+  it('should remove error if any', () => {
+    const initialState = {
+      ...DEFAULT_INITIALIZED_STATE,
+      logoutError: {
+        ...DEFAULT_ERROR
+      }
     };
     const finalState = {
       ...DEFAULT_INITIALIZED_STATE

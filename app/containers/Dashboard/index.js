@@ -2,19 +2,17 @@ import React from 'react';
 import { getUnseenRecos } from '../../store';
 import { connect } from 'react-redux';
 
+import Header from '../Header';
 import Footer from '../../components/Footer';
 import RecoList from '../../components/RecoList';
 import UserHeaderInfo from '../UserHeaderInfo';
 import { Card, CardText } from 'material-ui/Card';
-import AppBar from 'material-ui/AppBar';
 
 const Dashboard = ({ recos }) => {
   return (
     <div>
-      <AppBar
+      <Header
         title={'To watch'}
-        showMenuIconButton={false}
-        iconElementRight={<UserHeaderInfo />}
         />
       <Card>
         <CardText>

@@ -70,6 +70,14 @@ export const signUpWithEmailAndPassword = (email, password) => {
   };
 };
 
+export const logoutFromDatabase = (email, password) => {
+  return (dispatch) => {
+    return firebaseAuth.signOut()
+      .then(result => dispatch(logout(result)))
+      .catch(error => dispatch(logoutError(error)));
+  };
+};
+
 export const login = (user) => ({
   type: 'LOGIN',
   user
@@ -82,6 +90,11 @@ export const loginError = (error) => ({
 
 export const signupError = (error) => ({
   type: 'SIGNUP_ERROR',
+  error
+});
+
+export const logoutError = (error) => ({
+  type: 'LOGOUT_ERROR',
   error
 });
 
