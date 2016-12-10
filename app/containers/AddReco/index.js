@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import { addRecoToDB } from '../../actions';
-import { getRecommenders } from '../../store';
+import { recosActions } from '../../core/recos';
+import { getRecommenders } from '../../core/recos';
 
 import Header from '../Header';
 import TextField from 'material-ui/TextField';
@@ -93,7 +93,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     dispatchAddButtonClicked: (name, recommender) => {
-      dispatch(addRecoToDB(name, recommender)).then(() => {
+      dispatch(recosActions.addReco(name, recommender)).then(() => {
         browserHistory.push('/')
       });
     }

@@ -8,10 +8,10 @@ import './staticFiles';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, browserHistory } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { configureStore } from './store';
-import { getRoutes } from './routes.js';
+import { configureStore } from './core/store';
+import { getRoutes } from './core/routes.js';
 import { initAuth } from './core/auth';
 
 const store = configureStore();

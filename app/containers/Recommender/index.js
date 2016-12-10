@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import { getRecosByRecommender } from '../../store';
+import { getRecosByRecommender } from '../../core/recos';
 
 
 import Header from '../Header';

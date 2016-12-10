@@ -1,3 +1,12 @@
+import {
+  INIT_AUTH,
+  LOGIN,
+  LOGIN_ERROR,
+  SIGNUP_ERROR,
+  LOGOUT_ERROR,
+  LOGOUT
+} from './action-types';
+
 const DEFAULT_STATE = {
   loggedInUser: null,
   logInProgress: false,
@@ -50,26 +59,27 @@ const logoutError = (state, action) => {
   };
 };
 
-const logout = (state, action) => {
+const logout = (state) => {
   return {
     ...DEFAULT_INITIALIZED_STATE,
+    ...state,
     loggedInUser: null
   };
 };
 
 export default (state = DEFAULT_STATE, action = {}) => {
   switch (action.type) {
-    case 'INIT_AUTH':
+    case INIT_AUTH:
       return initAuth(state, action);
-    case 'LOGIN':
+    case LOGIN:
       return login(state, action);
-    case 'LOGIN_ERROR':
+    case LOGIN_ERROR:
       return loginError(state, action);
-    case 'SIGNUP_ERROR':
+    case SIGNUP_ERROR:
       return signupError(state, action);
-    case 'LOGOUT_ERROR':
+    case LOGOUT_ERROR:
       return logoutError(state, action);
-    case 'LOGOUT':
+    case LOGOUT:
       return logout(state, action);
     default:
       return state;

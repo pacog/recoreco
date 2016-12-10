@@ -1,5 +1,5 @@
 import React from 'react';
-import { getSeenRecos } from '../../store';
+import { getSeenRecos } from '../../core/recos';
 import { connect } from 'react-redux';
 
 import Header from '../Header';

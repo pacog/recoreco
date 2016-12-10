@@ -8,8 +8,8 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
-import { getLoggedInUser } from '../../store';
-import { logoutFromDatabase } from '../../actions';
+import { getLoggedInUser } from '../../core/auth';
+import { authActions } from '../../core/auth';
 
 const Header = ({ user, title, logoutClicked, iconElementLeft, onLeftIconButtonTouchTap, onTitleTouchTap }) => {
   return (
@@ -55,7 +55,7 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     logoutClicked: () => {
-      dispatch(logoutFromDatabase()).then(() => {
+      dispatch(authActions.logoutFromDatabase()).then(() => {
         browserHistory.push('/login');
       });
     }

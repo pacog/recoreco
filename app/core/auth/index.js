@@ -1,5 +1,5 @@
 import { firebaseAuth } from '../firebase';
-import { initAuthAction } from '../../actions';
+import { initAuthAction } from './actions';
 
 export const initAuth = (dispatch) => {
   return new Promise((resolve, reject) => {
@@ -13,3 +13,9 @@ export const initAuth = (dispatch) => {
     );
   });
 }
+
+import * as authActions from './actions';
+export { authActions };
+export * from './action-types';
+export authReducer from './reducer';
+export * from './selectors';

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import { editReco } from '../../actions';
-import { getRecommenders, getReco } from '../../store';
+import { recosActions } from '../../core/recos';
+import { getRecommenders, getReco } from '../../core/recos';
 
 import Header from '../Header';
 import TextField from 'material-ui/TextField';
@@ -103,7 +103,7 @@ const mapStateToProps = (state, { params }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     dispatchSaveButtonClicked: (id, name, recommender) => {
-      dispatch(editReco(id, name, recommender));
+      dispatch(recosActions.editReco(id, name, recommender));
       browserHistory.goBack();
     }
   };

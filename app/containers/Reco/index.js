@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getReco } from '../../store';
+import { getReco } from '../../core/recos';
 import { browserHistory } from 'react-router';
 import { Link } from 'react-router';
 
@@ -8,7 +8,7 @@ import Header from '../Header';
 import { Card, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
-import { removeReco, markAsSeen, markAsUnSeen, rateReco } from '../../actions';
+import { recosActions } from '../../core/recos';
 import IconButton from 'material-ui/IconButton';
 import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 import timeSince from '../../utils/time-since';
@@ -133,17 +133,17 @@ const mapStateToProps = (state, { params }) => {
 const mapDispatchToProps = (dispatch, { params }) => {
   return {
     onRemoveClick: () => {
-      dispatch(removeReco(params.recoId));
+      dispatch(recosActions.removeReco(params.recoId));
       browserHistory.push('/');
     },
     onMarkAsUnSeenClick: () => {
-      dispatch(markAsUnSeen(params.recoId));
+      dispatch(recosActions.markAsUnSeen(params.recoId));
     },
     onMarkAsSeenClick: () => {
-      dispatch(markAsSeen(params.recoId));
+      dispatch(recosActions.markAsSeen(params.recoId));
     },
     onChangedRating: (id, newRating) => {
-      dispatch(rateReco(params.recoId, newRating));
+      dispatch(recosActions.rateReco(params.recoId, newRating));
     }
   };
 };

@@ -2,8 +2,8 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import * as EmailValidator from 'email-validator';
-import { signUpWithEmailAndPassword } from '../../actions';
-
+import { authActions } from '../../core/auth';
+import { getSignupError } from '../../core/auth/selectors';
 import { Card, CardText } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
@@ -25,9 +25,12 @@ const blockStyle = {
 };
 
 class Signup extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  constructor({ recommenders, dispatchSignupButtonClicked }) {
+  constructor({ error, dispatchSignupButtonClicked }) {
     super();
-    this.state = emptyState;
+    this.state = {
+      ...emptyState,
+      error
+    };
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.signupButtonClicked = this.signupButtonClicked.bind(this);
@@ -155,14 +158,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     dispatchSignupButtonClicked: (email, password) => {
-      dispatch(signUpWithEmailAndPassword(email, password)).then(() => {
+      dispatch(authActions.signUpWithEmailAndPassword(email, password)).then(() => {
         browserHistory.push('/');
       });
     }
   };
 };
 
-
-const SignupContainer = connect(null, mapDispatchToProps)(Signup);
+const SignupContainer = connect(mapStateToProps, mapDispatchToProps)(Signup);
 
 export default SignupContainer;

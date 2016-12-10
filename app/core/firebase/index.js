@@ -1,6 +1,6 @@
 import firebase from 'firebase/app';
-import originalFirebaseAuth from 'firebase/auth';
-import originalFirebaseDb from 'firebase/database';
+import originalFirebaseAuth from 'firebase/auth'; // eslint-disable-line no-unused-vars
+import originalFirebaseDb from 'firebase/database'; // eslint-disable-line no-unused-vars
 
 const firebaseConfig = {
   apiKey: "AIzaSyDUk0biJfP51LXP7SeW0S5w2K-VuUVO-Jc",

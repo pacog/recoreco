@@ -1,13 +1,13 @@
-import Dashboard from './containers/Dashboard';
-import Reco from './containers/Reco';
-import Login from './containers/Login';
-import Signup from './containers/Signup';
-import Recommender from './containers/Recommender';
-import History from './containers/History';
-import AddReco from './containers/AddReco';
-import EditReco from './containers/EditReco';
-import Recommenders from './containers/Recommenders';
-import { getLoggedInUser } from './store';
+import Dashboard from '../containers/Dashboard';
+import Reco from '../containers/Reco';
+import Login from '../containers/Login';
+import Signup from '../containers/Signup';
+import Recommender from '../containers/Recommender';
+import History from '../containers/History';
+import AddReco from '../containers/AddReco';
+import EditReco from '../containers/EditReco';
+import Recommenders from '../containers/Recommenders';
+import { getLoggedInUser } from './auth';
 
 const checkLoggedIn = (getState) => {
   return (nextState, replace) => {
