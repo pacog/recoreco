@@ -1,6 +1,15 @@
 import expect from 'expect';
-import authReducer from '../store/reducer/auth';
+import { authReducer } from '../core/auth';
 import deepFreeze from '../utils/deep-freeze';
+
+import {
+  INIT_AUTH,
+  LOGIN,
+  LOGIN_ERROR,
+  SIGNUP_ERROR,
+  LOGOUT_ERROR,
+  LOGOUT
+} from '../core/auth/action-types';
 
 const DEFAULT_STATE = {
   loggedInUser: null,
@@ -39,7 +48,7 @@ describe('Init auth', () => {
       }
     };
     let action = {
-      type: 'INIT_AUTH',
+      type: INIT_AUTH,
       user: {
         ...DEFAULT_USER
       }
@@ -58,7 +67,7 @@ describe('Init auth', () => {
       ...DEFAULT_INITIALIZED_STATE
     };
     let action = {
-      type: 'INIT_AUTH',
+      type: INIT_AUTH,
       user: null
     };
     deepFreeze(initialState);
@@ -80,7 +89,7 @@ describe('Login', () => {
       }
     };
     let action = {
-      type: 'LOGIN',
+      type: LOGIN,
       user: {
         ...DEFAULT_USER
       }
@@ -99,7 +108,7 @@ describe('Login', () => {
       ...DEFAULT_INITIALIZED_STATE,
     };
     let action = {
-      type: 'LOGIN'
+      type: LOGIN
     };
     deepFreeze(initialState);
     deepFreeze(action);
@@ -124,7 +133,7 @@ describe('Login', () => {
       }
     };
     let action = {
-      type: 'LOGIN',
+      type: LOGIN,
       user: {
         ...DEFAULT_USER
       }
@@ -149,7 +158,7 @@ describe('Login', () => {
       }
     };
     let action = {
-      type: 'LOGIN',
+      type: LOGIN,
       user: {
         ...DEFAULT_USER
       }
@@ -174,7 +183,7 @@ describe('Login error', () => {
       }
     };
     let action = {
-      type: 'LOGIN_ERROR',
+      type: LOGIN_ERROR,
       error: {
         ...DEFAULT_ERROR
       }
@@ -198,7 +207,7 @@ describe('Signup error', () => {
       }
     };
     let action = {
-      type: 'SIGNUP_ERROR',
+      type: SIGNUP_ERROR,
       error: {
         ...DEFAULT_ERROR
       }
@@ -228,7 +237,7 @@ describe('Logout error', () => {
       }
     };
     let action = {
-      type: 'LOGOUT_ERROR',
+      type: LOGOUT_ERROR,
       error: {
         ...DEFAULT_ERROR
       }
@@ -252,7 +261,7 @@ describe('Logout', () => {
       ...DEFAULT_INITIALIZED_STATE
     };
     let action = {
-      type: 'LOGOUT'
+      type: LOGOUT
     };
     deepFreeze(initialState);
     deepFreeze(action);
@@ -268,7 +277,7 @@ describe('Logout', () => {
       ...DEFAULT_INITIALIZED_STATE
     };
     let action = {
-      type: 'LOGOUT'
+      type: LOGOUT
     };
     deepFreeze(initialState);
     deepFreeze(action);
@@ -287,7 +296,7 @@ describe('Logout', () => {
       ...DEFAULT_INITIALIZED_STATE
     };
     let action = {
-      type: 'LOGOUT'
+      type: LOGOUT
     };
     deepFreeze(initialState);
     deepFreeze(action);

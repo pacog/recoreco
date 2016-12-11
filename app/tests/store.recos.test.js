@@ -1,6 +1,18 @@
 import expect from 'expect';
-import recosReducer from '../store/reducer/recos';
+import { recosReducer } from '../core/recos';
 import deepFreeze from '../utils/deep-freeze';
+
+import {
+  ADD_RECO,
+  // ADD_RECO_ERROR,
+  EDIT_RECO,
+  REMOVE_RECO,
+  MARK_RECO_AS_SEEN,
+  MARK_RECO_AS_NOT_SEEN,
+  RATE_RECO,
+  // LOAD_RECOS_SUCCESS,
+  // UNLOAD_RECOS_SUCCESS
+} from '../core/recos/action-types';
 
 describe('add reco action', () => {
   it('should be able to add a reco when there are none', () => {
@@ -9,7 +21,7 @@ describe('add reco action', () => {
       { id: 1, name: 'test', recommender: 'someone', added: 123, seen: false }
     ];
     let action = {
-      type: 'ADD_RECO',
+      type: ADD_RECO,
       id: 1,
       name: 'test',
       recommender: 'someone',
@@ -33,7 +45,7 @@ describe('add reco action', () => {
     ];
 
     let action = {
-      type: 'ADD_RECO',
+      type: ADD_RECO,
       id: 3,
       name: 'test3',
       recommender: 'someone3',
@@ -57,7 +69,7 @@ describe('add reco action', () => {
     ];
 
     let action = {
-      type: 'ADD_RECO',
+      type: ADD_RECO,
       id: 3,
       name: '',
       recommender: ''
@@ -80,7 +92,7 @@ describe('add reco action', () => {
     ];
 
     let action = {
-      type: 'ADD_RECO',
+      type: ADD_RECO,
       id: 3,
       name: '',
       recommender: 'somebody'
@@ -103,7 +115,7 @@ describe('add reco action', () => {
       { id: 3, name: 'test3', recommender: '', added: 125, seen: false }
     ];
     let action = {
-      type: 'ADD_RECO',
+      type: ADD_RECO,
       id: 3,
       name: 'test3',
       recommender: '',
@@ -126,7 +138,7 @@ describe('edit reco action', () => {
       { id: 1, name: 'test2', recommender: 'someone2', added: 123, seen: false }
     ];
     let action = {
-      type: 'EDIT_RECO',
+      type: EDIT_RECO,
       id: 1,
       name: 'test2',
       recommender: 'someone2'
@@ -147,7 +159,7 @@ describe('edit reco action', () => {
       { id: 2, name: 'test3', recommender: '', added: 123, seen: false }
     ];
     let action = {
-      type: 'EDIT_RECO',
+      type: EDIT_RECO,
       id: 2,
       name: 'test3'
     };
@@ -167,7 +179,7 @@ describe('edit reco action', () => {
       { id: 2, name: 'test2', recommender: 'someone2', added: 123, seen: false }
     ];
     let action = {
-      type: 'EDIT_RECO',
+      type: EDIT_RECO,
       id: 3,
       name: 'test3'
     };
@@ -187,7 +199,7 @@ describe('edit reco action', () => {
       { id: 2, name: 'test2', recommender: 'someone2', added: 123, seen: false }
     ];
     let action = {
-      type: 'EDIT_RECO',
+      type: EDIT_RECO,
       name: 'test3'
     };
     deepFreeze(initialState);
@@ -206,7 +218,7 @@ describe('edit reco action', () => {
       { id: 2, name: 'test2', recommender: 'someone2', added: 123, seen: false }
     ];
     let action = {
-      type: 'EDIT_RECO',
+      type: EDIT_RECO,
       id: 1
     };
     deepFreeze(initialState);
@@ -224,7 +236,7 @@ describe('remove reco action', () => {
     ];
     const finalState = [];
     let action = {
-      type: 'REMOVE_RECO',
+      type: REMOVE_RECO,
       id: 1
     };
     deepFreeze(initialState);
@@ -242,7 +254,7 @@ describe('remove reco action', () => {
       { id: 2, name: 'test2', recommender: 'someone2', added: 123, seen: false }
     ];
     let action = {
-      type: 'REMOVE_RECO',
+      type: REMOVE_RECO,
       id: 1
     };
     deepFreeze(initialState);
@@ -258,11 +270,11 @@ describe('remove reco action', () => {
     ];
     const finalState = [];
     let action1 = {
-      type: 'REMOVE_RECO',
+      type: REMOVE_RECO,
       id: 1
     };
     let action2 = {
-      type: 'REMOVE_RECO',
+      type: REMOVE_RECO,
       id: 2
     };
     deepFreeze(initialState);
@@ -281,7 +293,7 @@ describe('remove reco action', () => {
       { id: 1, name: 'test', recommender: 'someone', added: 123, seen: false }
     ];
     let action = {
-      type: 'REMOVE_RECO',
+      type: REMOVE_RECO,
       id: 2
     };
     deepFreeze(initialState);
@@ -301,7 +313,7 @@ describe('mark as seen reco action', () => {
       { id: 1, name: 'test', recommender: 'someone', added: 123, seen: true }
     ];
     let action = {
-      type: 'MARK_RECO_AS_SEEN',
+      type: MARK_RECO_AS_SEEN,
       id: 1
     };
     deepFreeze(initialState);
@@ -318,7 +330,7 @@ describe('mark as seen reco action', () => {
       { id: 1, name: 'test', recommender: 'someone', added: 123, seen: true }
     ];
     let action = {
-      type: 'MARK_RECO_AS_SEEN',
+      type: MARK_RECO_AS_SEEN,
       id: 1
     };
     deepFreeze(initialState);
@@ -337,7 +349,7 @@ describe('mark as seen reco action', () => {
       { id: 2, name: 'test', recommender: 'someone', added: 123, seen: false }
     ];
     let action = {
-      type: 'MARK_RECO_AS_SEEN',
+      type: MARK_RECO_AS_SEEN,
       id: 1
     };
     deepFreeze(initialState);
@@ -356,7 +368,7 @@ describe('mark as seen reco action', () => {
       { id: 2, name: 'test', recommender: 'someone', added: 123, seen: false }
     ];
     let action = {
-      type: 'MARK_RECO_AS_SEEN',
+      type: MARK_RECO_AS_SEEN,
       id: 3
     };
     deepFreeze(initialState);
@@ -375,7 +387,7 @@ describe('mark as unseen reco action', () => {
       { id: 1, name: 'test', recommender: 'someone', added: 123, seen: false }
     ];
     let action = {
-      type: 'MARK_RECO_AS_NOT_SEEN',
+      type: MARK_RECO_AS_NOT_SEEN,
       id: 1
     };
     deepFreeze(initialState);
@@ -392,7 +404,7 @@ describe('mark as unseen reco action', () => {
       { id: 1, name: 'test', recommender: 'someone', added: 123, seen: false }
     ];
     let action = {
-      type: 'MARK_RECO_AS_NOT_SEEN',
+      type: MARK_RECO_AS_NOT_SEEN,
       id: 1
     };
     deepFreeze(initialState);
@@ -411,7 +423,7 @@ describe('mark as unseen reco action', () => {
       { id: 2, name: 'test', recommender: 'someone', added: 123, seen: true }
     ];
     let action = {
-      type: 'MARK_RECO_AS_NOT_SEEN',
+      type: MARK_RECO_AS_NOT_SEEN,
       id: 1
     };
     deepFreeze(initialState);
@@ -430,7 +442,7 @@ describe('mark as unseen reco action', () => {
       { id: 2, name: 'test', recommender: 'someone', added: 123, seen: true }
     ];
     let action = {
-      type: 'MARK_RECO_AS_NOT_SEEN',
+      type: MARK_RECO_AS_NOT_SEEN,
       id: 3
     };
     deepFreeze(initialState);
@@ -449,7 +461,7 @@ describe('rate reco action', () => {
       { id: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
     ];
     let action = {
-      type: 'RATE_RECO',
+      type: RATE_RECO,
       id: 1,
       rating: 3
     };
@@ -467,7 +479,7 @@ describe('rate reco action', () => {
       { id: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
     ];
     let action = {
-      type: 'RATE_RECO',
+      type: RATE_RECO,
       id: 1,
       rating: 3
     };
@@ -489,12 +501,12 @@ describe('rate reco action', () => {
       { id: 3, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
     ];
     let action1 = {
-      type: 'RATE_RECO',
+      type: RATE_RECO,
       id: 2,
       rating: 2
     };
     let action2 = {
-      type: 'RATE_RECO',
+      type: RATE_RECO,
       id: 3,
       rating: 3
     };
@@ -516,7 +528,7 @@ describe('rate reco action', () => {
       { id: 2, name: 'test', recommender: 'someone', added: 123, seen: true }
     ];
     let action = {
-      type: 'RATE_RECO',
+      type: RATE_RECO,
       id: 3,
       rating: 4
     };
@@ -534,7 +546,7 @@ describe('rate reco action', () => {
       { id: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
     ];
     let action = {
-      type: 'RATE_RECO',
+      type: RATE_RECO,
       id: 1
     };
     deepFreeze(initialState);

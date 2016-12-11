@@ -18,7 +18,7 @@ RecoList.propTypes = {
 const getRecoList = (recos) => (
   <div>
     {
-      recos.map( (reco, index) => {
+      recos.map( (reco) => {
           return (
             <RecoLink
               key={`reco-${reco.id}`}

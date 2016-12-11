@@ -63,6 +63,7 @@ const logout = (state) => {
   return {
     ...DEFAULT_INITIALIZED_STATE,
     ...state,
+    logoutError: null,
     loggedInUser: null
   };
 };
