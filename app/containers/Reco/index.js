@@ -133,8 +133,9 @@ const mapStateToProps = (state, { params }) => {
 const mapDispatchToProps = (dispatch, { params }) => {
   return {
     onRemoveClick: () => {
-      dispatch(recosActions.removeReco(params.recoId));
-      browserHistory.push('/');
+      dispatch(recosActions.removeReco(params.recoId)).then(() => {
+        browserHistory.push('/')
+      });
     },
     onMarkAsUnSeenClick: () => {
       dispatch(recosActions.markAsUnSeen(params.recoId));
@@ -147,7 +148,6 @@ const mapDispatchToProps = (dispatch, { params }) => {
     }
   };
 };
-
 
 const RecoContainer = connect(mapStateToProps, mapDispatchToProps)(Reco);
 

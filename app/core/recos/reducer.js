@@ -1,10 +1,11 @@
 import {
-  ADD_RECO,
+  ADD_RECO_SUCCESS,
   EDIT_RECO,
   REMOVE_RECO,
   MARK_RECO_AS_SEEN,
   MARK_RECO_AS_NOT_SEEN,
-  RATE_RECO
+  RATE_RECO,
+  LOAD_RECOS_SUCCESS
 } from './action-types';
 
 const DEFAULT_RECO = {
@@ -12,15 +13,13 @@ const DEFAULT_RECO = {
 };
 
 const addReco = (state, action) => {
-  if(!action.name) {
+  const reco = action.reco || {};
+  if(!reco.name) {
     return state;
   }
   const newReco = {
     ...DEFAULT_RECO,
-    id: action.id,
-    name: action.name,
-    recommender: action.recommender,
-    added: action.added
+    ...reco
   };
   return state.concat([newReco]);
 };
@@ -29,11 +28,11 @@ const editReco = (state, action) => {
   if(!action.name) {
     return state;
   }
-  if(typeof action.id === 'undefined') {
+  if(typeof action.key === 'undefined') {
     return state;
   }
   return state.map((reco) => {
-      if(reco.id === action.id) {
+      if(reco.key === action.key) {
         return {
           ...reco,
           name: action.name,
@@ -45,12 +44,12 @@ const editReco = (state, action) => {
 }
 
 const removeReco = (state, action) => {
-  return state.filter( (reco) => reco.id !== action.id );
+  return state.filter( (reco) => reco.key !== action.key );
 };
 
 const markRecoAsSeen = (state, action) => {
   return state.map((reco) => {
-      if(reco.id === action.id) {
+      if(reco.key === action.key) {
         return {
           ...reco,
           seen: true
@@ -62,7 +61,7 @@ const markRecoAsSeen = (state, action) => {
 
 const markRecoAsNotSeen = (state, action) => {
   return state.map((reco) => {
-      if(reco.id === action.id) {
+      if(reco.key === action.key) {
         return {
           ...reco,
           seen: false
@@ -77,7 +76,7 @@ const rateReco = (state, action) => {
     return state;
   }
   return state.map((reco) => {
-      if(reco.id === action.id) {
+      if(reco.key === action.key) {
         return {
           ...reco,
           rating: action.rating
@@ -87,9 +86,13 @@ const rateReco = (state, action) => {
     });
 };
 
+const loadRecosSuccess = (state, action) => {
+  return action.payload || [];
+};
+
 export default (state = [], action = {}) => {
   switch (action.type) {
-    case ADD_RECO:
+    case ADD_RECO_SUCCESS:
       return addReco(state, action);
     case EDIT_RECO:
       return editReco(state, action);
@@ -101,6 +104,8 @@ export default (state = [], action = {}) => {
       return markRecoAsNotSeen(state, action);
     case RATE_RECO:
       return rateReco(state, action);
+    case LOAD_RECOS_SUCCESS:
+      return loadRecosSuccess(state, action);
     default:
       return state;
   }

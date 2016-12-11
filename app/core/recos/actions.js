@@ -1,107 +1,75 @@
-import { recoList } from './reco-list';
+import { FirebaseList } from '../firebase/firebase-list';
+import Reco from './reco';
+
+export const recoList = new FirebaseList({
+  onAdd: addRecoSuccess,
+  onChange: editRecoSuccess,
+  onLoad: loadRecosSuccess,
+  onRemove: removeRecoSuccess
+}, Reco);
+
 import {
   ADD_RECO,
   ADD_RECO_ERROR,
   EDIT_RECO,
-  REMOVE_RECO,
+  // REMOVE_RECO,
+  REMOVE_RECO_SUCCESS,
   MARK_RECO_AS_SEEN,
   MARK_RECO_AS_NOT_SEEN,
-  RATE_RECO
+  RATE_RECO,
+  LOAD_RECOS_SUCCESS,
+  UNLOAD_RECOS_SUCCESS
 } from './action-types';
 
-export const addReco = (recoName, recommender = '') => {
+export const addReco = (reco) => {
   return dispatch => {
-    recoList.push({recoName, recommender})
+    return recoList.push({
+      added: (new Date().getTime()),
+      ...reco
+    })
       .catch(error => dispatch(addRecoError(error)));
   };
 }
 
 //TODO: do and test
-export function addRecoError(error) {
-  return {
+export const addRecoError = (error) => ({
     type: ADD_RECO_ERROR,
     payload: error
-  };
-}
-
-//TODO: check if there is already a reco
-export const addRecoSuccess = (reco) => ({
-  type: ADD_RECO,
-  reco,
-  added: (new Date().getTime())
 });
 
+//TODO: This is not really used
+export const addRecoSuccess = (reco) => {
+  type: ADD_RECO,
+  reco
+};
 
+export const editRecoSuccess = (reco) => ({
+  type: EDIT_RECO,
+  reco
+});
 
+export function loadRecosSuccess(recos) {
+  return {
+    type: LOAD_RECOS_SUCCESS,
+    payload: recos
+  };
+};
 
+export const loadRecos = () => {
+  return (dispatch, getState) => {
+    const { auth } = getState();
+    const id = auth.loggedInUser.uid;
+    recoList.path = `recos/${id}`;
+    recoList.subscribe(dispatch);
+  };
+};
 
-
-
-
-
-// export function deleteTask(task) {
-//   return dispatch => {
-//     taskList.remove(task.key)
-//       .catch(error => dispatch(deleteTaskError(error)));
-//   };
-// }
-//
-// export function deleteTaskError(error) {
-//   return {
-//     type: DELETE_TASK_ERROR,
-//     payload: error
-//   };
-// }
-//
-// export function deleteTaskSuccess(task) {
-//   return {
-//     type: DELETE_TASK_SUCCESS,
-//     payload: task
-//   };
-// }
-//
-// export function updateTaskError(error) {
-//   return {
-//     type: UPDATE_TASK_ERROR,
-//     payload: error
-//   };
-// }
-//
-// export function updateTask(task, changes) {
-//   return dispatch => {
-//     taskList.update(task.key, changes)
-//       .catch(error => dispatch(updateTaskError(error)));
-//   };
-// }
-//
-// export function updateTaskSuccess(task) {
-//   return {
-//     type: UPDATE_TASK_SUCCESS,
-//     payload: task
-//   };
-// }
-//
-// export function loadTasksSuccess(tasks) {
-//   return {
-//     type: LOAD_TASKS_SUCCESS,
-//     payload: tasks
-//   };
-// }
-
-// export function loadTasks() {
-//   return (dispatch, getState) => {
-//     const { auth } = getState();
-//     taskList.path = `tasks/${auth.id}`;
-//     taskList.subscribe(dispatch);
-//   };
-// }
-//
-// export function unloadTasks() {
-//   taskList.unsubscribe();
-//   return {
-//     type: UNLOAD_TASKS_SUCCESS
-//   };
-// }
+export const unloadRecos = () => {
+  recoList.unsubscribe();
+  return {
+    type: UNLOAD_RECOS_SUCCESS
+  };
+}
 
 
 
@@ -118,11 +86,28 @@ export const editReco = (id, recoName, recommender = '') => ({
   recommender: recommender
 });
 
+export const removeReco = (key) => {
+  return dispatch => {
+    return recoList.remove(key)
+      .catch(error => dispatch(removeRecoError(error)));
+  };
+};
 
-export const removeReco = (id) => ({
-  type: REMOVE_RECO,
-  id
-});
+
+//TODO: also not used
+export function removeRecoSuccess(key) {
+  return {
+    type: REMOVE_RECO_SUCCESS,
+    key
+  }
+};
+
+export function removeRecoError() {
+  // return {
+  //   type: REMOVE_RECO_SUCCESS,
+  //   key
+  // }
+};
 
 export const markAsSeen = (id) => ({
   type: MARK_RECO_AS_SEEN,

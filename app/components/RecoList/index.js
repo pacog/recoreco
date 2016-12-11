@@ -21,7 +21,7 @@ const getRecoList = (recos) => (
       recos.map( (reco) => {
           return (
             <RecoLink
-              key={`reco-${reco.id}`}
+              key={`reco-${reco.key}`}
               reco={reco}
               ></RecoLink>
           );

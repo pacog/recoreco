@@ -32,9 +32,9 @@ export const getSeenRecos = (state) => {
   return state.recos.filter( reco => reco.seen);
 }
 
-export const getReco = (state, recoId) => {
+export const getReco = (state, recoKey) => {
   if(!state.recos) {
     return null;
   }
-  return state.recos.find( reco => reco.id === recoId);
+  return state.recos.find( reco => reco.key === recoKey);
 }

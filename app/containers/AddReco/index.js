@@ -93,7 +93,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     dispatchAddButtonClicked: (name, recommender) => {
-      dispatch(recosActions.addReco(name, recommender)).then(() => {
+      dispatch(recosActions.addReco({ name, recommender })).then(() => {
         browserHistory.push('/')
       });
     }

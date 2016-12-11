@@ -49,7 +49,7 @@ const RecoLink = ({reco}) => {
   return (
     <Link
       style={linkStyle}
-      to={`/reco/${reco.id}`}>
+      to={`/reco/${reco.key}`}>
         <RaisedButton
           style={buttonStyle}
           fullWidth={true}>
