@@ -3,7 +3,7 @@ import { forIn } from 'lodash';
 export const getRecommenders = (state) => {
   const uniqueRecommenders = {};
   if(state.recos) {
-    state.recos.forEach( reco => {
+    forIn( (reco) => {
       if(reco.recommender) {
         uniqueRecommenders[reco.recommender] = true;
       }

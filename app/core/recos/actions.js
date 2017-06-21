@@ -9,7 +9,7 @@ import { firebaseDb } from '../firebase';
 // }, Reco);
 
 import {
-  ADD_RECO,
+  // ADD_RECO,
   ADD_RECO_ERROR,
   // EDIT_RECO,
   EDIT_RECO_SUCCESS,
@@ -22,30 +22,25 @@ import {
   UNLOAD_RECOS_SUCCESS
 } from './action-types';
 
-// export const addReco = (reco) => {
-//   return dispatch => {
-//     return recoList.push({
-//       added: (new Date().getTime()),
-//       ...reco
-//     })
-//       .catch(error => dispatch(addRecoError(error)));
-//   };
-// }
+export const addReco = (reco) => {
+  return (dispatch, getState) => {
+    const { auth } = getState();
+    const id = auth.loggedInUser.uid;
+    return firebaseDb
+      .ref(`recos/${id}`)
+      .push({
+        added: (new Date().getTime()),
+        ...reco
+      })
+      .catch(error => dispatch(addRecoError(error)));
+  };
+}
 
 //TODO: do and test
 export const addRecoError = (error) => ({
     type: ADD_RECO_ERROR,
     payload: error
 });
-
-//TODO: This is not really used
-export const addRecoSuccess = (reco) => {
-  console.log('addRecoSuccess!!');
-  return {
-    type: ADD_RECO,
-    reco
-  }
-};
 
 export function loadRecosSuccess(recos) {
   return {
