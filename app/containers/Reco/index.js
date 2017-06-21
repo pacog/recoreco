@@ -20,7 +20,7 @@ const buttonStyle = {
   width: '100%'
 };
 
-const Reco = ({reco, onRemoveClick, onMarkAsUnSeenClick, onMarkAsSeenClick, onChangedRating}) => {
+const Reco = ({reco = {}, onRemoveClick, onMarkAsUnSeenClick, onMarkAsSeenClick, onChangedRating}) => {
   return (
     <div>
       <Header
@@ -35,9 +35,7 @@ const Reco = ({reco, onRemoveClick, onMarkAsUnSeenClick, onMarkAsSeenClick, onCh
       />
       <Card>
         <CardText>
-          <h3>
-              {reco.name}
-          </h3>
+          { getTitlePart(reco) }
           { getRecommendedByPart(reco) }
           { getAddedPart(reco) }
           { getSeenPart(reco, onMarkAsUnSeenClick, onMarkAsSeenClick, onChangedRating) }
@@ -60,7 +58,19 @@ const Reco = ({reco, onRemoveClick, onMarkAsUnSeenClick, onMarkAsSeenClick, onCh
   );
 };
 
-const getRecommendedByPart = (reco) => {
+const getTitlePart = (reco = {}) => {
+  if(reco.name) {
+    return (
+      <h3>
+        {reco.name}
+      </h3>
+    );
+  } else {
+    return '';
+  }
+}
+
+const getRecommendedByPart = (reco = {}) => {
   if(reco.recommender) {
     return (
       <p>
@@ -76,7 +86,7 @@ const getRecommendedByPart = (reco) => {
 
 };
 
-const getAddedPart = (reco) => {
+const getAddedPart = (reco = {}) => {
   if(reco.added) {
     return (
       <div>
@@ -89,7 +99,7 @@ const getAddedPart = (reco) => {
 
 };
 
-const getSeenPart = (reco, onMarkAsUnSeenClick, onMarkAsSeenClick, onChangedRating) => {
+const getSeenPart = (reco = {}, onMarkAsUnSeenClick, onMarkAsSeenClick, onChangedRating) => {
   if(reco.seen) {
     return (
       <div>

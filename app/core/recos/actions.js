@@ -1,23 +1,8 @@
-// import { FirebaseList } from '../firebase/firebase-list';
-// import Reco from './reco';
 import { firebaseDb } from '../firebase';
-// export const recoList = new FirebaseList({
-//   onAdd: addRecoSuccess,
-//   onChange: editRecoSuccess,
-//   onLoad: loadRecosSuccess,
-//   onRemove: removeRecoSuccess
-// }, Reco);
 
 import {
-  // ADD_RECO,
   ADD_RECO_ERROR,
-  // EDIT_RECO,
-  EDIT_RECO_SUCCESS,
-  // REMOVE_RECO,
   REMOVE_RECO_SUCCESS,
-  // MARK_RECO_AS_SEEN,
-  // MARK_RECO_AS_NOT_SEEN,
-  // RATE_RECO,
   LOAD_RECOS_SUCCESS,
   UNLOAD_RECOS_SUCCESS
 } from './action-types';
@@ -65,32 +50,23 @@ export const unloadRecos = () => {
   };
 }
 
-// export const editReco = (key, changes) => {
-//   return dispatch => {
-//     return recoList.update(key, changes)
-//       .then(result => {
-//         debugger;
-//         console.log('editReco success');
-//         console.log(result);
-//       })
-//       .catch(error => dispatch(editRecoError(error)));
-//   };
-// };
-
-export function editRecoSuccess(reco) {
-  console.log('editRecoSuccess');
-  return {
-    type: EDIT_RECO_SUCCESS,
-    reco
+export const editReco = (key, changes) => {
+  return (dispatch, getState) => {
+    const { auth } = getState();
+    const id = auth.loggedInUser.uid;
+    return firebaseDb.ref(`recos/${id}`).child(key).update(changes)
+      .catch(error => dispatch(editRecoError(error)));
   };
 };
 
-// export const removeReco = (key) => {
-//   return dispatch => {
-//     return recoList.remove(key)
-//       .catch(error => dispatch(removeRecoError(error)));
-//   };
-// };
+export const removeReco = (key) => {
+  return (dispatch, getState) => {
+    const { auth } = getState();
+    const id = auth.loggedInUser.uid;
+    return firebaseDb.ref(`recos/${id}`).child(key).remove()
+      .catch(error => dispatch(removeRecoError(error)));
+  };
+};
 
 
 //TODO: also not used
@@ -111,19 +87,3 @@ export function removeRecoError() {
 export function editRecoError() {
 
 };
-
-// export const markAsSeen = (id) => ({
-//   type: MARK_RECO_AS_SEEN,
-//   id
-// });
-//
-// export const markAsUnSeen = (id) => ({
-//   type: MARK_RECO_AS_NOT_SEEN,
-//   id
-// });
-//
-// export const rateReco = (id, rating) => ({
-//   type: RATE_RECO,
-//   id,
-//   rating
-// });
