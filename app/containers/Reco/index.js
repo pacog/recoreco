@@ -138,13 +138,13 @@ const mapDispatchToProps = (dispatch, { params }) => {
       });
     },
     onMarkAsUnSeenClick: () => {
-      dispatch(recosActions.markAsUnSeen(params.recoId));
+      dispatch(recosActions.editReco(params.recoId, { seen: false }));
     },
     onMarkAsSeenClick: () => {
-      dispatch(recosActions.markAsSeen(params.recoId));
+      dispatch(recosActions.editReco(params.recoId, { seen: true }));
     },
     onChangedRating: (id, newRating) => {
-      dispatch(recosActions.rateReco(params.recoId, newRating));
+      dispatch(recosActions.editReco(params.recoId, { rating: newRating }));
     }
   };
 };

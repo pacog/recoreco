@@ -25,14 +25,6 @@ export class Dashboard extends React.Component {
       </div>
     );
   }
-
-  componentWillMount() {
-    this.props.loadRecos();
-  }
-
-  componentWillUnmount() {
-    this.props.unloadRecos();
-  }
 };
 
 const mapStateToProps = (state) => ({

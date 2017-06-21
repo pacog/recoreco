@@ -1,3 +1,5 @@
+import { forIn } from 'lodash';
+
 export const getRecommenders = (state) => {
   const uniqueRecommenders = {};
   if(state.recos) {
@@ -15,26 +17,59 @@ export const getRecosByRecommender = (state, recommender) => {
   if(!state.recos) {
     return [];
   }
-  return state.recos.filter( reco => reco.recommender === recommender);
+
+  const result = [];
+  forIn(state.recos, (value, key) => {
+    if(value.recommender === recommender) {
+      result.push({
+        ...value,
+        key
+      });
+    }
+  });
+  return result;
 }
 
 export const getUnseenRecos = (state) => {
   if(!state.recos) {
     return [];
   }
-  return state.recos.filter( reco => !reco.seen);
+  const result = [];
+  forIn(state.recos, (value, key) => {
+    if(!value.seen) {
+      result.push({
+        ...value,
+        key
+      });
+    }
+  });
+  return result;
 }
 
 export const getSeenRecos = (state) => {
   if(!state.recos) {
     return [];
   }
-  return state.recos.filter( reco => reco.seen);
+  const result = [];
+  forIn(state.recos, (value, key) => {
+    if(value.seen) {
+      result.push({
+        ...value,
+        key
+      });
+    }
+  });
+  return result;
 }
 
-export const getReco = (state, recoKey) => {
+export const getReco = (state, key) => {
   if(!state.recos) {
     return null;
   }
-  return state.recos.find( reco => reco.key === recoKey);
+  if(state.recos[key]) {
+    return {
+      ...state.recos[key],
+      key
+    };
+  }
 }

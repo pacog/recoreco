@@ -7,9 +7,9 @@ import {
   // ADD_RECO_ERROR,
   EDIT_RECO,
   REMOVE_RECO,
-  MARK_RECO_AS_SEEN,
-  MARK_RECO_AS_NOT_SEEN,
-  RATE_RECO,
+  // MARK_RECO_AS_SEEN,
+  // MARK_RECO_AS_NOT_SEEN,
+  // RATE_RECO,
   LOAD_RECOS_SUCCESS,
   // UNLOAD_RECOS_SUCCESS
 } from '../core/recos/action-types';
@@ -307,257 +307,257 @@ describe('remove reco action', () => {
 
 });
 
-describe('mark as seen reco action', () => {
-  it('should be able mark as seen', () => {
-    const initialState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: false }
-    ];
-    const finalState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true }
-    ];
-    let action = {
-      type: MARK_RECO_AS_SEEN,
-      key: 1
-    };
-    deepFreeze(initialState);
-    deepFreeze(action);
-
-    expect(recosReducer(initialState, action)).toEqual(finalState);
-  });
-
-  it('should keep seen value', () => {
-    const initialState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true }
-    ];
-    const finalState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true }
-    ];
-    let action = {
-      type: MARK_RECO_AS_SEEN,
-      key: 1
-    };
-    deepFreeze(initialState);
-    deepFreeze(action);
-
-    expect(recosReducer(initialState, action)).toEqual(finalState);
-  });
-
-  it('should not change other values', () => {
-    const initialState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: false },
-      { key: 2, name: 'test', recommender: 'someone', added: 123, seen: false }
-    ];
-    const finalState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true },
-      { key: 2, name: 'test', recommender: 'someone', added: 123, seen: false }
-    ];
-    let action = {
-      type: MARK_RECO_AS_SEEN,
-      key: 1
-    };
-    deepFreeze(initialState);
-    deepFreeze(action);
-
-    expect(recosReducer(initialState, action)).toEqual(finalState);
-  });
-
-  it('should not change value when it is not present', () => {
-    const initialState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: false },
-      { key: 2, name: 'test', recommender: 'someone', added: 123, seen: false }
-    ];
-    const finalState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: false },
-      { key: 2, name: 'test', recommender: 'someone', added: 123, seen: false }
-    ];
-    let action = {
-      type: MARK_RECO_AS_SEEN,
-      key: 3
-    };
-    deepFreeze(initialState);
-    deepFreeze(action);
-
-    expect(recosReducer(initialState, action)).toEqual(finalState);
-  });
-});
-
-describe('mark as unseen reco action', () => {
-  it('should be able mark as unseen', () => {
-    const initialState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true }
-    ];
-    const finalState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: false }
-    ];
-    let action = {
-      type: MARK_RECO_AS_NOT_SEEN,
-      key: 1
-    };
-    deepFreeze(initialState);
-    deepFreeze(action);
-
-    expect(recosReducer(initialState, action)).toEqual(finalState);
-  });
-
-  it('should keep seen value', () => {
-    const initialState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: false }
-    ];
-    const finalState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: false }
-    ];
-    let action = {
-      type: MARK_RECO_AS_NOT_SEEN,
-      key: 1
-    };
-    deepFreeze(initialState);
-    deepFreeze(action);
-
-    expect(recosReducer(initialState, action)).toEqual(finalState);
-  });
-
-  it('should not change other values', () => {
-    const initialState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true },
-      { key: 2, name: 'test', recommender: 'someone', added: 123, seen: true }
-    ];
-    const finalState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: false },
-      { key: 2, name: 'test', recommender: 'someone', added: 123, seen: true }
-    ];
-    let action = {
-      type: MARK_RECO_AS_NOT_SEEN,
-      key: 1
-    };
-    deepFreeze(initialState);
-    deepFreeze(action);
-
-    expect(recosReducer(initialState, action)).toEqual(finalState);
-  });
-
-  it('should not change value when it is not present', () => {
-    const initialState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true },
-      { key: 2, name: 'test', recommender: 'someone', added: 123, seen: true }
-    ];
-    const finalState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true },
-      { key: 2, name: 'test', recommender: 'someone', added: 123, seen: true }
-    ];
-    let action = {
-      type: MARK_RECO_AS_NOT_SEEN,
-      key: 3
-    };
-    deepFreeze(initialState);
-    deepFreeze(action);
-
-    expect(recosReducer(initialState, action)).toEqual(finalState);
-  });
-});
-
-describe('rate reco action', () => {
-  it('should be able to rate a previously unrated reco', () => {
-    const initialState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true }
-    ];
-    const finalState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
-    ];
-    let action = {
-      type: RATE_RECO,
-      key: 1,
-      rating: 3
-    };
-    deepFreeze(initialState);
-    deepFreeze(action);
-
-    expect(recosReducer(initialState, action)).toEqual(finalState);
-  });
-
-  it('should be able to rate a previously rated reco', () => {
-    const initialState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 1 }
-    ];
-    const finalState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
-    ];
-    let action = {
-      type: RATE_RECO,
-      key: 1,
-      rating: 3
-    };
-    deepFreeze(initialState);
-    deepFreeze(action);
-
-    expect(recosReducer(initialState, action)).toEqual(finalState);
-  });
-
-  it('should not change other ratings', () => {
-    const initialState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 1 },
-      { key: 2, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 1 },
-      { key: 3, name: 'test', recommender: 'someone', added: 123, seen: true }
-    ];
-    const finalState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 1 },
-      { key: 2, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 2 },
-      { key: 3, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
-    ];
-    let action1 = {
-      type: RATE_RECO,
-      key: 2,
-      rating: 2
-    };
-    let action2 = {
-      type: RATE_RECO,
-      key: 3,
-      rating: 3
-    };
-    deepFreeze(initialState);
-    deepFreeze(action1);
-    deepFreeze(action2);
-
-    let state = recosReducer(initialState, action1);
-    expect(recosReducer(state, action2)).toEqual(finalState);
-  });
-
-  it('should not change value when it is not present', () => {
-    const initialState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true },
-      { key: 2, name: 'test', recommender: 'someone', added: 123, seen: true }
-    ];
-    const finalState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true },
-      { key: 2, name: 'test', recommender: 'someone', added: 123, seen: true }
-    ];
-    let action = {
-      type: RATE_RECO,
-      key: 3,
-      rating: 4
-    };
-    deepFreeze(initialState);
-    deepFreeze(action);
-
-    expect(recosReducer(initialState, action)).toEqual(finalState);
-  });
-
-  it('should not change value when no rating is specified', () => {
-    const initialState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
-    ];
-    const finalState = [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
-    ];
-    let action = {
-      type: RATE_RECO,
-      key: 1
-    };
-    deepFreeze(initialState);
-    deepFreeze(action);
-
-    expect(recosReducer(initialState, action)).toEqual(finalState);
-  });
-});
+// describe('mark as seen reco action', () => {
+//   it('should be able mark as seen', () => {
+//     const initialState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: false }
+//     ];
+//     const finalState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true }
+//     ];
+//     let action = {
+//       type: MARK_RECO_AS_SEEN,
+//       key: 1
+//     };
+//     deepFreeze(initialState);
+//     deepFreeze(action);
+//
+//     expect(recosReducer(initialState, action)).toEqual(finalState);
+//   });
+//
+//   it('should keep seen value', () => {
+//     const initialState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true }
+//     ];
+//     const finalState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true }
+//     ];
+//     let action = {
+//       type: MARK_RECO_AS_SEEN,
+//       key: 1
+//     };
+//     deepFreeze(initialState);
+//     deepFreeze(action);
+//
+//     expect(recosReducer(initialState, action)).toEqual(finalState);
+//   });
+//
+//   it('should not change other values', () => {
+//     const initialState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: false },
+//       { key: 2, name: 'test', recommender: 'someone', added: 123, seen: false }
+//     ];
+//     const finalState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true },
+//       { key: 2, name: 'test', recommender: 'someone', added: 123, seen: false }
+//     ];
+//     let action = {
+//       type: MARK_RECO_AS_SEEN,
+//       key: 1
+//     };
+//     deepFreeze(initialState);
+//     deepFreeze(action);
+//
+//     expect(recosReducer(initialState, action)).toEqual(finalState);
+//   });
+//
+//   it('should not change value when it is not present', () => {
+//     const initialState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: false },
+//       { key: 2, name: 'test', recommender: 'someone', added: 123, seen: false }
+//     ];
+//     const finalState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: false },
+//       { key: 2, name: 'test', recommender: 'someone', added: 123, seen: false }
+//     ];
+//     let action = {
+//       type: MARK_RECO_AS_SEEN,
+//       key: 3
+//     };
+//     deepFreeze(initialState);
+//     deepFreeze(action);
+//
+//     expect(recosReducer(initialState, action)).toEqual(finalState);
+//   });
+// });
+//
+// describe('mark as unseen reco action', () => {
+//   it('should be able mark as unseen', () => {
+//     const initialState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true }
+//     ];
+//     const finalState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: false }
+//     ];
+//     let action = {
+//       type: MARK_RECO_AS_NOT_SEEN,
+//       key: 1
+//     };
+//     deepFreeze(initialState);
+//     deepFreeze(action);
+//
+//     expect(recosReducer(initialState, action)).toEqual(finalState);
+//   });
+//
+//   it('should keep seen value', () => {
+//     const initialState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: false }
+//     ];
+//     const finalState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: false }
+//     ];
+//     let action = {
+//       type: MARK_RECO_AS_NOT_SEEN,
+//       key: 1
+//     };
+//     deepFreeze(initialState);
+//     deepFreeze(action);
+//
+//     expect(recosReducer(initialState, action)).toEqual(finalState);
+//   });
+//
+//   it('should not change other values', () => {
+//     const initialState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true },
+//       { key: 2, name: 'test', recommender: 'someone', added: 123, seen: true }
+//     ];
+//     const finalState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: false },
+//       { key: 2, name: 'test', recommender: 'someone', added: 123, seen: true }
+//     ];
+//     let action = {
+//       type: MARK_RECO_AS_NOT_SEEN,
+//       key: 1
+//     };
+//     deepFreeze(initialState);
+//     deepFreeze(action);
+//
+//     expect(recosReducer(initialState, action)).toEqual(finalState);
+//   });
+//
+//   it('should not change value when it is not present', () => {
+//     const initialState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true },
+//       { key: 2, name: 'test', recommender: 'someone', added: 123, seen: true }
+//     ];
+//     const finalState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true },
+//       { key: 2, name: 'test', recommender: 'someone', added: 123, seen: true }
+//     ];
+//     let action = {
+//       type: MARK_RECO_AS_NOT_SEEN,
+//       key: 3
+//     };
+//     deepFreeze(initialState);
+//     deepFreeze(action);
+//
+//     expect(recosReducer(initialState, action)).toEqual(finalState);
+//   });
+// });
+//
+// describe('rate reco action', () => {
+//   it('should be able to rate a previously unrated reco', () => {
+//     const initialState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true }
+//     ];
+//     const finalState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
+//     ];
+//     let action = {
+//       type: RATE_RECO,
+//       key: 1,
+//       rating: 3
+//     };
+//     deepFreeze(initialState);
+//     deepFreeze(action);
+//
+//     expect(recosReducer(initialState, action)).toEqual(finalState);
+//   });
+//
+//   it('should be able to rate a previously rated reco', () => {
+//     const initialState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 1 }
+//     ];
+//     const finalState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
+//     ];
+//     let action = {
+//       type: RATE_RECO,
+//       key: 1,
+//       rating: 3
+//     };
+//     deepFreeze(initialState);
+//     deepFreeze(action);
+//
+//     expect(recosReducer(initialState, action)).toEqual(finalState);
+//   });
+//
+//   it('should not change other ratings', () => {
+//     const initialState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 1 },
+//       { key: 2, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 1 },
+//       { key: 3, name: 'test', recommender: 'someone', added: 123, seen: true }
+//     ];
+//     const finalState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 1 },
+//       { key: 2, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 2 },
+//       { key: 3, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
+//     ];
+//     let action1 = {
+//       type: RATE_RECO,
+//       key: 2,
+//       rating: 2
+//     };
+//     let action2 = {
+//       type: RATE_RECO,
+//       key: 3,
+//       rating: 3
+//     };
+//     deepFreeze(initialState);
+//     deepFreeze(action1);
+//     deepFreeze(action2);
+//
+//     let state = recosReducer(initialState, action1);
+//     expect(recosReducer(state, action2)).toEqual(finalState);
+//   });
+//
+//   it('should not change value when it is not present', () => {
+//     const initialState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true },
+//       { key: 2, name: 'test', recommender: 'someone', added: 123, seen: true }
+//     ];
+//     const finalState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true },
+//       { key: 2, name: 'test', recommender: 'someone', added: 123, seen: true }
+//     ];
+//     let action = {
+//       type: RATE_RECO,
+//       key: 3,
+//       rating: 4
+//     };
+//     deepFreeze(initialState);
+//     deepFreeze(action);
+//
+//     expect(recosReducer(initialState, action)).toEqual(finalState);
+//   });
+//
+//   it('should not change value when no rating is specified', () => {
+//     const initialState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
+//     ];
+//     const finalState = [
+//       { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
+//     ];
+//     let action = {
+//       type: RATE_RECO,
+//       key: 1
+//     };
+//     deepFreeze(initialState);
+//     deepFreeze(action);
+//
+//     expect(recosReducer(initialState, action)).toEqual(finalState);
+//   });
+// });
 
 describe('Load recos success', () => {
   it('should load recos correctly', () => {

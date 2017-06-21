@@ -1,35 +1,36 @@
-import { FirebaseList } from '../firebase/firebase-list';
-import Reco from './reco';
-
-export const recoList = new FirebaseList({
-  onAdd: addRecoSuccess,
-  onChange: editRecoSuccess,
-  onLoad: loadRecosSuccess,
-  onRemove: removeRecoSuccess
-}, Reco);
+// import { FirebaseList } from '../firebase/firebase-list';
+// import Reco from './reco';
+import { firebaseDb } from '../firebase';
+// export const recoList = new FirebaseList({
+//   onAdd: addRecoSuccess,
+//   onChange: editRecoSuccess,
+//   onLoad: loadRecosSuccess,
+//   onRemove: removeRecoSuccess
+// }, Reco);
 
 import {
   ADD_RECO,
   ADD_RECO_ERROR,
-  EDIT_RECO,
+  // EDIT_RECO,
+  EDIT_RECO_SUCCESS,
   // REMOVE_RECO,
   REMOVE_RECO_SUCCESS,
-  MARK_RECO_AS_SEEN,
-  MARK_RECO_AS_NOT_SEEN,
-  RATE_RECO,
+  // MARK_RECO_AS_SEEN,
+  // MARK_RECO_AS_NOT_SEEN,
+  // RATE_RECO,
   LOAD_RECOS_SUCCESS,
   UNLOAD_RECOS_SUCCESS
 } from './action-types';
 
-export const addReco = (reco) => {
-  return dispatch => {
-    return recoList.push({
-      added: (new Date().getTime()),
-      ...reco
-    })
-      .catch(error => dispatch(addRecoError(error)));
-  };
-}
+// export const addReco = (reco) => {
+//   return dispatch => {
+//     return recoList.push({
+//       added: (new Date().getTime()),
+//       ...reco
+//     })
+//       .catch(error => dispatch(addRecoError(error)));
+//   };
+// }
 
 //TODO: do and test
 export const addRecoError = (error) => ({
@@ -39,14 +40,12 @@ export const addRecoError = (error) => ({
 
 //TODO: This is not really used
 export const addRecoSuccess = (reco) => {
-  type: ADD_RECO,
-  reco
+  console.log('addRecoSuccess!!');
+  return {
+    type: ADD_RECO,
+    reco
+  }
 };
-
-export const editRecoSuccess = (reco) => ({
-  type: EDIT_RECO,
-  reco
-});
 
 export function loadRecosSuccess(recos) {
   return {
@@ -59,39 +58,44 @@ export const loadRecos = () => {
   return (dispatch, getState) => {
     const { auth } = getState();
     const id = auth.loggedInUser.uid;
-    recoList.path = `recos/${id}`;
-    recoList.subscribe(dispatch);
+    firebaseDb.ref(`recos/${id}`).on('value', (snapshot) => {
+      dispatch(loadRecosSuccess(snapshot.val()));
+    });
   };
 };
 
 export const unloadRecos = () => {
-  recoList.unsubscribe();
   return {
     type: UNLOAD_RECOS_SUCCESS
   };
 }
 
+// export const editReco = (key, changes) => {
+//   return dispatch => {
+//     return recoList.update(key, changes)
+//       .then(result => {
+//         debugger;
+//         console.log('editReco success');
+//         console.log(result);
+//       })
+//       .catch(error => dispatch(editRecoError(error)));
+//   };
+// };
 
-
-
-
-
-
-
-
-export const editReco = (id, recoName, recommender = '') => ({
-  id: id,
-  type: EDIT_RECO,
-  name: recoName,
-  recommender: recommender
-});
-
-export const removeReco = (key) => {
-  return dispatch => {
-    return recoList.remove(key)
-      .catch(error => dispatch(removeRecoError(error)));
+export function editRecoSuccess(reco) {
+  console.log('editRecoSuccess');
+  return {
+    type: EDIT_RECO_SUCCESS,
+    reco
   };
 };
+
+// export const removeReco = (key) => {
+//   return dispatch => {
+//     return recoList.remove(key)
+//       .catch(error => dispatch(removeRecoError(error)));
+//   };
+// };
 
 
 //TODO: also not used
@@ -109,18 +113,22 @@ export function removeRecoError() {
   // }
 };
 
-export const markAsSeen = (id) => ({
-  type: MARK_RECO_AS_SEEN,
-  id
-});
+export function editRecoError() {
 
-export const markAsUnSeen = (id) => ({
-  type: MARK_RECO_AS_NOT_SEEN,
-  id
-});
+};
 
-export const rateReco = (id, rating) => ({
-  type: RATE_RECO,
-  id,
-  rating
-});
+// export const markAsSeen = (id) => ({
+//   type: MARK_RECO_AS_SEEN,
+//   id
+// });
+//
+// export const markAsUnSeen = (id) => ({
+//   type: MARK_RECO_AS_NOT_SEEN,
+//   id
+// });
+//
+// export const rateReco = (id, rating) => ({
+//   type: RATE_RECO,
+//   id,
+//   rating
+// });
