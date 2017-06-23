@@ -1,4 +1,5 @@
 import { firebaseDb } from '../firebase';
+import { loadState, saveState } from '../localStorage';
 
 import {
   ADD_RECO_ERROR,
@@ -20,6 +21,22 @@ export const addReco = (reco) => {
       .catch(error => dispatch(addRecoError(error)));
   };
 }
+
+export const importRecosFromLocalStorage = () => {
+  return (dispatch) => {
+    const state = loadState() || {};
+    if(state.recos) {
+      state.recos.forEach((reco) => {
+        const recoToSave = {...reco};
+        delete recoToSave.id;
+        dispatch(addReco(recoToSave));
+      });
+      console.log(`Saved ${state.recos.length} old recos`);
+      saveState(null);
+    }
+  };
+
+};
 
 //TODO: do and test
 export const addRecoError = (error) => ({

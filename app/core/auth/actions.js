@@ -1,5 +1,6 @@
 import { firebaseAuth } from '../firebase';
-import { loadRecos } from '../recos/actions';
+import { loadRecos, importRecosFromLocalStorage } from '../recos/actions';
+
 import {
   INIT_AUTH,
   LOGIN,
@@ -19,6 +20,7 @@ export const initAuthAction = (user) => {
     dispatch(_initAuthAction(user));
     if(user) {
       dispatch(loadRecos());
+      dispatch(importRecosFromLocalStorage());
     }
   };
 };
