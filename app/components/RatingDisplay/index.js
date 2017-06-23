@@ -1,12 +1,27 @@
 import React from 'react';
 import ActionGrade from 'material-ui/svg-icons/action/grade';
+import { DARK_PURPLE, YELLOW, GREY, WHITE } from '../../core/theme';
+
+const ICON_BUTTON_SIZE = 16;
+
+const baseStarStyle = {
+  borderRadius: '50%',
+  height: ICON_BUTTON_SIZE,
+  width: ICON_BUTTON_SIZE,
+  padding: 1,
+  marginRight: 1
+};
 
 const starStyles = {
   unselected: {
-    color: '#aaa'
+    ...baseStarStyle,
+    color: WHITE,
+    backgroundColor: GREY
   },
   selected: {
-    color: '#D7D70E'
+    ...baseStarStyle,
+    color: YELLOW,
+    backgroundColor: DARK_PURPLE
   }
 };
 

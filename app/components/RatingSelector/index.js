@@ -1,13 +1,36 @@
 import React from 'react';
 import IconButton from 'material-ui/IconButton';
 import ActionGrade from 'material-ui/svg-icons/action/grade';
+import { DARK_PURPLE, YELLOW, GREY, WHITE } from '../../core/theme';
+
+const ICON_BUTTON_SIZE = 42;
+
+const iconButtonContainerStyle = {
+  height: ICON_BUTTON_SIZE,
+  width: ICON_BUTTON_SIZE,
+  border: 0,
+  padding: 0,
+  marginLeft: 4,
+  marginRight: 4
+}
+
+const baseStarStyle = {
+  borderRadius: '50%',
+  height: ICON_BUTTON_SIZE,
+  width: ICON_BUTTON_SIZE,
+  padding: 4
+};
 
 const starStyles = {
   unselected: {
-    color: '#aaa'
+    ...baseStarStyle,
+    color: WHITE,
+    backgroundColor: GREY
   },
   selected: {
-    color: '#D7D70E'
+    ...baseStarStyle,
+    color: YELLOW,
+    backgroundColor: DARK_PURPLE
   }
 };
 
@@ -34,6 +57,7 @@ const getStar = (starValue, props) => {
   };
   return (
     <IconButton
+      style={iconButtonContainerStyle}
       onClick={onStarClicked}
       touch={true}
       iconStyle={ getStarStyle(starValue, props.rating) }>

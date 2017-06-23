@@ -10,15 +10,18 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import RecoRecoTheme from './core/theme';
 import { configureStore } from './core/store';
 import { getRoutes } from './core/routes.js';
 import { initAuth } from './core/auth';
 
 const store = configureStore();
+const muiTheme = getMuiTheme(RecoRecoTheme);
 
 const render = () => {
   ReactDOM.render(
-    <MuiThemeProvider>
+    <MuiThemeProvider muiTheme={muiTheme}>
       <Provider store={store}>
         <Router history={browserHistory}
                 routes={getRoutes(store.getState)}>

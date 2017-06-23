@@ -15,8 +15,12 @@ RecoList.propTypes = {
   recos: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
 };
 
+const style = {
+  paddingBottom: 60,
+};
+
 const getRecoList = (recos) => (
-  <div>
+  <div style={style}>
     {
       recos.map( (reco) => {
           return (

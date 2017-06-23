@@ -20,6 +20,17 @@ const buttonStyle = {
   width: '100%'
 };
 
+const softTextStyle = {
+  color: '#676767',
+  fontSize: 12
+};
+
+const ratingSelectorStyle = {
+  textAlign: 'center',
+  paddingTop: 20,
+  paddingBottom: 20,
+};
+
 const Reco = ({reco = {}, onRemoveClick, onMarkAsUnSeenClick, onMarkAsSeenClick, onChangedRating}) => {
   return (
     <div>
@@ -73,7 +84,7 @@ const getTitlePart = (reco = {}) => {
 const getRecommendedByPart = (reco = {}) => {
   if(reco.recommender) {
     return (
-      <p>
+      <p style={softTextStyle}>
         <span>Recommended by: </span>
         <Link
           to={`/recommender/${encodeURI(reco.recommender)}`}
@@ -89,7 +100,7 @@ const getRecommendedByPart = (reco = {}) => {
 const getAddedPart = (reco = {}) => {
   if(reco.added) {
     return (
-      <div>
+      <div style={softTextStyle}>
         <p>{timeSince(reco.added)} ago</p>
       </div>
     );
@@ -103,7 +114,9 @@ const getSeenPart = (reco = {}, onMarkAsUnSeenClick, onMarkAsSeenClick, onChange
   if(reco.seen) {
     return (
       <div>
-        <RatingSelector rating={reco.rating} onChangedRating={ onChangedRating.bind(this, reco.id) }></RatingSelector>
+        <div style={ratingSelectorStyle}>
+          <RatingSelector rating={reco.rating} onChangedRating={ onChangedRating.bind(this, reco.id) }></RatingSelector>
+        </div>
         { getMarkAsUnseenPart(reco, onMarkAsUnSeenClick) }
       </div>
     );
