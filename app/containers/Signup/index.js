@@ -24,6 +24,10 @@ const blockStyle = {
   display: 'block'
 };
 
+const alreadyHaveAnAccountStyle = {
+  textAlign: 'center'
+};
+
 class Signup extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor({ error, dispatchSignupButtonClicked }) {
     super();
@@ -99,7 +103,7 @@ class Signup extends React.Component { // eslint-disable-line react/prefer-state
     return (
       <div>
         <AppBar
-          title={'Signup'}
+          title={'Sign up to RecoReco'}
           showMenuIconButton={false} />
         <Card>
           <CardText>
@@ -122,7 +126,7 @@ class Signup extends React.Component { // eslint-disable-line react/prefer-state
               />
 
               <RaisedButton
-                label={'Sign up'}
+                label={'Create account'}
                 style={mainButtonStyle}
                 primary={true}
                 onClick={this.signupButtonClicked}
@@ -133,7 +137,7 @@ class Signup extends React.Component { // eslint-disable-line react/prefer-state
         </Card>
         {this.getServerError()}
         <Card>
-          <CardText>
+          <CardText style={alreadyHaveAnAccountStyle}>
             <p>Already have an account?</p>
               <Link
                 to={'login'}

@@ -19,6 +19,10 @@ const blockStyle = {
   display: 'block'
 };
 
+const newToRecoRecoStyle = {
+  textAlign: 'center'
+};
+
 const emptyState = { email: '', password: '', emailError: false, passwordError: false };
 
 class Login extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -92,7 +96,7 @@ class Login extends React.Component { // eslint-disable-line react/prefer-statel
     return (
       <div>
         <AppBar
-          title={'Login'}
+          title={'Log in to RecoReco'}
           showMenuIconButton={false} />
         <Card>
           <CardText>
@@ -125,13 +129,13 @@ class Login extends React.Component { // eslint-disable-line react/prefer-statel
         {this.getServerError()}
 
         <Card>
-          <CardText>
+          <CardText style={newToRecoRecoStyle}>
             <p>New to RecoReco?</p>
               <Link
                 to={'signup'}
               >
                 <RaisedButton
-                  label={'Sign up!'}
+                  label={'Create a new account!'}
                   primary={true}/>
               </Link>
           </CardText>
