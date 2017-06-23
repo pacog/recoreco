@@ -25,7 +25,8 @@ describe('main reducer', () => {
     auth: {
       loggedInUser: null,
       logInProgress: false
-    }
+    },
+    loading: true
   };
   deepFreeze(DEFAULT_EMPTY_STATE);
 
