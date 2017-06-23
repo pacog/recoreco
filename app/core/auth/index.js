@@ -1,14 +1,11 @@
 import { firebaseAuth } from '../firebase';
 import { initAuthAction } from './actions';
-import { loadRecos } from '../recos/actions';
 
 export const initAuth = (dispatch) => {
   return new Promise((resolve, reject) => {
-    const unsub = firebaseAuth.onAuthStateChanged(
+    firebaseAuth.onAuthStateChanged(
       user => {
         dispatch(initAuthAction(user));
-        dispatch(loadRecos()); // TODO maybe find a better place to do this
-        unsub();
         resolve();
       },
       error => reject(error)

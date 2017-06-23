@@ -1,4 +1,5 @@
 import { firebaseAuth } from '../firebase';
+import { loadRecos } from '../recos/actions';
 import {
   INIT_AUTH,
   LOGIN,
@@ -8,10 +9,19 @@ import {
   LOGOUT
 } from './action-types';
 
-export const initAuthAction = (user) => ({
+const _initAuthAction = (user) => ({
   type: INIT_AUTH,
   user
 });
+
+export const initAuthAction = (user) => {
+  return (dispatch) => {
+    dispatch(_initAuthAction(user));
+    if(user) {
+      dispatch(loadRecos());
+    }
+  };
+};
 
 export const signInWithEmailAndPassword = (email, password) => {
   return (dispatch) => {

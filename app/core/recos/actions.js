@@ -37,6 +37,9 @@ export function loadRecosSuccess(recos) {
 export const loadRecos = () => {
   return (dispatch, getState) => {
     const { auth } = getState();
+    if(!auth.loggedInUser) {
+      return;
+    }
     const id = auth.loggedInUser.uid;
     firebaseDb.ref(`recos/${id}`).on('value', (snapshot) => {
       dispatch(loadRecosSuccess(snapshot.val()));
