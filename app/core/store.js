@@ -4,7 +4,8 @@ import { mainReducer } from './reducer';
 
 const initialState = {
   recos: [],
-  auth: {}
+  auth: {},
+  loading: true
 };
 
 export const configureStore = (state = initialState) => {

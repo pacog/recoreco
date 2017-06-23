@@ -1,15 +1,16 @@
 import { firebaseDb } from '../firebase';
 import { loadState, saveState } from '../localStorage';
+import { startLoading, endLoading } from '../loading/actions';
 
 import {
   ADD_RECO_ERROR,
-  REMOVE_RECO_SUCCESS,
   LOAD_RECOS_SUCCESS,
   UNLOAD_RECOS_SUCCESS
 } from './action-types';
 
 export const addReco = (reco) => {
   return (dispatch, getState) => {
+    dispatch(startLoading());
     const { auth } = getState();
     const id = auth.loggedInUser.uid;
     return firebaseDb
@@ -57,9 +58,11 @@ export const loadRecos = () => {
     if(!auth.loggedInUser) {
       return;
     }
+    dispatch(startLoading());
     const id = auth.loggedInUser.uid;
     firebaseDb.ref(`recos/${id}`).on('value', (snapshot) => {
       dispatch(loadRecosSuccess(snapshot.val()));
+      dispatch(endLoading());
     });
   };
 };
@@ -72,6 +75,7 @@ export const unloadRecos = () => {
 
 export const editReco = (key, changes) => {
   return (dispatch, getState) => {
+    dispatch(startLoading());
     const { auth } = getState();
     const id = auth.loggedInUser.uid;
     return firebaseDb.ref(`recos/${id}`).child(key).update(changes)
@@ -81,6 +85,7 @@ export const editReco = (key, changes) => {
 
 export const removeReco = (key) => {
   return (dispatch, getState) => {
+    dispatch(startLoading());
     const { auth } = getState();
     const id = auth.loggedInUser.uid;
     return firebaseDb.ref(`recos/${id}`).child(key).remove()
@@ -88,20 +93,8 @@ export const removeReco = (key) => {
   };
 };
 
-
-//TODO: also not used
-export function removeRecoSuccess(key) {
-  return {
-    type: REMOVE_RECO_SUCCESS,
-    key
-  }
-};
-
 export function removeRecoError() {
-  // return {
-  //   type: REMOVE_RECO_SUCCESS,
-  //   key
-  // }
+
 };
 
 export function editRecoError() {
