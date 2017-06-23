@@ -18,11 +18,7 @@ export class Dashboard extends React.Component {
         <Header
           title={'To watch'}
           />
-        <Card>
-          <CardText>
-            { getContentPart(this.props.recos, this.props.isLoading) }
-          </CardText>
-        </Card>
+        { getContentPart(this.props.recos, this.props.isLoading) }
         <Footer active={'toWatch'} />
       </div>
     );
@@ -33,7 +29,13 @@ const getContentPart = (recos, loading) => {
   if(loading) {
     return <LoadingIndicator />;
   } else {
-    return <RecoList recos={recos} />;
+    return (
+      <Card>
+        <CardText>
+          <RecoList recos={recos} />
+        </CardText>
+      </Card>
+    );
   }
 
 }
