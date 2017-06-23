@@ -4,52 +4,59 @@ import {
   getRecommenders,
   getRecosByRecommender,
   getUnseenRecos,
-  getSeenRecos } from '../core/recos';
+  getSeenRecos
+} from '../core/recos';
 import deepFreeze from '../utils/deep-freeze';
 
 describe('getReco method', () => {
   it('should be able to get a reco by id', () => {
-    const initialState = { recos: [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true },
-      { key: 2, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
-    ] };
+    const initialState = {
+      recos: {
+        '1': { name: 'test', recommender: 'someone', added: 123, seen: true },
+        '2': { name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
+      }
+    };
     const result =
-      { key: 2, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 };
+      { key: '2', name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 };
 
     deepFreeze(initialState);
 
-    expect(getReco(initialState, 2)).toEqual(result);
+    expect(getReco(initialState, '2')).toEqual(result);
   });
 
   it('should return null when not found', () => {
-    const initialState = { recos: [
-      { key: 1, name: 'test', recommender: 'someone', added: 123, seen: true },
-      { key: 2, name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
-    ] };
+    const initialState = {
+      recos: {
+        '1': { name: 'test', recommender: 'someone', added: 123, seen: true },
+        '2': { name: 'test', recommender: 'someone', added: 123, seen: true, rating: 3 }
+      }
+    };
     const result = null;
 
     deepFreeze(initialState);
 
-    expect(getReco(initialState, 3)).toEqual(result);
+    expect(getReco(initialState, '3')).toEqual(result);
   });
 
   it('should return null when no recos yet', () => {
-    const initialState = { recos: [] };
+    const initialState = { recos: {} };
     const result = null;
 
     deepFreeze(initialState);
 
-    expect(getReco(initialState, 3)).toEqual(result);
+    expect(getReco(initialState, '3')).toEqual(result);
   });
 });
 
 describe('getRecommenders method', () => {
   it('should be able to get recommenders', () => {
-    const initialState = { recos: [
-      { key: 1, name: 'test', recommender: 'Paco', added: 123, seen: true },
-      { key: 2, name: 'test', recommender: 'Paco', added: 123, seen: true },
-      { key: 3, name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
-    ] };
+    const initialState = {
+      recos: {
+        '1': { name: 'test', recommender: 'Paco', added: 123, seen: true },
+        '2': { name: 'test', recommender: 'Paco', added: 123, seen: true },
+        '3': { name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
+      }
+    };
     const result = ['Paco', 'Pepe'];
 
     deepFreeze(initialState);
@@ -58,11 +65,13 @@ describe('getRecommenders method', () => {
   });
 
   it('should work with empty recommenders', () => {
-    const initialState = { recos: [
-      { key: 1, name: 'test', recommender: 'Paco', added: 123, seen: true },
-      { key: 2, name: 'test', recommender: '', added: 123, seen: true },
-      { key: 3, name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
-    ] };
+    const initialState = {
+      recos: {
+        '1': { name: 'test', recommender: 'Paco', added: 123, seen: true },
+        '2': { name: 'test', recommender: '', added: 123, seen: true },
+        '3': { name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
+      }
+    };
     const result = ['Paco', 'Pepe'];
 
     deepFreeze(initialState);
@@ -71,11 +80,13 @@ describe('getRecommenders method', () => {
   });
 
   it('should work with empty recommenders', () => {
-    const initialState = { recos: [
-      { key: 1, name: 'test', recommender: '', added: 123, seen: true },
-      { key: 2, name: 'test', recommender: '', added: 123, seen: true },
-      { key: 3, name: 'test', recommender: '', added: 123, seen: true, rating: 3 }
-    ] };
+    const initialState = {
+      recos: {
+        '1': { name: 'test', recommender: '', added: 123, seen: true },
+        '2': { name: 'test', recommender: '', added: 123, seen: true },
+        '3': { name: 'test', recommender: '', added: 123, seen: true, rating: 3 }
+      }
+    };
     const result = [];
 
     deepFreeze(initialState);
@@ -95,14 +106,16 @@ describe('getRecommenders method', () => {
 
 describe('getRecosByRecommender method', () => {
   it('should be able to get recos', () => {
-    const initialState = { recos: [
-      { key: 1, name: 'test', recommender: 'Paco', added: 123, seen: true },
-      { key: 2, name: 'test', recommender: 'Paco', added: 123, seen: true },
-      { key: 3, name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
-    ] };
+    const initialState = {
+      recos: {
+        '1': { name: 'test', recommender: 'Paco', added: 123, seen: true },
+        '2': { name: 'test', recommender: 'Paco', added: 123, seen: true },
+        '3': { name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
+      }
+    };
     const result = [
-      { key: 1, name: 'test', recommender: 'Paco', added: 123, seen: true },
-      { key: 2, name: 'test', recommender: 'Paco', added: 123, seen: true }
+      { key: '1', name: 'test', recommender: 'Paco', added: 123, seen: true },
+      { key: '2', name: 'test', recommender: 'Paco', added: 123, seen: true }
     ];
 
     deepFreeze(initialState);
@@ -111,13 +124,15 @@ describe('getRecosByRecommender method', () => {
   });
 
   it('should be able to get recos when there is only one', () => {
-    const initialState = { recos: [
-      { key: 1, name: 'test', recommender: 'Paco', added: 123, seen: true },
-      { key: 2, name: 'test', recommender: 'Paco', added: 123, seen: true },
-      { key: 3, name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
-    ] };
+    const initialState = {
+      recos: {
+        '1': { name: 'test', recommender: 'Paco', added: 123, seen: true },
+        '2': { name: 'test', recommender: 'Paco', added: 123, seen: true },
+        '3': { name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
+      }
+    };
     const result = [
-      { key: 3, name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
+      { key: '3', name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
     ];
 
     deepFreeze(initialState);
@@ -126,11 +141,13 @@ describe('getRecosByRecommender method', () => {
   });
 
   it('should be able to get no recos', () => {
-    const initialState = { recos: [
-      { key: 1, name: 'test', recommender: 'Paco', added: 123, seen: true },
-      { key: 2, name: 'test', recommender: 'Paco', added: 123, seen: true },
-      { key: 3, name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
-    ] };
+    const initialState = {
+      recos: {
+        '1': { name: 'test', recommender: 'Paco', added: 123, seen: true },
+        '2': { name: 'test', recommender: 'Paco', added: 123, seen: true },
+        '3': { name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
+      }
+    };
     const result = [];
 
     deepFreeze(initialState);
@@ -139,7 +156,7 @@ describe('getRecosByRecommender method', () => {
   });
 
   it('should be able to get no recos when list is empty', () => {
-    const initialState = { recos: [] };
+    const initialState = { recos: {} };
     const result = [];
 
     deepFreeze(initialState);
@@ -150,13 +167,15 @@ describe('getRecosByRecommender method', () => {
 
 describe('getUnseenRecos method', () => {
   it('should be able to get recos', () => {
-    const initialState = { recos: [
-      { key: 1, name: 'test', recommender: 'Paco', added: 123, seen: true },
-      { key: 2, name: 'test', recommender: 'Paco', added: 123, seen: false },
-      { key: 3, name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
-    ] };
+    const initialState = {
+      recos: {
+        '1': { name: 'test', recommender: 'Paco', added: 123, seen: true },
+        '2': { name: 'test', recommender: 'Paco', added: 123, seen: false },
+        '3': { name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
+      }
+    };
     const result = [
-      { key: 2, name: 'test', recommender: 'Paco', added: 123, seen: false }
+      { key: '2', name: 'test', recommender: 'Paco', added: 123, seen: false }
     ];
 
     deepFreeze(initialState);
@@ -165,15 +184,17 @@ describe('getUnseenRecos method', () => {
   });
 
   it('should be able to get all recos', () => {
-    const initialState = { recos: [
-      { key: 1, name: 'test', recommender: 'Paco', added: 123, seen: false },
-      { key: 2, name: 'test', recommender: 'Paco', added: 123, seen: false },
-      { key: 3, name: 'test', recommender: 'Pepe', added: 123, seen: false, rating: 3 }
-    ] };
+    const initialState = {
+      recos: {
+        '1': { name: 'test', recommender: 'Paco', added: 123, seen: false },
+        '2': { name: 'test', recommender: 'Paco', added: 123, seen: false },
+        '3': { name: 'test', recommender: 'Pepe', added: 123, seen: false, rating: 3 }
+      }
+    };
     const result = [
-      { key: 1, name: 'test', recommender: 'Paco', added: 123, seen: false },
-      { key: 2, name: 'test', recommender: 'Paco', added: 123, seen: false },
-      { key: 3, name: 'test', recommender: 'Pepe', added: 123, seen: false, rating: 3 }
+      { key: '1', name: 'test', recommender: 'Paco', added: 123, seen: false },
+      { key: '2', name: 'test', recommender: 'Paco', added: 123, seen: false },
+      { key: '3', name: 'test', recommender: 'Pepe', added: 123, seen: false, rating: 3 }
     ];
 
     deepFreeze(initialState);
@@ -182,11 +203,13 @@ describe('getUnseenRecos method', () => {
   });
 
   it('should be able to get no recos', () => {
-    const initialState = { recos: [
-      { key: 1, name: 'test', recommender: 'Paco', added: 123, seen: true },
-      { key: 2, name: 'test', recommender: 'Paco', added: 123, seen: true },
-      { key: 3, name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
-    ] };
+    const initialState = {
+      recos: {
+        '1': { name: 'test', recommender: 'Paco', added: 123, seen: true },
+        '2': { name: 'test', recommender: 'Paco', added: 123, seen: true },
+        '3': { name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
+      }
+    };
     const result = [];
 
     deepFreeze(initialState);
@@ -195,7 +218,7 @@ describe('getUnseenRecos method', () => {
   });
 
   it('should work with empty state', () => {
-    const initialState = { recos: [] };
+    const initialState = { recos: {} };
     const result = [];
 
     deepFreeze(initialState);
@@ -204,13 +227,15 @@ describe('getUnseenRecos method', () => {
   });
 
   it('should work with undefined seen state', () => {
-    const initialState = { recos: [
-      { key: 1, name: 'test', recommender: 'Paco', added: 123, seen: true },
-      { key: 2, name: 'test', recommender: 'Paco', added: 123 },
-      { key: 3, name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
-    ] };
+    const initialState = {
+      recos: {
+        '1': { name: 'test', recommender: 'Paco', added: 123, seen: true },
+        '2': { name: 'test', recommender: 'Paco', added: 123 },
+        '3': { name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
+      }
+    };
     const result = [
-      { key: 2, name: 'test', recommender: 'Paco', added: 123 }
+      { key: '2', name: 'test', recommender: 'Paco', added: 123 }
     ];
 
     deepFreeze(initialState);
@@ -222,13 +247,15 @@ describe('getUnseenRecos method', () => {
 
 describe('getSeenRecos method', () => {
   it('should be able to get recos', () => {
-    const initialState = { recos: [
-      { key: 1, name: 'test', recommender: 'Paco', added: 123, seen: false },
-      { key: 2, name: 'test', recommender: 'Paco', added: 123, seen: true },
-      { key: 3, name: 'test', recommender: 'Pepe', added: 123, seen: false, rating: 3 }
-    ] };
+    const initialState = {
+      recos: {
+        '1': { name: 'test', recommender: 'Paco', added: 123, seen: false },
+        '2': { name: 'test', recommender: 'Paco', added: 123, seen: true },
+        '3': { name: 'test', recommender: 'Pepe', added: 123, seen: false, rating: 3 }
+      }
+    };
     const result = [
-      { key: 2, name: 'test', recommender: 'Paco', added: 123, seen: true }
+      { key: '2', name: 'test', recommender: 'Paco', added: 123, seen: true }
     ];
 
     deepFreeze(initialState);
@@ -237,15 +264,17 @@ describe('getSeenRecos method', () => {
   });
 
   it('should be able to get all recos', () => {
-    const initialState = { recos: [
-      { key: 1, name: 'test', recommender: 'Paco', added: 123, seen: true },
-      { key: 2, name: 'test', recommender: 'Paco', added: 123, seen: true },
-      { key: 3, name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
-    ] };
+    const initialState = {
+      recos: {
+        '1': { name: 'test', recommender: 'Paco', added: 123, seen: true },
+        '2': { name: 'test', recommender: 'Paco', added: 123, seen: true },
+        '3': { name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
+      }
+    };
     const result = [
-      { key: 1, name: 'test', recommender: 'Paco', added: 123, seen: true },
-      { key: 2, name: 'test', recommender: 'Paco', added: 123, seen: true },
-      { key: 3, name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
+      { key: '1', name: 'test', recommender: 'Paco', added: 123, seen: true },
+      { key: '2', name: 'test', recommender: 'Paco', added: 123, seen: true },
+      { key: '3', name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
     ];
 
     deepFreeze(initialState);
@@ -254,11 +283,13 @@ describe('getSeenRecos method', () => {
   });
 
   it('should be able to get no recos', () => {
-    const initialState = { recos: [
-      { key: 1, name: 'test', recommender: 'Paco', added: 123, seen: false },
-      { key: 2, name: 'test', recommender: 'Paco', added: 123, seen: false },
-      { key: 3, name: 'test', recommender: 'Pepe', added: 123, seen: false, rating: 3 }
-    ] };
+    const initialState = {
+      recos: {
+        '1': { name: 'test', recommender: 'Paco', added: 123, seen: false },
+        '2': { name: 'test', recommender: 'Paco', added: 123, seen: false },
+        '3': { name: 'test', recommender: 'Pepe', added: 123, seen: false, rating: 3 }
+      }
+    };
     const result = [];
 
     deepFreeze(initialState);
@@ -267,7 +298,7 @@ describe('getSeenRecos method', () => {
   });
 
   it('should work with empty state', () => {
-    const initialState = { recos: [] };
+    const initialState = { recos: {} };
     const result = [];
 
     deepFreeze(initialState);
@@ -276,13 +307,15 @@ describe('getSeenRecos method', () => {
   });
 
   it('should work with undefined seen state', () => {
-    const initialState = { recos: [
-      { key: 1, name: 'test', recommender: 'Paco', added: 123 },
-      { key: 2, name: 'test', recommender: 'Paco', added: 123, seen: true },
-      { key: 3, name: 'test', recommender: 'Pepe', added: 123 }
-    ] };
+    const initialState = {
+      recos: {
+        '1': { name: 'test', recommender: 'Paco', added: 123 },
+        '2': { name: 'test', recommender: 'Paco', added: 123, seen: true },
+        '3': { name: 'test', recommender: 'Pepe', added: 123 }
+      }
+    };
     const result = [
-      { key: 2, name: 'test', recommender: 'Paco', added: 123, seen: true }
+      { key: '2', name: 'test', recommender: 'Paco', added: 123, seen: true }
     ];
 
     deepFreeze(initialState);

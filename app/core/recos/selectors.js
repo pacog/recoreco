@@ -3,13 +3,12 @@ import { forIn } from 'lodash';
 export const getRecommenders = (state) => {
   const uniqueRecommenders = {};
   if(state.recos) {
-    forIn( (reco) => {
+    forIn(state.recos, (reco) => {
       if(reco.recommender) {
         uniqueRecommenders[reco.recommender] = true;
       }
     });
   }
-
   return Object.keys(uniqueRecommenders);
 }
 
