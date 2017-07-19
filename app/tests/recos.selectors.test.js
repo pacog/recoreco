@@ -108,14 +108,14 @@ describe('getRecosByRecommender method', () => {
   it('should be able to get recos', () => {
     const initialState = {
       recos: {
-        '1': { name: 'test', recommender: 'Paco', added: 123, seen: true },
-        '2': { name: 'test', recommender: 'Paco', added: 123, seen: true },
+        '1': { name: 'test', recommender: 'Paco', added: 125, seen: true },
+        '2': { name: 'test', recommender: 'Paco', added: 124, seen: true },
         '3': { name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
       }
     };
     const result = [
-      { key: '1', name: 'test', recommender: 'Paco', added: 123, seen: true },
-      { key: '2', name: 'test', recommender: 'Paco', added: 123, seen: true }
+      { key: '1', name: 'test', recommender: 'Paco', added: 125, seen: true },
+      { key: '2', name: 'test', recommender: 'Paco', added: 124, seen: true }
     ];
 
     deepFreeze(initialState);
@@ -186,14 +186,14 @@ describe('getUnseenRecos method', () => {
   it('should be able to get all recos', () => {
     const initialState = {
       recos: {
-        '1': { name: 'test', recommender: 'Paco', added: 123, seen: false },
-        '2': { name: 'test', recommender: 'Paco', added: 123, seen: false },
+        '1': { name: 'test', recommender: 'Paco', added: 125, seen: false },
+        '2': { name: 'test', recommender: 'Paco', added: 124, seen: false },
         '3': { name: 'test', recommender: 'Pepe', added: 123, seen: false, rating: 3 }
       }
     };
     const result = [
-      { key: '1', name: 'test', recommender: 'Paco', added: 123, seen: false },
-      { key: '2', name: 'test', recommender: 'Paco', added: 123, seen: false },
+      { key: '1', name: 'test', recommender: 'Paco', added: 125, seen: false },
+      { key: '2', name: 'test', recommender: 'Paco', added: 124, seen: false },
       { key: '3', name: 'test', recommender: 'Pepe', added: 123, seen: false, rating: 3 }
     ];
 
@@ -266,14 +266,14 @@ describe('getSeenRecos method', () => {
   it('should be able to get all recos', () => {
     const initialState = {
       recos: {
-        '1': { name: 'test', recommender: 'Paco', added: 123, seen: true },
-        '2': { name: 'test', recommender: 'Paco', added: 123, seen: true },
+        '1': { name: 'test', recommender: 'Paco', added: 125, seen: true },
+        '2': { name: 'test', recommender: 'Paco', added: 124, seen: true },
         '3': { name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
       }
     };
     const result = [
-      { key: '1', name: 'test', recommender: 'Paco', added: 123, seen: true },
-      { key: '2', name: 'test', recommender: 'Paco', added: 123, seen: true },
+      { key: '1', name: 'test', recommender: 'Paco', added: 125, seen: true },
+      { key: '2', name: 'test', recommender: 'Paco', added: 124, seen: true },
       { key: '3', name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
     ];
 
