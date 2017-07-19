@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getReco } from '../../core/recos';
+import { isLoading } from '../../core/loading';
 import { browserHistory } from 'react-router';
 import { Link } from 'react-router';
 
@@ -14,6 +15,7 @@ import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-lef
 import timeSince from '../../utils/time-since';
 import RatingSelector from '../../components/RatingSelector';
 import Footer from '../../components/Footer';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
 const buttonStyle = {
   marginTop: 20,
@@ -31,7 +33,7 @@ const ratingSelectorStyle = {
   paddingBottom: 20,
 };
 
-const Reco = ({reco = {}, onRemoveClick, onMarkAsUnSeenClick, onMarkAsSeenClick, onChangedRating}) => {
+const Reco = ({reco = {}, isLoading, onRemoveClick, onMarkAsUnSeenClick, onMarkAsSeenClick, onChangedRating}) => {
   return (
     <div>
       <Header
@@ -44,30 +46,40 @@ const Reco = ({reco = {}, onRemoveClick, onMarkAsUnSeenClick, onMarkAsSeenClick,
           browserHistory.push('/');
         }}
       />
-      <Card>
-        <CardText>
-          { getTitlePart(reco) }
-          { getRecommendedByPart(reco) }
-          { getAddedPart(reco) }
-          { getSeenPart(reco, onMarkAsUnSeenClick, onMarkAsSeenClick, onChangedRating) }
-
-          <RaisedButton
-            label="Delete"
-            labelPosition="after"
-            style={buttonStyle}
-            secondary={true}
-            icon={<ActionDelete />}
-            onClick={ onRemoveClick.bind(this, reco.id) }
-          />
-
-        </CardText>
-
-      </Card>
+      { getContentPart(reco, isLoading, onMarkAsUnSeenClick, onMarkAsSeenClick, onChangedRating, onRemoveClick) }
 
       <Footer />
     </div>
   );
 };
+
+const getContentPart = (reco, isLoading, onMarkAsUnSeenClick, onMarkAsSeenClick, onChangedRating, onRemoveClick) => {
+  if(isLoading) {
+    return <LoadingIndicator />;
+  }
+  return (
+    <Card>
+      <CardText>
+        { getTitlePart(reco) }
+        { getRecommendedByPart(reco) }
+        { getAddedPart(reco) }
+        { getSeenPart(reco, onMarkAsUnSeenClick, onMarkAsSeenClick, onChangedRating, onRemoveClick) }
+
+        <RaisedButton
+          label="Delete"
+          labelPosition="after"
+          style={buttonStyle}
+          secondary={true}
+          icon={<ActionDelete />}
+          onClick={ onRemoveClick.bind(this, reco.id) }
+        />
+
+      </CardText>
+
+    </Card>
+  );
+};
+
 
 const getTitlePart = (reco = {}) => {
   if(reco.name) {
@@ -149,7 +161,8 @@ const getMarkAsSeenPart = (reco, onMarkAsSeenClick) => {
 
 const mapStateToProps = (state, { params }) => {
   return {
-    reco: getReco(state, params.recoId)
+    reco: getReco(state, params.recoId),
+    isLoading: isLoading(state)
   };
 };
 

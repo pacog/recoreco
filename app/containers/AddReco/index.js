@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { recosActions } from '../../core/recos';
 import { getRecommenders } from '../../core/recos';
+import { isLoading } from '../../core/loading';
 
 import Header from '../Header';
 import TextField from 'material-ui/TextField';
@@ -12,6 +13,7 @@ import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import AutoComplete from 'material-ui/AutoComplete';
 import Footer from '../../components/Footer';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
 const blockStyle = {
   display: 'block'
@@ -20,14 +22,15 @@ const blockStyle = {
 const emptyState = { name: '', recommender: '' };
 
 class AddReco extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  constructor({ recommenders, dispatchAddButtonClicked }) {
+  constructor(props) {
     super();
+    this.props = props;
     this.state = emptyState;
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleRecommenderChange = this.handleRecommenderChange.bind(this);
     this.addButtonClicked = this.addButtonClicked.bind(this);
-    this.dispatchAddButtonClicked = dispatchAddButtonClicked; //Probably there is a better way to have evrything being into this.
-    this.recommenders = recommenders;
+    this.dispatchAddButtonClicked = props.dispatchAddButtonClicked; //Probably there is a better way to have evrything being into this.
+    this.recommenders = props.recommenders;
   }
 
   handleNameChange(event) {
@@ -75,9 +78,10 @@ class AddReco extends React.Component { // eslint-disable-line react/prefer-stat
               style={blockStyle}
               primary={true}
               onClick={this.addButtonClicked}
-              disabled={!this.state.name} />
+              disabled={!this.state.name || this.props.isLoading} />
           </CardText>
         </Card>
+        { getLoadingPart(this.props.isLoading) }
         <Footer active={'add'} />
       </div>
     );
@@ -86,7 +90,8 @@ class AddReco extends React.Component { // eslint-disable-line react/prefer-stat
 
 const mapStateToProps = (state) => {
   return {
-    recommenders: getRecommenders(state)
+    recommenders: getRecommenders(state),
+    isLoading: isLoading(state)
   };
 };
 
@@ -99,6 +104,15 @@ const mapDispatchToProps = (dispatch) => {
     }
   };
 };
+
+const getLoadingPart = (loading) => {
+  if(loading) {
+    return <LoadingIndicator />;
+  } else {
+    return '';
+  }
+
+}
 
 const AddRecoContainer = connect(mapStateToProps, mapDispatchToProps)(AddReco);
 
