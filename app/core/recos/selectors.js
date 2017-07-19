@@ -26,7 +26,7 @@ export const getRecosByRecommender = (state, recommender) => {
       });
     }
   });
-  return result;
+  return sortByAdded(result);
 }
 
 export const getUnseenRecos = (state) => {
@@ -42,7 +42,7 @@ export const getUnseenRecos = (state) => {
       });
     }
   });
-  return result;
+  return sortByAdded(result);
 }
 
 export const getSeenRecos = (state) => {
@@ -58,7 +58,7 @@ export const getSeenRecos = (state) => {
       });
     }
   });
-  return result;
+  return sortByAdded(result);
 }
 
 export const getReco = (state, key) => {
@@ -71,4 +71,13 @@ export const getReco = (state, key) => {
       key
     };
   }
+}
+
+function sortByAdded(array) {
+  return array.splice(0).sort((itemA, itemB) => {
+    if(itemA.added > itemB.added) {
+      return -1;
+    }
+    return 1;
+  });
 }
