@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getReco } from '../../core/recos';
-import { isLoading } from '../../core/loading';
+import { isEditing } from '../../core/loading';
 import { browserHistory } from 'react-router';
 import { Link } from 'react-router';
 
@@ -162,7 +162,7 @@ const getMarkAsSeenPart = (reco, onMarkAsSeenClick) => {
 const mapStateToProps = (state, { params }) => {
   return {
     reco: getReco(state, params.recoId),
-    isLoading: isLoading(state)
+    isLoading: isEditing(state)
   };
 };
 

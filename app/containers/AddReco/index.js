@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { recosActions } from '../../core/recos';
 import { getRecommenders } from '../../core/recos';
-import { isLoading } from '../../core/loading';
+import { isAdding } from '../../core/loading';
 
 import Header from '../Header';
 import TextField from 'material-ui/TextField';
@@ -91,7 +91,7 @@ class AddReco extends React.Component { // eslint-disable-line react/prefer-stat
 const mapStateToProps = (state) => {
   return {
     recommenders: getRecommenders(state),
-    isLoading: isLoading(state)
+    isLoading: isAdding(state)
   };
 };
 

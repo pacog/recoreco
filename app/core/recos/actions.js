@@ -1,6 +1,6 @@
 import { firebaseDb } from '../firebase';
 import { loadState, saveState } from '../localStorage';
-import { startLoading, endLoading } from '../loading/actions';
+import { startLoading, startAdding, endAdding, endLoading, startEditing, endEditing } from '../loading/actions';
 
 import {
   ADD_RECO_ERROR,
@@ -11,6 +11,7 @@ import {
 export const addReco = (reco) => {
   return (dispatch, getState) => {
     dispatch(startLoading());
+    dispatch(startAdding());
     const { auth } = getState();
     const id = auth.loggedInUser.uid;
     return firebaseDb
@@ -18,6 +19,10 @@ export const addReco = (reco) => {
       .push({
         added: (new Date().getTime()),
         ...reco
+      })
+      .then((result) => {
+        dispatch(endAdding());
+        return result;
       })
       .catch(error => dispatch(addRecoError(error)));
   };
@@ -76,9 +81,14 @@ export const unloadRecos = () => {
 export const editReco = (key, changes) => {
   return (dispatch, getState) => {
     dispatch(startLoading());
+    dispatch(startEditing());
     const { auth } = getState();
     const id = auth.loggedInUser.uid;
     return firebaseDb.ref(`recos/${id}`).child(key).update(changes)
+      .then((result) => {
+        dispatch(endEditing());
+        return result;
+      })
       .catch(error => dispatch(editRecoError(error)));
   };
 };
@@ -86,9 +96,14 @@ export const editReco = (key, changes) => {
 export const removeReco = (key) => {
   return (dispatch, getState) => {
     dispatch(startLoading());
+    dispatch(startEditing());
     const { auth } = getState();
     const id = auth.loggedInUser.uid;
     return firebaseDb.ref(`recos/${id}`).child(key).remove()
+      .then((result) => {
+        dispatch(endEditing());
+        return result;
+      })
       .catch(error => dispatch(removeRecoError(error)));
   };
 };
