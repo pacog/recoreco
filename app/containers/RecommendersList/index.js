@@ -1,16 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getRecommenders } from '../../core/recos';
+import { isLoading } from '../../core/loading';
 
-import { Link } from 'react-router';
-import {List, ListItem, makeSelectable} from 'material-ui/List';
-import RaisedButton from 'material-ui/RaisedButton';
-import { browserHistory } from 'react-router';
-import KeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
+import LoadingIndicator from '../../components/LoadingIndicator';
+import RecommenderLink from '../../components/RecommenderLink';
 
-let SelectableList = makeSelectable(List);
+const style = {
+  paddingBottom: 60,
+};
 
-const RecommendersList = ({recommenders}) => {
+const RecommendersList = ({recommenders, loading}) => {
+  if(loading) {
+    return getLoading();
+  }
   if(recommenders && recommenders.length) {
     return getRecommendersList(recommenders);
   } else {
@@ -18,26 +21,23 @@ const RecommendersList = ({recommenders}) => {
   }
 };
 
-const getRecommendersList = (recos) => (
-  <SelectableList onChange={
-      (event, selectedRecommender) => {
-        browserHistory.push('/recommender/' + encodeURI(selectedRecommender.name));
-        event.stopPropagation();
-        event.preventDefault();
-      }
-    }>
+const getLoading = () => {
+  return <LoadingIndicator />;
+};
+
+const getRecommendersList = (recommenders) => (
+  <div style={style}>
     {
-      recos.map( (recommender) => {
+      recommenders.map( (recommender) => {
           return (
-            <ListItem
-              value={recommender}
-              key={`recommender-${encodeURI(recommender.name)}`}
-              primaryText={recommender.name}
-              rightIcon={<KeyboardArrowRight />} />
+            <RecommenderLink
+              key={`recommender-${recommender.name}`}
+              recommender={recommender}
+              ></RecommenderLink>
           );
       })
     }
-  </SelectableList>
+  </div>
 );
 
 const getEmptyState = () => (
@@ -54,7 +54,8 @@ const getEmptyState = () => (
 );
 
 const mapStateToProps = (state) => ({
-    recommenders: getRecommenders(state)
+    recommenders: getRecommenders(state),
+    loading: isLoading(state)
 });
 
 const RecommendersListContainer = connect(mapStateToProps)(RecommendersList);

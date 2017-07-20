@@ -1,4 +1,4 @@
-import { forIn, mean } from 'lodash';
+import { forIn, mean, sortBy } from 'lodash';
 
 export const getRecommenders = (state) => {
   const uniqueRecommenders = {};
@@ -14,7 +14,7 @@ export const getRecommenders = (state) => {
   forIn(uniqueRecommenders, (recos, id) => {
     result.push(getRecommenderSummary(recos, id));
   });
-  return result;
+  return sortBy(result, [function(recommender) { return recommender.name; }]);
 }
 
 function getRecommenderSummary(recos = [], recommender) {
