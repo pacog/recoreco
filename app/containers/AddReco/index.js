@@ -72,6 +72,8 @@ class AddReco extends React.Component { // eslint-disable-line react/prefer-stat
               onUpdateInput={this.handleRecommenderChange}
               onNewRequest={this.handleRecommenderChange}
               style={blockStyle}
+              filter={AutoComplete.fuzzyFilter}
+              maxSearchResults={5}
             />
             <RaisedButton
               label={'Save'}
