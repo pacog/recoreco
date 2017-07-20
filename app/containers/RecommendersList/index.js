@@ -5,6 +5,8 @@ import { isLoading } from '../../core/loading';
 
 import LoadingIndicator from '../../components/LoadingIndicator';
 import RecommenderLink from '../../components/RecommenderLink';
+import { Link } from 'react-router';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const style = {
   paddingBottom: 60,
