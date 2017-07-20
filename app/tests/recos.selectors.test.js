@@ -57,12 +57,48 @@ describe('getRecommenders method', () => {
         '3': { name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
       }
     };
-    const result = ['Paco', 'Pepe'];
+    const result = [{
+      name: 'Paco',
+      recos: 2,
+      average: undefined
+    }, {
+      name: 'Pepe',
+      recos: 1,
+      average: 3
+    }];
 
     deepFreeze(initialState);
 
     expect(getRecommenders(initialState)).toEqual(result);
   });
+
+
+  it('should be able to get recommenders with averages', () => {
+    const initialState = {
+      recos: {
+        '1': { name: 'test', recommender: 'Paco', added: 123, seen: true, rating: 2 },
+        '2': { name: 'test', recommender: 'Paco', added: 123, seen: true, rating: 1 },
+        '3': { name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 },
+        '4': { name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 5 },
+        '5': { name: 'test', recommender: 'Paco', added: 123, seen: false },
+        '6': { name: 'test', recommender: 'Pepe', added: 123, seen: false },
+      }
+    };
+    const result = [{
+      name: 'Paco',
+      recos: 3,
+      average: 1.5
+    }, {
+      name: 'Pepe',
+      recos: 3,
+      average: 4
+    }];
+
+    deepFreeze(initialState);
+
+    expect(getRecommenders(initialState)).toEqual(result);
+  });
+
 
   it('should work with empty recommenders', () => {
     const initialState = {
@@ -72,7 +108,15 @@ describe('getRecommenders method', () => {
         '3': { name: 'test', recommender: 'Pepe', added: 123, seen: true, rating: 3 }
       }
     };
-    const result = ['Paco', 'Pepe'];
+    const result = [{
+      name: 'Paco',
+      recos: 1,
+      average: undefined
+    }, {
+      name: 'Pepe',
+      recos: 1,
+      average: 3
+    }];
 
     deepFreeze(initialState);
 

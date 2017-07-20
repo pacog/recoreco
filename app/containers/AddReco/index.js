@@ -90,7 +90,7 @@ class AddReco extends React.Component { // eslint-disable-line react/prefer-stat
 
 const mapStateToProps = (state) => {
   return {
-    recommenders: getRecommenders(state),
+    recommenders: getRecommenders(state).map( reco => reco.name),
     isLoading: isAdding(state)
   };
 };

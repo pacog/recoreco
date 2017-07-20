@@ -11,7 +11,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { getLoggedInUser } from '../../core/auth';
 import { authActions } from '../../core/auth';
 
-const Header = ({ user, title, logoutClicked, iconElementLeft, onLeftIconButtonTouchTap, onTitleTouchTap }) => {
+const Header = ({ user, title, logoutClicked, recommendersClicked, iconElementLeft, onLeftIconButtonTouchTap, onTitleTouchTap }) => {
   return (
     <div>
       <AppBar
@@ -29,6 +29,8 @@ const Header = ({ user, title, logoutClicked, iconElementLeft, onLeftIconButtonT
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           >
             <MenuItem primaryText={user.email} />
+            <MenuItem primaryText='See all recommenders'
+              onClick={recommendersClicked}/>
             <MenuItem primaryText='Log out'
                 onClick={logoutClicked}/>
           </IconMenu>
@@ -58,6 +60,9 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(authActions.logoutFromDatabase()).then(() => {
         browserHistory.push('/login');
       });
+    },
+    recommendersClicked: () => {
+      browserHistory.push('/recommenders');
     }
   };
 };

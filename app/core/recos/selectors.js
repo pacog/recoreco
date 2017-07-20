@@ -1,15 +1,34 @@
-import { forIn } from 'lodash';
+import { forIn, mean } from 'lodash';
 
 export const getRecommenders = (state) => {
   const uniqueRecommenders = {};
   if(state.recos) {
     forIn(state.recos, (reco) => {
       if(reco.recommender) {
-        uniqueRecommenders[reco.recommender] = true;
+        uniqueRecommenders[reco.recommender] = uniqueRecommenders[reco.recommender] || [];
+        uniqueRecommenders[reco.recommender].push(reco);
       }
     });
   }
-  return Object.keys(uniqueRecommenders);
+  const result = [];
+  forIn(uniqueRecommenders, (recos, id) => {
+    result.push(getRecommenderSummary(recos, id));
+  });
+  return result;
+}
+
+function getRecommenderSummary(recos = [], recommender) {
+  const scores = [];
+  recos.forEach((reco) => {
+    if(reco.seen && (typeof reco.rating !== 'undefined')) {
+      scores.push(reco.rating);
+    }
+  });
+  return {
+    name: recommender,
+    recos: recos.length,
+    average: mean(scores) || undefined
+  };
 }
 
 export const getRecosByRecommender = (state, recommender) => {

@@ -21,7 +21,7 @@ const RecommendersList = ({recommenders}) => {
 const getRecommendersList = (recos) => (
   <SelectableList onChange={
       (event, selectedRecommender) => {
-        browserHistory.push('/recommender/' + encodeURI(selectedRecommender));
+        browserHistory.push('/recommender/' + encodeURI(selectedRecommender.name));
         event.stopPropagation();
         event.preventDefault();
       }
@@ -31,8 +31,8 @@ const getRecommendersList = (recos) => (
           return (
             <ListItem
               value={recommender}
-              key={`recommender-${encodeURI(recommender)}`}
-              primaryText={recommender}
+              key={`recommender-${encodeURI(recommender.name)}`}
+              primaryText={recommender.name}
               rightIcon={<KeyboardArrowRight />} />
           );
       })

@@ -95,7 +95,7 @@ class EditReco extends React.Component { // eslint-disable-line react/prefer-sta
 
 const mapStateToProps = (state, { params }) => {
   return {
-    recommenders: getRecommenders(state),
+    recommenders: getRecommenders(state).map( reco => reco.name),
     reco: getReco(state, params.recoId)
   };
 };
