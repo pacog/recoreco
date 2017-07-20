@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { recosActions } from '../../core/recos';
 import { getRecommenders, getReco } from '../../core/recos';
+import { isEditing } from '../../core/loading';
 
 import Header from '../Header';
 import TextField from 'material-ui/TextField';
@@ -12,23 +13,24 @@ import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import FlatButton from 'material-ui/FlatButton';
 import AutoComplete from 'material-ui/AutoComplete';
-
+import LoadingIndicator from '../../components/LoadingIndicator';
 
 const blockStyle = {
   display: 'block'
 }
 
 class EditReco extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  constructor({ recommenders, reco, dispatchSaveButtonClicked }) {
+  constructor(props) {
     super();
     this.state = {
-      ...reco
+      ...props.reco
     };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleRecommenderChange = this.handleRecommenderChange.bind(this);
     this.saveButtonClicked = this.saveButtonClicked.bind(this);
-    this.dispatchSaveButtonClicked = dispatchSaveButtonClicked; //Probably there is a better way to have evrything being into this.
-    this.recommenders = recommenders;
+    this.dispatchSaveButtonClicked = props.dispatchSaveButtonClicked; //Probably there is a better way to have evrything being into this.
+    this.recommenders = props.recommenders;
+    this.props = props;
   }
 
   handleNameChange(event) {
@@ -40,7 +42,7 @@ class EditReco extends React.Component { // eslint-disable-line react/prefer-sta
   }
 
   saveButtonClicked() {
-    this.dispatchSaveButtonClicked(this.state.id, this.state.name, this.state.recommender);
+    this.dispatchSaveButtonClicked(this.state.key, this.state.name, this.state.recommender);
   }
 
   closeButtonClicked() {
@@ -56,6 +58,9 @@ class EditReco extends React.Component { // eslint-disable-line react/prefer-sta
   }
 
   render() {
+    if(this.props.isLoading) {
+      return <LoadingIndicator />;
+    }
     return (
       <div>
         <Header
@@ -98,15 +103,18 @@ class EditReco extends React.Component { // eslint-disable-line react/prefer-sta
 const mapStateToProps = (state, { params }) => {
   return {
     recommenders: getRecommenders(state).map( reco => reco.name),
-    reco: getReco(state, params.recoId)
+    reco: getReco(state, params.recoId),
+    isLoading: isEditing(state)
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     dispatchSaveButtonClicked: (id, name, recommender) => {
-      dispatch(recosActions.editReco(id, name, recommender));
-      browserHistory.goBack();
+      dispatch(recosActions.editReco(id, {name, recommender}))
+        .then(() => {
+          browserHistory.goBack();
+        });
     }
   };
 };

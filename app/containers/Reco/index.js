@@ -32,6 +32,15 @@ const ratingSelectorStyle = {
   paddingTop: 20,
   paddingBottom: 20,
 };
+const containerStyle = {
+  position: 'relative'
+};
+
+const floatingStyle = {
+  position: 'absolute',
+  top: 20,
+  right: 20
+};
 
 const Reco = ({reco = {}, isLoading, onRemoveClick, onMarkAsUnSeenClick, onMarkAsSeenClick, onChangedRating}) => {
   return (
@@ -46,8 +55,9 @@ const Reco = ({reco = {}, isLoading, onRemoveClick, onMarkAsUnSeenClick, onMarkA
           browserHistory.push('/');
         }}
       />
-      { getContentPart(reco, isLoading, onMarkAsUnSeenClick, onMarkAsSeenClick, onChangedRating, onRemoveClick) }
-
+      <div style={containerStyle}>
+        { getContentPart(reco, isLoading, onMarkAsUnSeenClick, onMarkAsSeenClick, onChangedRating, onRemoveClick) }
+      </div>
       <Footer />
     </div>
   );
@@ -60,6 +70,7 @@ const getContentPart = (reco, isLoading, onMarkAsUnSeenClick, onMarkAsSeenClick,
   return (
     <Card>
       <CardText>
+        { getEditPart(reco) }
         { getTitlePart(reco) }
         { getRecommendedByPart(reco) }
         { getAddedPart(reco) }
@@ -80,6 +91,21 @@ const getContentPart = (reco, isLoading, onMarkAsUnSeenClick, onMarkAsSeenClick,
   );
 };
 
+
+const getEditPart = (reco = {}) => {
+  return (
+    <div style={floatingStyle}>
+      <Link
+        to={`/edit-reco/${reco.key}`}
+      >
+        <RaisedButton
+          backgroundColor='#c3c4c5'
+          label={'Edit'}/>
+      </Link>
+    </div>
+
+  );
+};
 
 const getTitlePart = (reco = {}) => {
   if(reco.name) {
