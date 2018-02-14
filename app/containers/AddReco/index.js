@@ -14,6 +14,7 @@ import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import AutoComplete from 'material-ui/AutoComplete';
 import Footer from '../../components/Footer';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import CategorySelector from '../../components/CategorySelector';
 
 const blockStyle = {
   display: 'block'
@@ -75,6 +76,9 @@ class AddReco extends React.Component { // eslint-disable-line react/prefer-stat
               filter={AutoComplete.fuzzyFilter}
               maxSearchResults={5}
             />
+            <CategorySelector
+                value={this.state.name}
+                onChange={this.handleCategoryChange}/>
             <RaisedButton
               label={'Save'}
               style={blockStyle}
