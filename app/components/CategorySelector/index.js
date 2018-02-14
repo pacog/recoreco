@@ -1,11 +1,19 @@
 import React from 'react';
 
-import { FilmCategoryButton, TVShowCategoryButton } from '../CategoryButtons';
+import { FilmCategoryButton,
+         TVShowCategoryButton,
+         BookCategoryButton,
+         PlaceCategoryButton,
+         DocumentaryCategoryButton,
+         GameCategoryButton,
+         MusicCategoryButton,
+     } from '../CategoryButtons';
 
 const containerStyle = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    flexWrap: 'wrap',
     marginBottom: '10px'
 };
 
@@ -14,6 +22,11 @@ const CategorySelector = ( /*{value, onChange}*/) => {
         <div style={containerStyle}>
             <FilmCategoryButton />
             <TVShowCategoryButton />
+            <BookCategoryButton />
+            <PlaceCategoryButton />
+            <DocumentaryCategoryButton />
+            <GameCategoryButton />
+            <MusicCategoryButton />
         </div>
     );
 };
