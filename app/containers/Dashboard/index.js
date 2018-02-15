@@ -29,7 +29,7 @@ export class Dashboard extends React.Component {
                 onChange={this.handleCategoryChange}/>
                 <Card>
                   <CardText>
-                    <RecoList recos={this.filterRecos(recos)} />
+                    <RecoList recos={this.filterRecos(recos)} showIcons={!this.state.category}/>
                   </CardText>
                 </Card>
         </div>

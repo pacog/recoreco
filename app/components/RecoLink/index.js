@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import KeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 import timeSince from '../../utils/time-since';
 import RatingDisplay from '../RatingDisplay';
+import Categories from '../../core/constants/categories';
 
 const linkStyle = {
   display: 'block',
@@ -23,7 +24,17 @@ const contentStyle = {
 };
 
 const contentInnerStyle = {
-  flex: 1
+  flex: 1,
+  display: 'flex',
+  alignItems: 'center'
+};
+
+const contentInnerIconStyle = {
+  marginRight: 5
+};
+
+const contentInnerMainStyle = {
+    flex: 1
 };
 
 const mainTextStyle = {
@@ -45,7 +56,7 @@ const ratingStyle = {
   marginRight: 5
 };
 
-const RecoLink = ({reco}) => {
+const RecoLink = ({reco, showIcons}) => {
   return (
     <Link
       style={linkStyle}
@@ -53,28 +64,41 @@ const RecoLink = ({reco}) => {
         <RaisedButton
           style={buttonStyle}
           fullWidth={true}>
-          { getLinkContent(reco) }
+          { getLinkContent(reco, showIcons) }
         </RaisedButton>
     </Link>
   );
 };
 
 RecoLink.propTypes = {
-  reco: React.PropTypes.object.isRequired
+  reco: React.PropTypes.object.isRequired,
+  showIcons: React.PropTypes.bool
 };
 
-const getLinkContent = (reco) => {
+const getLinkContent = (reco, showIcons) => {
   return (
     <div style={contentStyle}>
       <div style={contentInnerStyle}>
+        { getIcon(reco, showIcons) }
+        <div style={contentInnerMainStyle}>
         <span style={mainTextStyle}>{reco.name}</span>
-        { getRecommenderContent(reco) }
-        <span style={secondarySoftTextStyle}> {timeSince(reco.added)} ago</span>
+            { getRecommenderContent(reco) }
+            <span style={secondarySoftTextStyle}> {timeSince(reco.added)} ago</span>
+        </div>
       </div>
       { getRatingContent(reco) }
       <KeyboardArrowRight />
     </div>
   );
+};
+
+const getIcon = (reco, showIcons) => {
+
+    if(!showIcons || !reco.category || !Categories[reco.category]) {
+        return '';
+    }
+    const { Icon } = Categories[reco.category];
+    return <Icon style={contentInnerIconStyle} />;
 };
 
 const getRecommenderContent = (reco) => {

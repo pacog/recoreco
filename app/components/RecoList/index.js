@@ -3,23 +3,24 @@ import RaisedButton from 'material-ui/RaisedButton';
 import RecoLink from '../RecoLink';
 import { Link } from 'react-router';
 
-const RecoList = ({recos}) => {
+const RecoList = ({recos, showIcons}) => {
   if(recos && recos.length) {
-    return getRecoList(recos);
+    return getRecoList(recos, showIcons);
   } else {
     return getEmptyState();
   }
 };
 
 RecoList.propTypes = {
-  recos: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
+  recos: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  showIcons: React.PropTypes.bool
 };
 
 const style = {
   paddingBottom: 60,
 };
 
-const getRecoList = (recos) => (
+const getRecoList = (recos, showIcons) => (
   <div style={style}>
     {
       recos.map( (reco) => {
@@ -27,6 +28,7 @@ const getRecoList = (recos) => (
             <RecoLink
               key={`reco-${reco.key}`}
               reco={reco}
+              showIcons={showIcons}
               ></RecoLink>
           );
       })
