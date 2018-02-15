@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Categories from '../../core/constants/categories';
 import { FilmCategoryButton,
          TVShowCategoryButton,
          BookCategoryButton,
@@ -17,22 +18,28 @@ const containerStyle = {
     marginBottom: '10px'
 };
 
-const CategorySelector = ( /*{value, onChange}*/) => {
+const CategorySelector = ({value, onChange}) => {
+    const handleSelection = (valueSelected) => {
+        if(onChange) {
+            onChange(valueSelected);
+        }
+    };
     return (
         <div style={containerStyle}>
-            <FilmCategoryButton />
-            <TVShowCategoryButton />
-            <BookCategoryButton />
-            <PlaceCategoryButton />
-            <DocumentaryCategoryButton />
-            <GameCategoryButton />
-            <MusicCategoryButton />
+            <FilmCategoryButton onSelect={handleSelection} selected={value==='movie'}/>
+            <TVShowCategoryButton onSelect={handleSelection} selected={value==='tvshow'} />
+            <BookCategoryButton onSelect={handleSelection} selected={value==='book'} />
+            <PlaceCategoryButton onSelect={handleSelection} selected={value==='place'} />
+            <DocumentaryCategoryButton onSelect={handleSelection} selected={value==='documentary'} />
+            <GameCategoryButton onSelect={handleSelection} selected={value==='game'} />
+            <MusicCategoryButton onSelect={handleSelection} selected={value==='music'} />
         </div>
     );
 };
 
-// CategorySelector.propTypes = {
-//   // active: React.PropTypes.oneOf(['toWatch','history', 'add'])
-// };
+CategorySelector.propTypes = {
+    onChange: React.PropTypes.func,
+    value: React.PropTypes.oneOf(Object.keys(Categories))
+};
 
 export default CategorySelector;

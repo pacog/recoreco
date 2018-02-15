@@ -1,13 +1,8 @@
 import React from 'react';
 
 import Paper from 'material-ui/Paper';
-import IconFilm from 'material-ui/svg-icons/action/theaters';
-import IconTVShow from 'material-ui/svg-icons/hardware/tv';
-import IconBook from 'material-ui/svg-icons/action/book';
-import IconPlace from 'material-ui/svg-icons/maps/place';
-import IconDocumentary from 'material-ui/svg-icons/action/account-balance';
-import IconGame from 'material-ui/svg-icons/action/extension';
-import IconMusic from 'material-ui/svg-icons/image/music-note';
+import Categories from '../../core/constants/categories';
+import { blue300 } from 'material-ui/styles/colors';
 
 const styles = {
     card: {
@@ -25,24 +20,51 @@ const styles = {
     }
 };
 
-export const FilmCategoryButton = createCategoryButton(IconFilm, 'Movie');
-export const TVShowCategoryButton = createCategoryButton(IconTVShow, 'Tv Show');
-export const BookCategoryButton = createCategoryButton(IconBook, 'Book');
-export const PlaceCategoryButton = createCategoryButton(IconPlace, 'Place');
-export const DocumentaryCategoryButton = createCategoryButton(IconDocumentary, 'Documentary');
-export const GameCategoryButton = createCategoryButton(IconGame, 'Game');
-export const MusicCategoryButton = createCategoryButton(IconMusic, 'Music');
+export const FilmCategoryButton = createCategoryButton(Categories.movie);
+export const TVShowCategoryButton = createCategoryButton(Categories.tvshow);
+export const BookCategoryButton = createCategoryButton(Categories.book);
+export const PlaceCategoryButton = createCategoryButton(Categories.place);
+export const DocumentaryCategoryButton = createCategoryButton(Categories.documentary);
+export const GameCategoryButton = createCategoryButton(Categories.game);
+export const MusicCategoryButton = createCategoryButton(Categories.music);
 
-function createCategoryButton(IconToUse, name) {
-    return (props) => {
-        return (
-            <Paper zDepth={1}
-                {...props}
-                style={styles.card}
-                >
-                <IconToUse style={styles.icon} />
-                <span style={styles.text}>{name}</span>
-            </Paper>
-        );
+function createCategoryButton(category) {
+    class CategoryButton extends React.Component {
+        constructor(props) {
+            super(props);
+            this.handleClick = this._onClick.bind(this);
+        }
+        _onClick() {
+            if(this.props.onSelect) {
+                this.props.onSelect(category.id);
+            }
+        }
+        getZDepth() {
+            if(this.props.selected) {
+                return 1;
+            }
+            return 2;
+        }
+        getCardStyle() {
+            const bgColorStyle = this.props.selected? {backgroundColor: blue300} : {};
+            return Object.assign({}, styles.card, bgColorStyle);
+        }
+        render() {
+            return (
+                <Paper zDepth={this.getZDepth()}
+                    {...this.props}
+                    style={this.getCardStyle()}
+                    onClick={this.handleClick}
+                    >
+                    <category.Icon style={styles.icon} />
+                    <span style={styles.text}>{category.name} {this.props.selected}</span>
+                </Paper>
+            )
+        }
+    }
+    CategoryButton.propTypes = {
+        onSelect: React.PropTypes.func,
+        selected: React.PropTypes.bool
     };
+    return CategoryButton;
 };

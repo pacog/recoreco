@@ -29,6 +29,7 @@ class AddReco extends React.Component { // eslint-disable-line react/prefer-stat
     this.state = emptyState;
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleRecommenderChange = this.handleRecommenderChange.bind(this);
+    this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.addButtonClicked = this.addButtonClicked.bind(this);
     this.dispatchAddButtonClicked = props.dispatchAddButtonClicked; //Probably there is a better way to have evrything being into this.
     this.recommenders = props.recommenders;
@@ -36,6 +37,13 @@ class AddReco extends React.Component { // eslint-disable-line react/prefer-stat
 
   handleNameChange(event) {
     this.setState({ name: event.target.value });
+  }
+
+  handleCategoryChange(newCategory) {
+      if(this.state.category === newCategory) {
+          newCategory = null;
+      }
+      this.setState({ category: newCategory });
   }
 
   handleRecommenderChange(value) {
@@ -77,7 +85,7 @@ class AddReco extends React.Component { // eslint-disable-line react/prefer-stat
               maxSearchResults={5}
             />
             <CategorySelector
-                value={this.state.name}
+                value={this.state.category}
                 onChange={this.handleCategoryChange}/>
             <RaisedButton
               label={'Save'}
