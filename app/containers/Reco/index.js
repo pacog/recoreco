@@ -120,13 +120,16 @@ const getTitlePart = (reco = {}) => {
     return '';
   }
 }
+const categoryStyle = {
+    display: 'inline-block'
+};
 
 const getCategoryPart = (reco = {}) => {
     const CategoryButton = getCategoryButtonForCategory(reco.category);
     if(CategoryButton) {
       return (
-          <div>
-              <CategoryButton />
+          <div style={categoryStyle}>
+              <CategoryButton  />
           </div>
       );
     } else {

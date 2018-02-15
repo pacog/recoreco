@@ -14,6 +14,7 @@ import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import FlatButton from 'material-ui/FlatButton';
 import AutoComplete from 'material-ui/AutoComplete';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import CategorySelector from '../../components/CategorySelector';
 
 const blockStyle = {
   display: 'block'
@@ -27,6 +28,7 @@ class EditReco extends React.Component { // eslint-disable-line react/prefer-sta
     };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleRecommenderChange = this.handleRecommenderChange.bind(this);
+    this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.saveButtonClicked = this.saveButtonClicked.bind(this);
     this.dispatchSaveButtonClicked = props.dispatchSaveButtonClicked; //Probably there is a better way to have evrything being into this.
     this.recommenders = props.recommenders;
@@ -41,8 +43,19 @@ class EditReco extends React.Component { // eslint-disable-line react/prefer-sta
     this.setState({ recommender: value });
   }
 
+  handleCategoryChange(newCategory) {
+      if(this.state.category === newCategory) {
+          newCategory = null;
+      }
+      this.setState({ category: newCategory });
+  }
+
   saveButtonClicked() {
-    this.dispatchSaveButtonClicked(this.state.key, this.state.name, this.state.recommender);
+    this.dispatchSaveButtonClicked(this.state.key, {
+        name: this.state.name,
+        recommender: this.state.recommender,
+        category: this.state.category,
+    });
   }
 
   closeButtonClicked() {
@@ -87,6 +100,9 @@ class EditReco extends React.Component { // eslint-disable-line react/prefer-sta
               filter={AutoComplete.fuzzyFilter}
               maxSearchResults={5}
             />
+            <CategorySelector
+                value={this.state.category}
+                onChange={this.handleCategoryChange}/>
             <RaisedButton
               label={'Save'}
               style={blockStyle}
@@ -110,8 +126,8 @@ const mapStateToProps = (state, { params }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    dispatchSaveButtonClicked: (id, name, recommender) => {
-      dispatch(recosActions.editReco(id, {name, recommender}))
+    dispatchSaveButtonClicked: (id, reco) => {
+      dispatch(recosActions.editReco(id, reco))
         .then(() => {
           browserHistory.goBack();
         });
