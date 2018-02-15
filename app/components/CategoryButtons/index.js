@@ -68,3 +68,24 @@ function createCategoryButton(category) {
     };
     return CategoryButton;
 };
+
+export const getCategoryButtonForCategory = (category) => {
+    switch (category) {
+        case Categories.movie.id:
+            return FilmCategoryButton;
+        case Categories.tvshow.id:
+            return TVShowCategoryButton;
+        case Categories.book.id:
+            return BookCategoryButton;
+        case Categories.place.id:
+            return PlaceCategoryButton;
+        case Categories.documentary.id:
+            return DocumentaryCategoryButton;
+        case Categories.game.id:
+            return GameCategoryButton;
+        case Categories.music.id:
+            return MusicCategoryButton;
+        default:
+            return null;
+    };
+};

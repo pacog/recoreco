@@ -16,6 +16,7 @@ import timeSince from '../../utils/time-since';
 import RatingSelector from '../../components/RatingSelector';
 import Footer from '../../components/Footer';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import { getCategoryButtonForCategory } from '../../components/CategoryButtons';
 
 const buttonStyle = {
   marginTop: 20,
@@ -72,6 +73,7 @@ const getContentPart = (reco, isLoading, onMarkAsUnSeenClick, onMarkAsSeenClick,
       <CardText>
         { getEditPart(reco) }
         { getTitlePart(reco) }
+        { getCategoryPart(reco) }
         { getRecommendedByPart(reco) }
         { getAddedPart(reco) }
         { getSeenPart(reco, onMarkAsUnSeenClick, onMarkAsSeenClick, onChangedRating, onRemoveClick) }
@@ -118,6 +120,19 @@ const getTitlePart = (reco = {}) => {
     return '';
   }
 }
+
+const getCategoryPart = (reco = {}) => {
+    const CategoryButton = getCategoryButtonForCategory(reco.category);
+    if(CategoryButton) {
+      return (
+          <div>
+              <CategoryButton />
+          </div>
+      );
+    } else {
+      return '';
+    }
+};
 
 const getRecommendedByPart = (reco = {}) => {
   if(reco.recommender) {

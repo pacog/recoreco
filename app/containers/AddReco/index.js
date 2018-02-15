@@ -51,7 +51,11 @@ class AddReco extends React.Component { // eslint-disable-line react/prefer-stat
   }
 
   addButtonClicked() {
-    this.dispatchAddButtonClicked(this.state.name, this.state.recommender);
+    this.dispatchAddButtonClicked({
+        name: this.state.name,
+        recommender: this.state.recommender,
+        category: this.state.category,
+    });
   }
 
   closeButtonClicked() {
@@ -111,8 +115,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    dispatchAddButtonClicked: (name, recommender) => {
-      dispatch(recosActions.addReco({ name, recommender })).then(() => {
+    dispatchAddButtonClicked: (reco) => {
+      dispatch(recosActions.addReco(reco)).then(() => {
         browserHistory.push('/')
       });
     }
